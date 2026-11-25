@@ -1,12 +1,12 @@
 # Copyright (c) 2026, IBTINEX and contributors
 # License: GNU General Public License v3. See license.txt
 
-"""Apply only the distribution's main icon and favicon to a newly provisioned site.
+"""Apply distribution identity through Frappe's existing presentation settings.
 
-Called explicitly by the installation recipe, not on every upgrade. No public API
-is exposed. Changes remain in the caller's transaction, and previously customized
-values are preserved. There are deliberately no CSS, palette, layout, company,
-letterhead, app-name, email, or business-document changes here.
+Called explicitly by the installation/visual-upgrade recipe. No public API is
+exposed. Changes remain in the caller's transaction, and customer names and logos
+are preserved. The compiled, screen-only theme is included through asset hooks;
+company data, letterheads, print formats and business settings are untouched.
 """
 
 import json
@@ -14,6 +14,7 @@ from pathlib import Path
 
 
 STATE_KEY = "ibtinex_branding_v1"
+PRODUCT_NAME = "IBTINEX ERP"
 LOGO = "/assets/erpnext/images/ibtinex-logo.svg"
 FAVICON = "/assets/erpnext/images/ibtinex-favicon.svg"
 _SAVEPOINT = "ibtinex_branding"
@@ -22,6 +23,8 @@ _FIELDS = {
 	"Navbar Settings.app_logo": LOGO,
 	"Website Settings.favicon": FAVICON,
 	"Website Settings.splash_image": LOGO,
+	"Website Settings.app_name": PRODUCT_NAME,
+	"System Settings.app_name": PRODUCT_NAME,
 }
 _UPSTREAM_VALUES = {
 	"",
@@ -31,6 +34,15 @@ _UPSTREAM_VALUES = {
 	"/assets/frappe/images/frappe-framework-logo.svg",
 	"/assets/frappe/images/frappe-favicon.svg",
 }
+_NAME_KEYS = ("Website Settings.app_name", "System Settings.app_name")
+
+
+def _upstream_values(key):
+	# Name defaults must never make a coincidentally named customer logo eligible
+	# for replacement. Keep the existing ownership record backward-compatible.
+	if key in _NAME_KEYS:
+		return {"", None, "ERPNext", "Frappe"}
+	return _UPSTREAM_VALUES
 
 
 def _check_assets():
@@ -76,7 +88,7 @@ def _write(frappe, key, value):
 
 
 def apply():
-	"""Set stock/empty icons once; preserve later edits and any customer-owned logo."""
+	"""Default stock identity once; preserve later edits and customer-owned branding."""
 	import frappe
 
 	_check_assets()
@@ -94,17 +106,25 @@ def apply():
 		and values[key] != managed.get(key, {}).get("applied")
 		for key in logo_keys
 	)
+	# Website name wins over System Settings on the login page. The same
+	# precedence protection as logos avoids hiding a customer's system app name.
+	custom_name = any(
+		values[key] not in _upstream_values(key)
+		and values[key] != _FIELDS[key]
+		and values[key] != managed.get(key, {}).get("applied")
+		for key in _NAME_KEYS
+	)
 
 	frappe.db.savepoint(_SAVEPOINT)
 	try:
 		for key, wanted in _FIELDS.items():
 			current = values[key]
 			owned = managed.get(key)
-			custom_value = current != owned["applied"] if owned else current not in _UPSTREAM_VALUES
+			custom_value = current != owned["applied"] if owned else current not in _upstream_values(key)
 			if current == wanted:
 				result["unchanged"].append(key)
 				continue
-			if (key in logo_keys and custom_logo) or custom_value:
+			if (key in logo_keys and custom_logo) or (key in _NAME_KEYS and custom_name) or custom_value:
 				result["preserved"].append(key)
 				continue
 			_write(frappe, key, wanted)
@@ -117,6 +137,21 @@ def apply():
 		frappe.db.rollback(save_point=_SAVEPOINT)
 		raise
 	return result
+
+
+def update_website_context(context):
+	"""Expose the native login name for presentation, without touching authentication.
+
+	Frappe's login controller already resolves Website/System Settings precedence.
+	Its web boot dictionary is JSON-escaped by the native base template. The tiny
+	web asset uses textContent, never HTML, for customer-provided display names.
+	"""
+	if context.get("path") != "login" or not context.get("app_name"):
+		return
+	name = context["app_name"]
+	if isinstance(context.get("boot"), dict):
+		context["boot"]["ibtinex_app_name"] = name
+	context["title"] = f"{name} · {context.get('title') or 'Login'}"
 
 
 def restore():

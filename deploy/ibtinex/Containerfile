@@ -153,7 +153,7 @@ COPY build/install_apps.py /opt/frappe/install_apps.py
 RUN --mount=type=secret,id=apps_json,target=/opt/frappe/apps.json,uid=1000,gid=0,required=true \
   : "${CACHE_BUST}" && \
   cd /home/frappe/frappe-bench && \
-  python3 /opt/frappe/install_apps.py /opt/frappe/apps.json && \
+  python3 /opt/frappe/install_apps.py /opt/frappe/apps.json "$ERP_COMMIT" && \
   test "$(git -C apps/erpnext rev-parse HEAD)" = "$ERP_COMMIT" && \
   test "$(git -C apps/frappe rev-parse HEAD)" = "$FRAPPE_COMMIT" && \
   bench build --production --force && \
@@ -197,6 +197,6 @@ CMD ["start.sh"]
 
 ARG ERP_COMMIT
 LABEL org.opencontainers.image.title="IBTINEX ERP" \
-      org.opencontainers.image.version="0.1.0-rc.1" \
+      org.opencontainers.image.version="0.1.1-rc.1" \
       org.opencontainers.image.source="https://github.com/zernova-platform/erpnext" \
       org.opencontainers.image.revision="${ERP_COMMIT}"

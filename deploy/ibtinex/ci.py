@@ -27,6 +27,9 @@ CONTEXT = TEMP / 'ibtinex-build'
 STATE = TEMP / 'ibtinex-state.json'
 FRAPPE_COMMIT = '2df0425571ebbaed878eabc3edc5b7e7c3327ae0'
 DOCKER_COMMIT = 'cf568a829790ef658d232daa75457dadf4e1ecc9'
+BRANCH = 'feat/ibtinex-erp-v0.1.1-branding'
+VERSION = '0.1.1-rc.1'
+PREVIOUS = json.loads((HERE / 'previous-release.json').read_text(encoding='utf-8'))
 
 def output(name, value):
     if '\n' in str(value):
@@ -40,6 +43,10 @@ def pull_digest(image):
     digests = json.loads(run(['docker', 'image', 'inspect', '--format', '{{json .RepoDigests}}', image]))
     if not digests or not re.fullmatch(r'.+@sha256:[0-9a-f]{64}', digests[0]):
         raise RuntimeError('Docker did not resolve an immutable dependency digest.')
+    if '@sha256:' in image:
+        if image not in digests:
+            raise RuntimeError('Pulled dependency did not retain its pinned repository digest.')
+        return image
     return digests[0]
 
 def fetch_json(url, token=None):
@@ -56,26 +63,26 @@ def prepare():
     if commit != os.environ['GITHUB_SHA']:
         raise RuntimeError('Checked-out commit does not match the workflow event.')
     branch = os.environ['GITHUB_REF_NAME']
-    if branch != 'ibtinex/starter-0.1.0':
+    if branch != BRANCH:
         raise RuntimeError('Only the explicitly qualified candidate branch can publish.')
     EVIDENCE.mkdir(parents=True, exist_ok=True)
     if CONTEXT.exists():
         shutil.rmtree(CONTEXT)
     shutil.copytree(HERE, CONTEXT, ignore=shutil.ignore_patterns('__pycache__', '*.pyc', 'tests'))
-    versions = fetch_json('https://nodejs.org/dist/index.json')
-    node = next(row['version'].removeprefix('v') for row in versions
-                if row['version'].startswith('v24.') and row.get('lts'))
+    # A presentation-only release retains the exact tested runtime dependencies.
+    # Resolving floating tags here would quietly change the upgrade boundary.
+    node = PREVIOUS['node_version']
     if not re.fullmatch(r'24\.\d+\.\d+', node):
         raise RuntimeError('Could not resolve Node 24 LTS.')
-    inputs = {'distribution_version': '0.1.0-rc.1', 'source_commit': commit,
+    inputs = {'distribution_version': VERSION, 'source_commit': commit,
               'source_repository': 'https://github.com/zernova-platform/erpnext',
               'source_branch': branch, 'erpnext_version': '16.60.0',
               'frappe_version': '16.60.2', 'frappe_commit': FRAPPE_COMMIT,
               'frappe_docker_reference': DOCKER_COMMIT, 'bench_version': '5.31.1',
               'node_version': node, 'platform': 'linux/amd64',
-              'python_base_image': pull_digest('python:3.14-slim-trixie'),
-              'mariadb_image': pull_digest('mariadb:11.8'),
-              'redis_image': pull_digest('redis:8.6-alpine')}
+              'python_base_image': pull_digest(PREVIOUS['python_base_image']),
+              'mariadb_image': pull_digest(PREVIOUS['mariadb_image']),
+              'redis_image': pull_digest(PREVIOUS['redis_image'])}
     write_json(CONTEXT / 'release.json', inputs)
     write_json(EVIDENCE / 'build-inputs.json', inputs)
     write_json(STATE, inputs)
@@ -99,14 +106,14 @@ def free_port():
         sock.bind(('127.0.0.1', 0))
         return sock.getsockname()[1]
 
-def qualify(directory, site, mode):
+def qualify(directory, site, mode, *, evidence_prefix=''):
     command = ['/home/frappe/frappe-bench/env/bin/python', '/opt/ibtinex/qualify.py',
                '--site', site, '--mode', mode]
     raw = compose(directory, 'run', '--rm', '--no-deps', '-T', '--entrypoint', command[0],
                   'backend', *command[1:])
     # Compose progress is on stderr; function output is the final JSON line.
     payload = json.loads(next(line for line in reversed(raw.splitlines()) if line.startswith('{')))
-    write_json(EVIDENCE / f'{mode}-verification.json', payload)
+    write_json(EVIDENCE / f'{evidence_prefix}{mode}-verification.json', payload)
     return payload
 
 def assert_ready_desk(html, final_url):
@@ -179,10 +186,17 @@ def publish(image, inputs):
     docker_config = TEMP / 'ibtinex-docker-auth'
     docker_config.mkdir(mode=0o700, exist_ok=True)
     env = {**os.environ, 'DOCKER_CONFIG': str(docker_config)}
-    destination = f'{IMAGE_REPOSITORY}:0.1.0-rc.1-g{inputs["source_commit"][:12]}'
+    destination = f'{IMAGE_REPOSITORY}:{VERSION}-g{inputs["source_commit"][:12]}'
     try:
         run(['docker', 'login', 'ghcr.io', '--username', os.environ['GITHUB_ACTOR'],
              '--password-stdin'], env=env, input=token, secrets=[token])
+        probe = subprocess.run(['docker', 'manifest', 'inspect', destination], env=env,
+                               text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if probe.returncode == 0:
+            raise RuntimeError('This immutable source tag already exists. It was not overwritten. '
+                               'Use its existing evidence or create a new candidate source commit.')
+        if not any(value in probe.stderr.lower() for value in ('manifest unknown', 'no such manifest', 'not found')):
+            raise RuntimeError('Could not verify that the candidate tag is unused; publication stopped.')
         run(['docker', 'tag', image, destination])
         run(['docker', 'push', destination], env=env, secrets=[token], capture=False)
         digests = json.loads(run(['docker', 'image', 'inspect', '--format', '{{json .RepoDigests}}', destination]))
@@ -194,6 +208,175 @@ def publish(image, inputs):
     output('published_image', IMAGE_REPOSITORY)
     return destination, digest
 
+def pull_previous_image():
+    """Pull only the previously qualified private digest, with transient auth."""
+    token = os.environ.get('GH_TOKEN', '')
+    if not token:
+        raise RuntimeError('Registry access is required to rehearse the real existing-installation upgrade.')
+    package_visibility(token)
+    docker_config = TEMP / 'ibtinex-upgrade-docker-auth'
+    docker_config.mkdir(mode=0o700, exist_ok=True)
+    env = {**os.environ, 'DOCKER_CONFIG': str(docker_config)}
+    try:
+        run(['docker', 'login', 'ghcr.io', '--username', os.environ['GITHUB_ACTOR'],
+             '--password-stdin'], env=env, input=token, secrets=[token])
+        run(['docker', 'pull', '--platform', 'linux/amd64', PREVIOUS['images']['app']],
+            env=env, secrets=[token], capture=False)
+    finally:
+        shutil.rmtree(docker_config, ignore_errors=True)
+
+def upgrade_contract():
+    return {'kind': 'appearance-only', 'schema_changed': False,
+            'from_images': [PREVIOUS['images']['app']], 'rollback_compatible': True}
+
+def check_upgrade_and_rollback(image, inputs):
+    """Rehearse against the actual released image and a persisted stock movement."""
+    from deploy import rollback, upgrade
+    pull_previous_image()
+    directory = TEMP / 'ibtinex-upgrade-installation'
+    project = f'ibtinex-upgrade-{os.environ.get("GITHUB_RUN_ID", "local")}-{os.environ.get("GITHUB_RUN_ATTEMPT", "1")}'
+    site = 'upgrade.ibtinex-ci.invalid'
+    secrets_to_redact = []
+    try:
+        initialize(directory, image=PREVIOUS['images']['app'],
+                   mariadb_image=PREVIOUS['images']['mariadb'], redis_image=PREVIOUS['images']['redis'],
+                   project=project, site=site, port=free_port(), starter_data=True)
+        secrets_to_redact = [p.read_text().strip() for p in (directory / '.secrets').iterdir()]
+        start(directory, skip_pull=True)
+        qualify(directory, site, 'starter', evidence_prefix='previous-')
+        qualify(directory, site, 'explore', evidence_prefix='previous-')
+        # The local exact-commit image is accepted only by the internal CI API.
+        # This manifest is a test input, not published qualification evidence.
+        candidate = {**inputs, 'schema_version': 1, 'status': 'verified-review-candidate',
+                     'package_visibility': 'private', 'customer_release_qualified': False,
+                     'upgrade': upgrade_contract(),
+                     'images': {'app': image, 'mariadb': inputs['mariadb_image'], 'redis': inputs['redis_image']}}
+        upgraded = upgrade(directory, candidate, ci=True)
+        qualify(directory, site, 'after-exploration', evidence_prefix='upgraded-')
+        rollback(directory, Path(upgraded['backup_directory']), ci=True)
+        qualify(directory, site, 'after-exploration', evidence_prefix='rolled-back-')
+        upgrade(directory, candidate, ci=True)
+        qualify(directory, site, 'after-exploration', evidence_prefix='reupgraded-')
+        write_json(EVIDENCE / 'upgrade-verification.json', {
+            'status': 'passed', 'host': 'Linux GitHub Actions',
+            'from_image': PREVIOUS['images']['app'], 'to_source_commit': inputs['source_commit'],
+            'checks': ['real_previous_image_install', 'native_stock_transfer_before_upgrade',
+                       'mandatory_full_backup', 'upgrade_preserves_all_erp_counts_gl_bins_and_site_config',
+                       'appearance_only_rollback_preserves_business_state', 'repeat_upgrade'],
+            'windows_docker_desktop': 'not-executed',
+            'backup_contents': 'retained only in private disposable CI directory; never published'})
+    except Exception as error:
+        raise RuntimeError(redact(f'Upgrade rehearsal failed: {error}', secrets_to_redact)) from None
+    finally:
+        if (directory / 'installation.json').exists():
+            try:
+                verify_ownership(directory)
+                compose(directory, '--profile', 'setup', 'down', '--volumes', '--remove-orphans', capture=False)
+            except Exception as error:
+                print(redact(f'Isolated upgrade CI cleanup did not complete: {error}', secrets_to_redact), file=sys.stderr)
+        # Site backups include encryption keys and synthetic passwords. They are
+        # deliberately outside uploaded evidence and are removed after rehearsal.
+        shutil.rmtree(directory, ignore_errors=True)
+
+def check_legacy_password_recovery(image, inputs):
+    """Reproduce the old CRLF failure, then recover only its empty partial site."""
+    directory = TEMP / 'ibtinex-crlf-installation'
+    project = f'ibtinex-crlf-{os.environ.get("GITHUB_RUN_ID", "local")}-{os.environ.get("GITHUB_RUN_ATTEMPT", "1")}'
+    site = 'recovery.ibtinex-ci.invalid'
+    secrets_to_redact = []
+    try:
+        state = initialize(directory, image=PREVIOUS['images']['app'],
+                           mariadb_image=inputs['mariadb_image'], redis_image=inputs['redis_image'],
+                           project=project, site=site, port=free_port(), starter_data=True)
+        password_path = directory / '.secrets/db-password'
+        password_path.write_bytes(password_path.read_bytes().rstrip(b'\r\n') + b'\r\n')
+        secrets_to_redact = [p.read_text().strip() for p in (directory / '.secrets').iterdir()]
+        compose(directory, 'up', '-d', '--wait', 'db', 'redis-cache', 'redis-queue', capture=False)
+        try:
+            compose(directory, '--profile', 'setup', 'run', '--rm', '-T', 'create-site')
+        except RuntimeError as error:
+            if '1045' not in str(error) and 'Access denied' not in str(error):
+                raise AssertionError('Previous-image failure did not reproduce the expected MariaDB authentication error.') from None
+        else:
+            raise AssertionError('The previous image unexpectedly accepted the CRLF secret; the proposed root cause is unproven.')
+        # The new host installer streams the bundled recovery bootstrap into
+        # the previous image. Its selected image and all volumes stay unchanged;
+        # a subsequent visual upgrade still requires the full backup gate.
+        start(directory, skip_pull=True, recover=True)
+        qualify(directory, site, 'starter', evidence_prefix='crlf-recovered-')
+        start(directory, skip_pull=True)
+        qualify(directory, site, 'starter', evidence_prefix='crlf-restarted-')
+        write_json(EVIDENCE / 'legacy-password-recovery.json', {
+            'status': 'passed', 'host': 'Linux GitHub Actions',
+            'root_cause_reproduced': 'CRLF password file; MariaDB retains CR while old Python reader strips it',
+            'old_image': PREVIOUS['images']['app'], 'new_source_commit': inputs['source_commit'],
+            'checks': ['previous_image_access_denied', 'same_volumes_preserved',
+                       'explicit_empty_partial_site_recovery', 'legacy_crlf_authentication',
+                       'native_starter_workflows_after_recovery', 'safe_repeat_start'],
+            'windows_docker_desktop': 'not-executed'})
+    except Exception as error:
+        raise RuntimeError(redact(f'Legacy secret recovery rehearsal failed: {error}', secrets_to_redact)) from None
+    finally:
+        if (directory / 'installation.json').exists():
+            try:
+                verify_ownership(directory)
+                compose(directory, '--profile', 'setup', 'down', '--volumes', '--remove-orphans', capture=False)
+            except Exception as error:
+                print(redact(f'Isolated CRLF CI cleanup did not complete: {error}', secrets_to_redact), file=sys.stderr)
+        shutil.rmtree(directory, ignore_errors=True)
+
+def build_installer(manifest):
+    write_json(EVIDENCE / 'release-manifest.json', manifest)
+    destination = EVIDENCE / f'ibtinex-erp-{VERSION}-windows-installer.zip'
+    with zipfile.ZipFile(destination, 'w', zipfile.ZIP_DEFLATED) as bundle:
+        prefix = 'ibtinex-erp-review-installer/'
+        for name in ('deploy.py', 'common.py', 'maintenance.py', 'compose.yaml', 'README.md', 'WINDOWS.md'):
+            bundle.write(HERE / name, prefix + name)
+        bundle.write(HERE / 'container/bootstrap.py', prefix + 'container/bootstrap.py')
+        bundle.write(EVIDENCE / 'release-manifest.json', prefix + 'release-manifest.json')
+        bundle.write(HERE / 'previous-release.json', prefix + 'previous-release.json')
+        bundle.write(ROOT / 'license.txt', prefix + 'ERPNext-LICENSE.txt')
+        bundle.write(HERE / 'vendor/frappe_docker/LICENSE', prefix + 'Frappe-Docker-LICENSE.txt')
+        bundle.write(ROOT / 'docs/ibtinex/STARTER_WALKTHROUGH.md', prefix + 'STARTER_WALKTHROUGH.md')
+    digest = hashlib.sha256(destination.read_bytes()).hexdigest()
+    (EVIDENCE / (destination.name + '.sha256')).write_text(f'{digest}  {destination.name}\n', encoding='utf-8')
+    return destination
+
+def release_prerelease(installer, inputs):
+    """Publish the requested review release, explicitly retaining open gates."""
+    tag = f'ibtinex-erp-{VERSION}-g{inputs["source_commit"][:12]}'
+    notes = EVIDENCE / 'RELEASE_NOTES.md'
+    notes.write_text(
+        f'# IBTINEX ERP {VERSION}\n\n'
+        'Calm dark-green/off-white native theme, Windows-safe secret files, and an explicit backed-up upgrade/visual rollback path.\n\n'
+        'This is a review candidate. Automated Linux container, native Windows Python, browser, '
+        'business-state preservation, upgrade and rollback gates passed for the exact source and image in release-manifest.json.\n\n'
+        '**Open gate:** full fresh installation, recovery, upgrade and rollback on Windows Docker Desktop '
+        'have not been executed. This release is not production/customer qualified.\n\n'
+        'Download the installer ZIP and read WINDOWS.md. Existing sites must use the upgrade command; '
+        'do not initialize over an existing deployment. The GHCR package remains private.\n\n'
+        'ERPNext GPLv3 and Frappe MIT notices are retained. Exact corresponding source archives accompany this candidate.\n',
+        encoding='utf-8')
+    qualification = EVIDENCE / f'ibtinex-erp-{VERSION}-qualification.zip'
+    with zipfile.ZipFile(qualification, 'w', zipfile.ZIP_DEFLATED) as archive:
+        for path in sorted(EVIDENCE.glob('*.json')):
+            if path.name not in {'failure.json', 'release-location.json'}:
+                archive.write(path, path.name)
+        for path in sorted((EVIDENCE / 'visual').rglob('*')):
+            if path.is_file() and path.suffix in {'.png', '.json', '.html'}:
+                archive.write(path, str(path.relative_to(EVIDENCE)))
+        archive.write(notes, notes.name)
+    command = ['gh', 'release', 'create', tag, '--repo', 'zernova-platform/erpnext',
+               '--target', inputs['source_commit'], '--title', f'IBTINEX ERP {VERSION}',
+               '--prerelease', '--notes-file', str(notes), str(installer),
+               str(EVIDENCE / (installer.name + '.sha256')),
+               str(EVIDENCE / 'release-manifest.json'),
+               str(qualification),
+               str(EVIDENCE / 'erpnext-corresponding-source.tar.gz'),
+               str(EVIDENCE / 'frappe-corresponding-source.tar.gz')]
+    run(command, secrets=[os.environ.get('GH_TOKEN', '')], capture=False)
+    return f'https://github.com/zernova-platform/erpnext/releases/tag/{tag}'
+
 def verify_publish():
     inputs = json.loads(STATE.read_text())
     image = f'ibtinex-ci:{inputs["source_commit"]}'
@@ -201,6 +384,7 @@ def verify_publish():
     project = f'ibtinex-ci-{os.environ.get("GITHUB_RUN_ID", "local")}-{os.environ.get("GITHUB_RUN_ATTEMPT", "1")}'
     site = 'starter.ibtinex-ci.invalid'
     secret_values = []
+    publication = {'phase': 'not-published', 'image': None, 'tag': None}
     try:
         initialize(directory, image=image, mariadb_image=inputs['mariadb_image'],
                    redis_image=inputs['redis_image'], project=project, site=site,
@@ -216,6 +400,10 @@ def verify_publish():
         state = start(directory, skip_pull=True)
         qualify(directory, site, 'starter')
         http_checks(state['port'], (directory / '.secrets/admin-password').read_text().strip())
+        print('Checking native desktop/mobile screens, both themes, and visible focus.', flush=True)
+        from visual_checks import run_visual_checks
+        run_visual_checks(f'http://127.0.0.1:{state["port"]}',
+                          directory / '.secrets/admin-password', EVIDENCE / 'visual', site)
         print('Recreating application containers and rechecking the persisted site.', flush=True)
         compose(directory, 'up', '-d', '--no-deps', '--force-recreate', '--wait', '--wait-timeout', '360',
                 'backend', 'websocket', 'queue-short', 'queue-long', 'scheduler', 'frontend', capture=False)
@@ -224,6 +412,10 @@ def verify_publish():
         qualify(directory, site, 'explore')
         start(directory, skip_pull=True)
         qualify(directory, site, 'after-exploration')
+        print('Rehearsing an upgrade from the previous private release and visual rollback.', flush=True)
+        check_upgrade_and_rollback(image, inputs)
+        print('Reproducing the old CRLF password failure and proving guarded recovery.', flush=True)
+        check_legacy_password_recovery(image, inputs)
         python_packages = run(['docker', 'run', '--rm', '--entrypoint',
                                '/home/frappe/frappe-bench/env/bin/python', image,
                                '-m', 'pip', 'list', '--format=json'])
@@ -233,37 +425,52 @@ def verify_publish():
         (EVIDENCE / 'os-packages.tsv').write_text(os_packages)
         manifest = {**inputs, 'schema_version': 1, 'status': 'verified-review-candidate',
                     'customer_release_qualified': False,
+                    'upgrade': upgrade_contract(),
+                    'release_gates': {
+                        'native_windows_python_tests': 'passed (separate windows-latest prerequisite job)',
+                        'linux_fresh_install_and_native_workflows': 'passed',
+                        'native_ui_screenshot_and_focus_checks': 'passed',
+                        'linux_previous_release_upgrade_and_rollback': 'passed',
+                        'legacy_crlf_failure_reproduction_and_recovery': 'passed',
+                        'windows_docker_desktop_end_to_end': 'not-executed',
+                        'complete_wcag_22_aa_audit': 'not-executed; automated checks are partial'},
                     'verification': ['fresh_empty_site', 'explicit_starter_install', 'native_business_assertions',
                                      'seed_idempotence', 'opt_in_and_site_guards', 'worker_execution',
                                      'http_icons_login_api', 'authenticated_desk_setup_complete',
                                      'realtime_handshake', 'container_recreation',
-                                     'normal_restart_preserves_review_activity'],
+                                     'normal_restart_preserves_review_activity', 'browser_theme_checks',
+                                     'real_previous_image_upgrade', 'appearance_only_rollback',
+                                     'legacy_crlf_recovery',
+                                     'native_windows_installer_unit_tests'],
                     'images': {'app': None, 'mariadb': inputs['mariadb_image'], 'redis': inputs['redis_image']}}
         if os.environ.get('IBTINEX_PUBLISH', 'false').lower() == 'true':
             print('All qualification checks passed; publishing the same tested image.', flush=True)
+            publication['phase'] = 'publishing'
             tag, digest = publish(image, inputs)
+            publication.update(phase='image-published', image=digest, tag=tag)
             manifest.update(package_visibility='private', image_tag=tag)
             manifest['images']['app'] = digest
-            write_json(EVIDENCE / 'release-manifest.json', manifest)
-            with zipfile.ZipFile(EVIDENCE / 'ibtinex-erp-review-installer.zip', 'w', zipfile.ZIP_DEFLATED) as bundle:
-                for file in ('deploy.py', 'common.py', 'compose.yaml', 'README.md'):
-                    bundle.write(HERE / file, file)
-                bundle.write(EVIDENCE / 'release-manifest.json', 'release-manifest.json')
-                walkthrough = ROOT / 'docs/ibtinex/STARTER_WALKTHROUGH.md'
-                if walkthrough.exists():
-                    bundle.write(walkthrough, 'STARTER_WALKTHROUGH.md')
+            installer = build_installer(manifest)
+            release_url = release_prerelease(installer, inputs)
+            publication['phase'] = 'release-published'
+            write_json(EVIDENCE / 'release-location.json', {'url': release_url, 'image': digest})
             if summary := os.environ.get('GITHUB_STEP_SUMMARY'):
                 with open(summary, 'a') as stream:
-                    stream.write(f'## Verified private review candidate\n\n`{digest}`\n\n'
-                                 'Fresh install, synthetic workflows, guarded repeat seed, real HTTP and '
-                                 'container recreation checks passed. Normal start preserves a subsequent native '
-                                 'stock transfer and site configuration. Customer rollout is not qualified.\n')
+                    stream.write(f'## IBTINEX ERP {VERSION} review candidate\n\n`{digest}`\n\n'
+                                 f'[Download the candidate installer]({release_url})\n\n'
+                                 'Native Windows Python, Linux container business workflows, browser screenshots/focus, '
+                                 'existing-release upgrade and visual rollback checks passed. '
+                                 'Windows Docker Desktop end-to-end installation and a full accessibility audit remain '
+                                 'open. Customer rollout is not qualified.\n')
         else:
             write_json(EVIDENCE / 'verification-only.json', manifest)
     except Exception as error:
         message = redact(str(error), secret_values + [os.environ.get('GH_TOKEN', '')])
         write_json(EVIDENCE / 'failure.json', {'status': 'failed', 'reason': message,
-                                             'image_published_as_verified': False})
+                                             'publication': publication,
+                                             'image_published_as_verified': (
+                                                 True if publication['image'] else
+                                                 None if publication['phase'] == 'publishing' else False)})
         if directory.exists():
             try:
                 logs = compose(directory, 'logs', '--no-color', '--tail', '120')

@@ -1,9 +1,9 @@
 app_name = "erpnext"
-app_title = "ERPNext"
+app_title = "IBTINEX ERP"
 app_publisher = "Frappe Technologies Pvt. Ltd."
 app_description = """ERP made simple"""
 app_icon = "fa fa-th"
-app_color = "#e74c3c"
+app_color = "#102B21"
 app_email = "hello@frappe.io"
 app_license = "GNU General Public License (v3)"
 source_link = "https://github.com/frappe/erpnext"
@@ -48,8 +48,10 @@ code_only_modules = {
 develop_version = "15.x.x-develop"
 
 app_include_js = "erpnext.bundle.js"
-app_include_css = "erpnext.bundle.css"
-web_include_css = "erpnext-web.bundle.css"
+app_include_css = ["erpnext.bundle.css", "ibtinex-theme.bundle.css"]
+web_include_css = ["erpnext-web.bundle.css", "ibtinex-theme.bundle.css"]
+web_include_js = ["ibtinex-branding.bundle.js"]
+update_website_context = "erpnext.ibtinex_branding.update_website_context"
 email_css = "email_erpnext.bundle.css"
 
 app_include_icons = [
