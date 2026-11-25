@@ -206,6 +206,10 @@ def verify_publish():
         compose(directory, 'up', '-d', '--no-deps', '--force-recreate', '--wait', '--wait-timeout', '360',
                 'backend', 'websocket', 'queue-short', 'queue-long', 'scheduler', 'frontend', capture=False)
         qualify(directory, site, 'starter')
+        print('Posting a legitimate review stock transfer and proving a normal start preserves it.', flush=True)
+        qualify(directory, site, 'explore')
+        start(directory, skip_pull=True)
+        qualify(directory, site, 'after-exploration')
         python_packages = run(['docker', 'run', '--rm', '--entrypoint',
                                '/home/frappe/frappe-bench/env/bin/python', image,
                                '-m', 'pip', 'list', '--format=json'])
@@ -217,7 +221,8 @@ def verify_publish():
                     'customer_release_qualified': False,
                     'verification': ['fresh_empty_site', 'explicit_starter_install', 'native_business_assertions',
                                      'seed_idempotence', 'opt_in_and_site_guards', 'worker_execution',
-                                     'http_icons_login_api', 'realtime_handshake', 'container_recreation'],
+                                     'http_icons_login_api', 'realtime_handshake', 'container_recreation',
+                                     'normal_restart_preserves_review_activity'],
                     'images': {'app': None, 'mariadb': inputs['mariadb_image'], 'redis': inputs['redis_image']}}
         if os.environ.get('IBTINEX_PUBLISH', 'false').lower() == 'true':
             print('All qualification checks passed; publishing the same tested image.', flush=True)
@@ -236,7 +241,8 @@ def verify_publish():
                 with open(summary, 'a') as stream:
                     stream.write(f'## Verified private review candidate\n\n`{digest}`\n\n'
                                  'Fresh install, synthetic workflows, guarded repeat seed, real HTTP and '
-                                 'container recreation checks passed. Customer rollout is not qualified.\n')
+                                 'container recreation checks passed. Normal start preserves a subsequent native '
+                                 'stock transfer and site configuration. Customer rollout is not qualified.\n')
         else:
             write_json(EVIDENCE / 'verification-only.json', manifest)
     except Exception as error:

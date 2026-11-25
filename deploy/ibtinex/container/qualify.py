@@ -1,7 +1,9 @@
 """CI-only synthetic assertions, invoked explicitly; never an install hook."""
 import argparse
+import hashlib
 import json
 import time
+from decimal import Decimal
 from pathlib import Path
 
 import frappe
@@ -10,7 +12,7 @@ from erpnext.ibtinex_starter.seed import install, verify
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--site', required=True)
-parser.add_argument('--mode', choices=('empty', 'starter'), required=True)
+parser.add_argument('--mode', choices=('empty', 'starter', 'explore', 'after-exploration'), required=True)
 args = parser.parse_args()
 if not args.site.endswith('.ibtinex-ci.invalid'):
     raise SystemExit('Qualification only operates on the dedicated CI site suffix.')
@@ -32,6 +34,19 @@ def rejection(call):
         return True
     raise AssertionError('A guarded starter request unexpectedly succeeded.')
 
+def exploration_snapshot():
+    from erpnext.ibtinex_starter.plan import COMPANY, MARKER_KEY
+    balances = {}
+    for row in frappe.get_all('GL Entry', filters={'company': COMPANY, 'is_cancelled': 0},
+                              fields=['account', 'debit', 'credit']):
+        balances[row.account] = balances.get(row.account, Decimal(0)) + Decimal(str(row.debit)) - Decimal(str(row.credit))
+    return {'business_record_counts': counts(),
+            'bins': frappe.get_all('Bin', fields=['item_code', 'warehouse', 'actual_qty', 'stock_value'],
+                                   order_by='item_code, warehouse'),
+            'account_balances': {name: str(value) for name, value in sorted(balances.items())},
+            'marker_sha256': hashlib.sha256(frappe.db.get_global(MARKER_KEY).encode()).hexdigest(),
+            'site_config_sha256': hashlib.sha256(Path(frappe.get_site_path('site_config.json')).read_bytes()).hexdigest()}
+
 try:
     assert frappe.__version__ == '16.60.2' and erpnext.__version__ == '16.60.0'
     assert set(frappe.get_installed_apps()) == {'frappe', 'erpnext'}
@@ -46,7 +61,7 @@ try:
         result['checks']['non_demo_site_rejected'] = rejection(
             lambda: install(expected_site=args.site, accept_sample_data=True))
         assert counts() == before, 'Rejected requests changed business data.'
-    else:
+    elif args.mode == 'starter':
         result['verification'] = verify(expected_site=args.site)
         first = install(expected_site=args.site, accept_sample_data=True)
         second = install(expected_site=args.site, accept_sample_data=True)
@@ -95,6 +110,46 @@ try:
         result['checks']['real_background_job_completed'] = True
         result['business_record_counts'] = {key: value for key, value in counts().items() if value}
         result['coverage'] = first['coverage']
+    else:
+        from erpnext.ibtinex_starter.plan import COMPANY, MARKER_KEY
+        marker = json.loads(frappe.db.get_global(MARKER_KEY))
+        records = marker['records']
+        transfer_name = 'ISE-CI-REVIEW-TRANSFER'
+        snapshot_path = Path(frappe.get_site_path('private', 'ibtinex-ci-exploration.json'))
+        if args.mode == 'explore':
+            assert not frappe.db.exists('Stock Entry', transfer_name), 'Exploration was already performed.'
+            transfer = frappe.get_doc({'doctype': 'Stock Entry', 'stock_entry_type': 'Material Transfer',
+                                      'purpose': 'Material Transfer', 'company': COMPANY,
+                                      'posting_date': marker['as_of_date'], 'posting_time': '00:39:00',
+                                      'set_posting_time': 1,
+                                      'items': [{'item_code': records['finished_item']['name'], 'qty': 1,
+                                                 's_warehouse': records['finished_warehouse']['name'],
+                                                 't_warehouse': records['showroom_warehouse']['name']}]})
+            transfer.insert(set_name=transfer_name)
+            transfer.submit()
+            frappe.db.commit()
+            # An engineer may change review-site settings after initialization.
+            # Turning off the seeding flag must survive a normal start too.
+            from frappe.installer import update_site_config
+            update_site_config('ibtinex_starter_demo', 0,
+                               site_config_path=frappe.get_site_path('site_config.json'))
+            snapshot = exploration_snapshot()
+            snapshot_path.parent.mkdir(parents=True, exist_ok=True)
+            snapshot_path.write_text(json.dumps(snapshot, default=str, sort_keys=True))
+            result['checks']['native_review_transfer_submitted'] = True
+        else:
+            expected = json.loads(snapshot_path.read_text())
+            snapshot = exploration_snapshot()
+            assert json.loads(json.dumps(snapshot, default=str)) == expected, 'A normal restart changed the explored site.'
+            assert not frappe.conf.get('ibtinex_starter_demo'), 'Normal start reset the engineer-selected site flag.'
+            result['checks']['restart_preserves_edited_business_state_and_site_config'] = True
+        transfer = frappe.get_doc('Stock Entry', transfer_name)
+        assert transfer.docstatus == 1 and float(transfer.items[0].qty) == 1
+        for key in ('finished_warehouse', 'showroom_warehouse'):
+            actual = frappe.db.get_value('Bin', {'item_code': records['finished_item']['name'],
+                                                'warehouse': records[key]['name']}, 'actual_qty')
+            assert float(actual) == 3, 'The legitimate review stock movement was reset.'
+        result['exploration_state'] = snapshot
     from erpnext.ibtinex_branding import LOGO, FAVICON, apply as apply_branding
     assert frappe.db.get_single_value('Website Settings', 'app_logo') == LOGO
     assert frappe.db.get_single_value('Website Settings', 'favicon') == FAVICON

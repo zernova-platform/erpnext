@@ -672,6 +672,34 @@ def _verify(manifest, detailed_coverage=False):
 	require(not frappe.db.get_single_value("Plaid Settings", "enabled"), "Plaid enabled")
 	require(doc("communication_medium").disabled == 1, "synthetic voice medium enabled")
 	require(doc("subcontracting_order").purchase_order == doc("subcontracting_purchase_order").name, "subcontract link")
+	# Exercise the reports users actually open, in addition to checking raw ledgers.
+	from erpnext.accounts.report.general_ledger.general_ledger import execute as general_ledger
+	from erpnext.stock.report.stock_balance.stock_balance import execute as stock_balance
+	filters = {"company": COMPANY, "from_date": manifest["as_of_date"], "to_date": manifest["as_of_date"]}
+	gl_columns, gl_rows = general_ledger(frappe._dict(filters))
+	stock_columns, stock_rows = stock_balance(frappe._dict(filters))
+	require(bool(gl_columns) and bool(gl_rows), "General Ledger report is empty")
+	require(bool(stock_columns) and bool(stock_rows), "Stock Balance report is empty")
+	posted_vouchers = {row.get("voucher_no") for row in gl_rows if row.get("voucher_no")}
+	for key in ("opening_journal", "purchase_receipt", "purchase_invoice", "supplier_payment",
+		"delivery_note", "sales_invoice", "customer_payment", "asset_opening_journal"):
+		require(doc(key).name in posted_vouchers, f"General Ledger report omits {key}")
+	bank_rows = [row for row in gl_rows if row.get("account") == doc("bank_gl").name and row.get("voucher_no")]
+	bank_balance = sum((Decimal(str(row.get("debit") or 0)) - Decimal(str(row.get("credit") or 0))
+		for row in bank_rows), Decimal(0))
+	require(bank_balance == Decimal("433280"), "General Ledger report bank balance")
+	stock_map = {(row.get("item_code"), row.get("warehouse")): row for row in stock_rows}
+	for item_key, warehouse_key, expected_qty, expected_value in (
+		("raw_item", "raw_warehouse", 90, 54000), ("hardware_item", "raw_warehouse", 90, 13500),
+		("finished_item", "finished_warehouse", 4, 3000), ("finished_item", "showroom_warehouse", 2, 1500)):
+		row = stock_map.get((doc(item_key).name, doc(warehouse_key).name))
+		require(bool(row), f"Stock Balance report omits {item_key}/{warehouse_key}")
+		require(row.get("company") == COMPANY, "Stock Balance report contains another company")
+		require(Decimal(str(row.get("bal_qty") or 0)) == Decimal(expected_qty), f"Stock Balance report quantity: {item_key}/{warehouse_key}")
+		require(abs(Decimal(str(row.get("bal_val") or 0)) - Decimal(expected_value)) < Decimal("0.01"),
+			f"Stock Balance report value: {item_key}/{warehouse_key}")
+	stock_value = sum((Decimal(str(row.get("bal_val") or 0)) for row in stock_rows), Decimal(0))
+	require(abs(stock_value - Decimal("72000")) < Decimal("0.01"), "Stock Balance report total value")
 	coverage = doctype_coverage(manifest["doctype_baseline_counts"], records)
 	result = {"status": "passed", "seed_version": SEED_VERSION, "company": COMPANY,
 		"record_count": len(records), "counts_by_doctype": dict(sorted(Counter(r["doctype"] for r in records.values()).items())),
@@ -680,6 +708,8 @@ def _verify(manifest, detailed_coverage=False):
 		"purchase_outstanding": str(doc("purchase_invoice").outstanding_amount),
 		"manufactured_qty": str(doc("work_order").produced_qty), "outbound_integrations": "inert",
 		"fixed_asset_book_value": str(asset_balance), "doctype_coverage_summary": coverage["summary"],
+		"reports": {"general_ledger": {"status": "passed", "rows": len(gl_rows), "bank_balance": str(bank_balance)},
+			"stock_balance": {"status": "passed", "rows": len(stock_rows), "inventory_value": str(stock_value)}},
 	}
 	if detailed_coverage:
 		result["doctype_coverage"] = coverage

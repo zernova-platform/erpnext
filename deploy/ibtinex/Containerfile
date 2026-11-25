@@ -149,10 +149,11 @@ RUN bench init \
 
 ARG ERP_COMMIT
 ARG CACHE_BUST
+COPY build/install_apps.py /opt/frappe/install_apps.py
 RUN --mount=type=secret,id=apps_json,target=/opt/frappe/apps.json,uid=1000,gid=0,required=true \
   : "${CACHE_BUST}" && \
   cd /home/frappe/frappe-bench && \
-  python3 -c 'from bench.app import install_apps_from_path; install_apps_from_path("/opt/frappe/apps.json", bench_path="/home/frappe/frappe-bench")' && \
+  python3 /opt/frappe/install_apps.py /opt/frappe/apps.json && \
   test "$(git -C apps/erpnext rev-parse HEAD)" = "$ERP_COMMIT" && \
   test "$(git -C apps/frappe rev-parse HEAD)" = "$FRAPPE_COMMIT" && \
   bench build --production && \

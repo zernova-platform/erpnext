@@ -59,12 +59,22 @@ try:
     summary['branding'] = apply_branding()
     if starter == 'ethiopia-demo':
         from erpnext.ibtinex_starter.seed import install
-        if not created and not frappe.conf.get('ibtinex_starter_demo'):
-            raise RuntimeError('Starter data can only initialize a newly created review site.')
-        for name in ('ibtinex_starter_demo', 'mute_emails', 'pause_scheduler'):
-            update_site_config(name, 1, site_config_path=str(config_path))
-            frappe.conf[name] = 1
-        summary['starter'] = install(expected_site=site, accept_sample_data=True)
+        from erpnext.ibtinex_starter.plan import COMPANY, MARKER_KEY, SEED_VERSION
+        from starter_state import completed_starter
+        present = completed_starter(frappe.db, marker_key=MARKER_KEY,
+                                    seed_version=SEED_VERSION, company=COMPANY)
+        if present:
+            # A normal start must preserve legitimate review activity and site
+            # settings. Strict fixture verification remains an explicit diagnostic.
+            summary['starter'] = present
+        else:
+            if not created and not frappe.conf.get('ibtinex_starter_demo'):
+                raise RuntimeError('Starter data can only initialize a newly created review site.')
+            if created:
+                for name in ('ibtinex_starter_demo', 'mute_emails', 'pause_scheduler'):
+                    update_site_config(name, 1, site_config_path=str(config_path))
+                    frappe.conf[name] = 1
+            summary['starter'] = install(expected_site=site, accept_sample_data=True)
     frappe.db.commit()
     print(json.dumps(summary, default=str, sort_keys=True))
 except Exception:
