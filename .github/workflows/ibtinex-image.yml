@@ -78,8 +78,6 @@ jobs:
             CACHE_BUST=${{ github.sha }}
           secret-files: |
             apps_json=${{ runner.temp }}/ibtinex-apps.json
-          cache-from: type=gha,scope=ibtinex-erp-v16
-          cache-to: type=gha,mode=max,scope=ibtinex-erp-v16
       - name: Exercise fresh site and starter data, then publish the tested image
         run: python3 deploy/ibtinex/ci.py verify-publish
       - name: Retain source and verification evidence

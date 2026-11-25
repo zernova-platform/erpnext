@@ -20,10 +20,14 @@ rollout or a full ERP/security acceptance program.
 | Local source before the first full build | 12 focused branding tests, 9 deployment guardrail tests and 9 starter contract/schema tests passed. Pinned Frappe source was used for schema validation. |
 | [Runner check](https://github.com/zernova-platform/erpnext/actions/runs/45670747551), commit `b43c0fa680cbfc55449408a2815c0239c5638978` | Passed; Docker Engine and Compose were actually available. |
 | [First full build](https://github.com/zernova-platform/erpnext/actions/runs/45673281372), commit `213ce0450a1f4d88eca3b78f0a3a9d3548d35a9c` | All 30 checks and dependency resolution passed. The image build failed before ERP application installation because a direct internal Bench API invocation bypassed the CLI logging setup. Runtime qualification and publication were skipped. |
+| [Second full build](https://github.com/zernova-platform/erpnext/actions/runs/45675363152), commit `ce0e11eb661a964e51b59de6dfedfcf03e8d811a` | All 35 checks passed. The supported Bench CLI, source/version assertions and image build succeeded. Docker image export/import completed at 18:35:54 UTC. Optional GitHub Actions cache export continued until the run was superseded at 18:53:13 UTC; runtime qualification and publication were skipped. |
 
-The initial build failure is corrected by invoking the supported Bench command
-through an argument list, while retaining the BuildKit source manifest and exact
-commit checks. A subsequent run must establish that the correction works.
+The second run proves the Bench CLI correction. Later source review also found
+an optional upstream asset-download path with no request timeout; the recipe now
+uses `bench build --production --force` to compile pinned source assets. This was
+a separate build reliability issue, not the observed cause of the second run's
+delay. Optional remote cache import/export is removed from review qualification
+so cache transfer cannot delay the runtime tests.
 
 ## Runtime results
 
