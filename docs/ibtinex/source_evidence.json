@@ -1,0 +1,545 @@
+{
+  "review_date": "2026-11-25",
+  "scope": "Referenced source files inspected by the review team; blob hashes verified against the local pinned clones. Runtime acceptance tests were not executed.",
+  "files": [
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": ".github/workflows/server-tests-mariadb.yml",
+      "blob": "9153f6a1b5f0a71e5f615f027f330f23a4af6e53",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/.github/workflows/server-tests-mariadb.yml"
+    },
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": "erpnext/accounts/doctype/account/chart_of_accounts/unverified/et_l10n_et.json",
+      "blob": "20b6f4c5f8512239ff81b493da6a867e6c0f32c2",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/erpnext/accounts/doctype/account/chart_of_accounts/unverified/et_l10n_et.json"
+    },
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": "erpnext/accounts/doctype/sales_invoice/sales_invoice.json",
+      "blob": "c7f7fa7eb8b63a09a563f9581c261b0483156410",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/erpnext/accounts/doctype/sales_invoice/sales_invoice.json"
+    },
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": "erpnext/accounts/report/general_ledger/general_ledger.json",
+      "blob": "9694a82f22b3428ee8181add81dd7f1cad546c9c",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/erpnext/accounts/report/general_ledger/general_ledger.json"
+    },
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": "erpnext/accounts/report/general_ledger/general_ledger.py",
+      "blob": "e42a467e11db6f538c82af9ca595bdd5e986e78d",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/erpnext/accounts/report/general_ledger/general_ledger.py"
+    },
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": "erpnext/desktop_icon/erpnext.json",
+      "blob": "b020ba1b615b2a496f6ac23b736affcf9cebea87",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/erpnext/desktop_icon/erpnext.json"
+    },
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": "erpnext/dock/erpnext/erpnext.json",
+      "blob": "0f7d1dacc2ee6ac7449f25837032e92306ced7ff",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/erpnext/dock/erpnext/erpnext.json"
+    },
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": "erpnext/hooks.py",
+      "blob": "6a9b797575829d7fc877209d7773cb077dcb3eb1",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/erpnext/hooks.py"
+    },
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": "erpnext/modules.txt",
+      "blob": "b8b12e90fb081429822839977f12fa318a43d244",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/erpnext/modules.txt"
+    },
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": "erpnext/public/js/help_links.js",
+      "blob": "00d2134ee42bf52a7935de318e9a03884c555ce5",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/erpnext/public/js/help_links.js"
+    },
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": "erpnext/report_center/accounting.json",
+      "blob": "a365141b516375688d21deb668ba460b39f2e40b",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/erpnext/report_center/accounting.json"
+    },
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": "erpnext/setup/install.py",
+      "blob": "85f3803e3380e28f7c1f2baf0a953e702c50a273",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/erpnext/setup/install.py"
+    },
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": "erpnext/setup/setup_wizard/data/country_wise_tax.json",
+      "blob": "469b5c7baed093592c8c00b1d6b1e7c95313fd19",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/erpnext/setup/setup_wizard/data/country_wise_tax.json"
+    },
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": "erpnext/www/banking.py",
+      "blob": "663757a972a520db24972c24dac3074115b425cf",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/erpnext/www/banking.py"
+    },
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": "license.txt",
+      "blob": "f288702d2fa16d3cdf0035b15a9fcbc552cd88e7",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/license.txt"
+    },
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": "package.json",
+      "blob": "126053b09b31f7bb1db4bdafa31976fc8b4ba58a",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/package.json"
+    },
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "path": "pyproject.toml",
+      "blob": "29ce9ab17302f984ebeee003c98220ebff3ad190",
+      "url": "https://github.com/frappe/erpnext/blob/886ab6ae187244e7f1b852393384ab6019d56264/pyproject.toml"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "LICENSE",
+      "blob": "6919960f8ba9c6ea72a8a0b07d6e98b4b46c7531",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/LICENSE"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "flow/README.md",
+      "blob": "ab958774a6ee11ada2cdffc594956e2a61a2c902",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/flow/README.md"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/api/__init__.py",
+      "blob": "1b7921cbee95937dd70bffd1270bc0d47290730c",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/api/__init__.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/api/v1.py",
+      "blob": "2ee549e43ea92df55c460890be33c4c8e9aacf3c",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/api/v1.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/apps.py",
+      "blob": "b9b1c56141a6a8e5df46294f48e71ce2231983ef",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/apps.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/auth.py",
+      "blob": "d8735ebffcfccf2b8d20796a853f40ac0da21a17",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/auth.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/boot.py",
+      "blob": "9a4ee036718f14701086f68f42c4a28c1b0f5935",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/boot.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/commands/site.py",
+      "blob": "1a10b559e5e374c6e615e2d6447302427a81f6e7",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/commands/site.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/core/doctype/file/file.py",
+      "blob": "8e18e3ac8f8e9446a5da9e31058597de7e8b78f9",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/core/doctype/file/file.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/core/doctype/navbar_settings/navbar_settings.py",
+      "blob": "d41a3b73ad1963c24b3c6b4a2aa0abc0756c167a",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/core/doctype/navbar_settings/navbar_settings.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/core/doctype/system_settings/system_settings.json",
+      "blob": "1e0f90e7dadf2158ed62a44e80781eec94a8777e",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/core/doctype/system_settings/system_settings.json"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/desk/doctype/workspace/workspace.py",
+      "blob": "318ad7bb06f1b16183d790ff0f64eb69add0eedf",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/desk/doctype/workspace/workspace.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/desk/page/desktop/desktop.py",
+      "blob": "8db8334ab086ba703434cb9cba97f4f8edf29a2f",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/desk/page/desktop/desktop.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/flow/permissions.py",
+      "blob": "067201a29376dd47964d3c619debaa1bb7570bea",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/flow/permissions.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/handler.py",
+      "blob": "8a7d37fb08270fdf6bc80865c9f7a82a893823ca",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/handler.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/integrations/doctype/social_login_key/social_login_key.json",
+      "blob": "6d8cc9443904c0d80586cc4eac45ed354caef177",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/integrations/doctype/social_login_key/social_login_key.json"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/integrations/doctype/social_login_key/social_login_key.py",
+      "blob": "f98b35f64ee251a956c9e8757b319041c4a4d403",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/integrations/doctype/social_login_key/social_login_key.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/integrations/doctype/social_login_key/test_social_login_key.py",
+      "blob": "ec05ee31fdc29d7bde9d0d0d1de82cdf5d54dcd1",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/integrations/doctype/social_login_key/test_social_login_key.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/integrations/doctype/webhook/webhook.py",
+      "blob": "d604301ea105c2c9b67fe0364c9ef72a23043e9f",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/integrations/doctype/webhook/webhook.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/integrations/oauth2_logins.py",
+      "blob": "e4549c8ec65372a889842b013bb302e4582ebe53",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/integrations/oauth2_logins.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/modules.txt",
+      "blob": "9771d9b3247414dc95bb280f59a0cc4f6a4443f1",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/modules.txt"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/public/js/frappe/utils/utils.js",
+      "blob": "07abd9ea39da7d0f4c061f1657557d6c90009ea7",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/public/js/frappe/utils/utils.js"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/studio/api.py",
+      "blob": "e3b73ef09ed8d418ec25aa4f3c0ef8d4c3f8d44d",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/studio/api.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/utils/background_jobs.py",
+      "blob": "0fe2d769b2fda9af7ff054e91c3dfc26c06bd75b",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/utils/background_jobs.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/utils/backups.py",
+      "blob": "5967c74ee69c403d8a1373dec5c66760df10faee",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/utils/backups.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/utils/change_log.py",
+      "blob": "202b4785ecba047bdbe56479df57084d0ddf18e1",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/utils/change_log.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/utils/oauth.py",
+      "blob": "4f36e27db94914ec4faef93f390b3ef65636cdf6",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/utils/oauth.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/website/doctype/website_settings/website_settings.json",
+      "blob": "276bf38411bc11236463cd2ec63e719dfea53c73",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/website/doctype/website_settings/website_settings.json"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/website/doctype/website_settings/website_settings.py",
+      "blob": "f9dac2c7a7c4251c75b8f7d90e08e9a7331d56e8",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/website/doctype/website_settings/website_settings.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/www/desk.html",
+      "blob": "52cf1f0ecacdf10691dbef2977813db8d4b96f94",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/www/desk.html"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/www/desk.py",
+      "blob": "62d7003fb9526a5e65e795a4e6b4cabf87aa6f8a",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/www/desk.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "frappe/www/login.py",
+      "blob": "dedf6e21e3ee8dd4a7f8bddf417f111e8b1b9551",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/frappe/www/login.py"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "package.json",
+      "blob": "05f7ac4c828e684dd4e36109229333d7434ef897",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/package.json"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "pyproject.toml",
+      "blob": "35813b2836dc7cb40b20b2ed805a71efb1961544",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/pyproject.toml"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "studio/AGENTS.md",
+      "blob": "abff91d65e8085957605f254aa20bac35eec7db6",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/studio/AGENTS.md"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "studio/frontend/README.md",
+      "blob": "d9a4fd86d8da23757d954fb868a1457311b76108",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/studio/frontend/README.md"
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "path": "ui/README.md",
+      "blob": "608953887a44ab1fccc5975b4b910f113ae5e591",
+      "url": "https://github.com/frappe/frappe/blob/2df0425571ebbaed878eabc3edc5b7e7c3327ae0/ui/README.md"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": ".github/workflows/app-build-image.yml",
+      "blob": "4be4b8be490d4079e0dc1d2bdf93dd640d0824d1",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/.github/workflows/app-build-image.yml"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "LICENSE",
+      "blob": "c4e7b3dc6f56a3ca6718b9c00abecc073a7cf57a",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/LICENSE"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "compose.yaml",
+      "blob": "431e450a057cad57bd81f041e72367e7034bfc25",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/compose.yaml"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "docs/01-getting-started/01-choosing-a-deployment-method.md",
+      "blob": "29a160f9db7a1bccea2bac207e6a57d716b8dfca",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/docs/01-getting-started/01-choosing-a-deployment-method.md"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "docs/02-setup/02-build-setup.md",
+      "blob": "a9d55476d0ef4938895f63287314485a35f445db",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/docs/02-setup/02-build-setup.md"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "docs/04-operations/01-site-operations.md",
+      "blob": "8350292e2be77531da6acfc13fb658bad207decd",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/docs/04-operations/01-site-operations.md"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "docs/11-how-to/04-create-backups.md",
+      "blob": "f254a159a0907add7870313d17b060a5fd02d013",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/docs/11-how-to/04-create-backups.md"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "docs/11-how-to/06-control-source-refreshes-in-ci-builds.md",
+      "blob": "4a6623139b3a50f3f3cbf5225937a93e44e3b7aa",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/docs/11-how-to/06-control-source-refreshes-in-ci-builds.md"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "docs/11-how-to/08-fork-management.md",
+      "blob": "c421550677d97f70049d8992017f3c7beba8b92e",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/docs/11-how-to/08-fork-management.md"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "docs/11-how-to/11-automate-site-migrations.md",
+      "blob": "759f8ac29d85eb1e10cc45ff83899edb3dd8b29d",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/docs/11-how-to/11-automate-site-migrations.md"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "docs/12-reference/05-site-migration-service.md",
+      "blob": "90e60586d261b8ae7b6704ee2b7956a2f18c245f",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/docs/12-reference/05-site-migration-service.md"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "docs/13-explanation/01-container-immutability.md",
+      "blob": "0c5c791d99072811efad01051814dccfa7034d2b",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/docs/13-explanation/01-container-immutability.md"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "images/custom/Containerfile",
+      "blob": "b6fb90db7af45a7d5fc34674a3f6adc3632cebc0",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/images/custom/Containerfile"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "images/layered/Containerfile",
+      "blob": "cefcbe46d9e91e71075990f4af919a4e456b4f10",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/images/layered/Containerfile"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "overrides/compose.https.yaml",
+      "blob": "6d9cfae067e2d63d5545d1a1a633471b1e88bf32",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/overrides/compose.https.yaml"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "overrides/compose.mariadb-secrets.yaml",
+      "blob": "2e90446319699749b0685a1592171db877cc5a1d",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/overrides/compose.mariadb-secrets.yaml"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "overrides/compose.mariadb.yaml",
+      "blob": "472c6e85031a868bb48be224c55c8280931f5851",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/overrides/compose.mariadb.yaml"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "overrides/compose.migrator.yaml",
+      "blob": "8a96107faae3ff65d2ecbe8b3c23e8b9fd803ff5",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/overrides/compose.migrator.yaml"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "overrides/compose.redis.yaml",
+      "blob": "64bc05ac2e955719822718e5118a62d0c9771e24",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/overrides/compose.redis.yaml"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "overrides/compose.traefik.yaml",
+      "blob": "c5327f23b13b6c90b3fb94060390f8ef3c7e6351",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/overrides/compose.traefik.yaml"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "pwd.yml",
+      "blob": "cf492ed7034a7a402d8de8202afd218f1ea60b68",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/pwd.yml"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "resources/core/main-entrypoint.sh",
+      "blob": "d2ac6f979838d9ae14559311933d109fc81c28ba",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/resources/core/main-entrypoint.sh"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "path": "resources/core/nginx/nginx-template.conf",
+      "blob": "0634d8c4bedf195b83b0cb9374fe7cb083fe2491",
+      "url": "https://github.com/frappe/frappe_docker/blob/cf568a829790ef658d232daa75457dadf4e1ecc9/resources/core/nginx/nginx-template.conf"
+    }
+  ]
+}

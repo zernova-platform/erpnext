@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "status": "planning_only",
+  "review_date": "2026-11-25",
+  "product_display_name": "IBTINEX ERP",
+  "fork_repository": "https://github.com/zernova-platform/erpnext",
+  "planning_branch": "ibtinex/rebrand-plan-v16.60.0",
+  "proposed_distribution_version": "0.1.0-rc.1",
+  "product_image_created": false,
+  "customer_rollout_performed": false,
+  "observed_runtime": {
+    "evidence": "live Installed Applications UI",
+    "erpnext": "16.60.0",
+    "frappe": "16.60.2",
+    "git_branch_display": "UNVERSIONED",
+    "image_digest": null,
+    "source_provenance_verified": false
+  },
+  "source_inputs": [
+    {
+      "repository": "frappe/erpnext",
+      "tag": "v16.60.0",
+      "commit": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "role": "first_branding_baseline"
+    },
+    {
+      "repository": "frappe/frappe",
+      "tag": "v16.60.2",
+      "commit": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "role": "first_branding_baseline"
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "tag": null,
+      "commit": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "role": "reviewed_build_reference"
+    }
+  ],
+  "required_inputs_before_build": [
+    "approved IBTINEX artwork and style tokens",
+    "resolved dependency and base-image pins",
+    "verified host inventory and runtime image provenance",
+    "implementation source commits",
+    "qualified build runner and publishing pipeline"
+  ],
+  "scope": {
+    "complete_source_inventories": true,
+    "representative_deeper_source_reads": true,
+    "all_lines_audited": false,
+    "application_code_modified": false,
+    "business_workflows_executed": false,
+    "authentication_tests_executed": false,
+    "image_built": false,
+    "deployment_executed": false
+  },
+  "release_selection": {
+    "preserve_upstream_application_ids": true,
+    "branding_companion_app": "ibtinex_branding",
+    "small_erp_owned_metadata_patch": true,
+    "optional_apps_selected": [],
+    "future_upstream_upgrade_separate": true
+  }
+}

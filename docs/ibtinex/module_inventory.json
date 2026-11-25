@@ -1,0 +1,498 @@
+{
+  "schema_version": 1,
+  "scope": "Complete tracked source inventory; counts are structural, not runtime proof. DocType counts include child tables.",
+  "repositories": [
+    {
+      "repository": "frappe/erpnext",
+      "revision": "886ab6ae187244e7f1b852393384ab6019d56264",
+      "tracked_files": 5774,
+      "module_count": 21,
+      "modules": [
+        {
+          "module": "Accounts",
+          "source_directory": "erpnext/accounts",
+          "tracked_files": 1441,
+          "doctype_schemas": 191,
+          "report_schemas": 57,
+          "workspace_schemas": 4,
+          "python_test_files": 158
+        },
+        {
+          "module": "CRM",
+          "source_directory": "erpnext/crm",
+          "tracked_files": 198,
+          "doctype_schemas": 28,
+          "report_schemas": 9,
+          "workspace_schemas": 1,
+          "python_test_files": 23
+        },
+        {
+          "module": "Buying",
+          "source_directory": "erpnext/buying",
+          "tracked_files": 221,
+          "doctype_schemas": 20,
+          "report_schemas": 10,
+          "workspace_schemas": 1,
+          "python_test_files": 21
+        },
+        {
+          "module": "Projects",
+          "source_directory": "erpnext/projects",
+          "tracked_files": 157,
+          "doctype_schemas": 15,
+          "report_schemas": 5,
+          "workspace_schemas": 1,
+          "python_test_files": 17
+        },
+        {
+          "module": "Selling",
+          "source_directory": "erpnext/selling",
+          "tracked_files": 317,
+          "doctype_schemas": 20,
+          "report_schemas": 23,
+          "workspace_schemas": 1,
+          "python_test_files": 39
+        },
+        {
+          "module": "Setup",
+          "source_directory": "erpnext/setup",
+          "tracked_files": 268,
+          "doctype_schemas": 40,
+          "report_schemas": 0,
+          "workspace_schemas": 2,
+          "python_test_files": 28
+        },
+        {
+          "module": "Manufacturing",
+          "source_directory": "erpnext/manufacturing",
+          "tracked_files": 396,
+          "doctype_schemas": 50,
+          "report_schemas": 21,
+          "workspace_schemas": 1,
+          "python_test_files": 44
+        },
+        {
+          "module": "Stock",
+          "source_directory": "erpnext/stock",
+          "tracked_files": 766,
+          "doctype_schemas": 76,
+          "report_schemas": 52,
+          "workspace_schemas": 1,
+          "python_test_files": 105
+        },
+        {
+          "module": "Support",
+          "source_directory": "erpnext/support",
+          "tracked_files": 90,
+          "doctype_schemas": 11,
+          "report_schemas": 4,
+          "workspace_schemas": 1,
+          "python_test_files": 10
+        },
+        {
+          "module": "Utilities",
+          "source_directory": "erpnext/utilities",
+          "tracked_files": 44,
+          "doctype_schemas": 4,
+          "report_schemas": 1,
+          "workspace_schemas": 0,
+          "python_test_files": 5
+        },
+        {
+          "module": "Assets",
+          "source_directory": "erpnext/assets",
+          "tracked_files": 153,
+          "doctype_schemas": 26,
+          "report_schemas": 3,
+          "workspace_schemas": 1,
+          "python_test_files": 17
+        },
+        {
+          "module": "Portal",
+          "source_directory": "erpnext/portal",
+          "tracked_files": 10,
+          "doctype_schemas": 2,
+          "report_schemas": 0,
+          "workspace_schemas": 0,
+          "python_test_files": 0
+        },
+        {
+          "module": "Maintenance",
+          "source_directory": "erpnext/maintenance",
+          "tracked_files": 30,
+          "doctype_schemas": 5,
+          "report_schemas": 1,
+          "workspace_schemas": 0,
+          "python_test_files": 2
+        },
+        {
+          "module": "Regional",
+          "source_directory": "erpnext/regional",
+          "tracked_files": 87,
+          "doctype_schemas": 5,
+          "report_schemas": 4,
+          "workspace_schemas": 0,
+          "python_test_files": 11
+        },
+        {
+          "module": "ERPNext Integrations",
+          "source_directory": "erpnext/erpnext_integrations",
+          "tracked_files": 9,
+          "doctype_schemas": 1,
+          "report_schemas": 0,
+          "workspace_schemas": 0,
+          "python_test_files": 1
+        },
+        {
+          "module": "Quality Management",
+          "source_directory": "erpnext/quality_management",
+          "tracked_files": 90,
+          "doctype_schemas": 16,
+          "report_schemas": 1,
+          "workspace_schemas": 1,
+          "python_test_files": 10
+        },
+        {
+          "module": "Communication",
+          "source_directory": "erpnext/communication",
+          "tracked_files": 9,
+          "doctype_schemas": 2,
+          "report_schemas": 0,
+          "workspace_schemas": 0,
+          "python_test_files": 1
+        },
+        {
+          "module": "Telephony",
+          "source_directory": "erpnext/telephony",
+          "tracked_files": 25,
+          "doctype_schemas": 5,
+          "report_schemas": 0,
+          "workspace_schemas": 0,
+          "python_test_files": 4
+        },
+        {
+          "module": "Bulk Transaction",
+          "source_directory": "erpnext/bulk_transaction",
+          "tracked_files": 12,
+          "doctype_schemas": 2,
+          "report_schemas": 0,
+          "workspace_schemas": 0,
+          "python_test_files": 2
+        },
+        {
+          "module": "Subcontracting",
+          "source_directory": "erpnext/subcontracting",
+          "tracked_files": 78,
+          "doctype_schemas": 13,
+          "report_schemas": 3,
+          "workspace_schemas": 0,
+          "python_test_files": 7
+        },
+        {
+          "module": "EDI",
+          "source_directory": "erpnext/edi",
+          "tracked_files": 17,
+          "doctype_schemas": 2,
+          "report_schemas": 0,
+          "workspace_schemas": 0,
+          "python_test_files": 3
+        }
+      ],
+      "top_level_file_counts": {
+        ".coderabbit.yml": 1,
+        ".editorconfig": 1,
+        ".eslintrc": 1,
+        ".flake8": 1,
+        ".git-blame-ignore-revs": 1,
+        ".github": 40,
+        ".gitignore": 1,
+        ".greptile": 1,
+        ".mergify.yml": 1,
+        ".pre-commit-config.yaml": 1,
+        ".releaserc": 1,
+        ".semgrepignore": 1,
+        "CODEOWNERS": 1,
+        "CODE_OF_CONDUCT.md": 1,
+        "README.md": 1,
+        "SECURITY.md": 1,
+        "TRADEMARK_POLICY.md": 1,
+        "attributions.md": 1,
+        "babel_extractors.csv": 1,
+        "banking": 153,
+        "codecov.yml": 1,
+        "commitlint.config.js": 1,
+        "crowdin.yml": 1,
+        "erpnext": 5514,
+        "islands": 38,
+        "license.txt": 1,
+        "package.json": 1,
+        "pyproject.toml": 1,
+        "semgrep": 1,
+        "sider.yml": 1,
+        "sponsors.md": 1,
+        "transaction-deletion-import-logic-summary.md": 1,
+        "yarn.lock": 1
+      },
+      "schema_counts": {
+        "doctype_schemas": 534,
+        "report_schemas": 194,
+        "workspace_schemas": 15,
+        "python_test_files": 550
+      },
+      "schema_json_parsed": 743
+    },
+    {
+      "repository": "frappe/frappe",
+      "revision": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+      "tracked_files": 5761,
+      "module_count": 17,
+      "modules": [
+        {
+          "module": "Core",
+          "source_directory": "frappe/core",
+          "tracked_files": 607,
+          "doctype_schemas": 106,
+          "report_schemas": 5,
+          "workspace_schemas": 0,
+          "python_test_files": 73
+        },
+        {
+          "module": "Website",
+          "source_directory": "frappe/website",
+          "tracked_files": 310,
+          "doctype_schemas": 39,
+          "report_schemas": 1,
+          "workspace_schemas": 1,
+          "python_test_files": 25
+        },
+        {
+          "module": "Workflow",
+          "source_directory": "frappe/workflow",
+          "tracked_files": 52,
+          "doctype_schemas": 9,
+          "report_schemas": 0,
+          "workspace_schemas": 0,
+          "python_test_files": 5
+        },
+        {
+          "module": "Email",
+          "source_directory": "frappe/email",
+          "tracked_files": 116,
+          "doctype_schemas": 17,
+          "report_schemas": 0,
+          "workspace_schemas": 1,
+          "python_test_files": 16
+        },
+        {
+          "module": "Custom",
+          "source_directory": "frappe/custom",
+          "tracked_files": 50,
+          "doctype_schemas": 7,
+          "report_schemas": 1,
+          "workspace_schemas": 0,
+          "python_test_files": 6
+        },
+        {
+          "module": "Geo",
+          "source_directory": "frappe/geo",
+          "tracked_files": 20,
+          "doctype_schemas": 2,
+          "report_schemas": 0,
+          "workspace_schemas": 0,
+          "python_test_files": 2
+        },
+        {
+          "module": "Desk",
+          "source_directory": "frappe/desk",
+          "tracked_files": 382,
+          "doctype_schemas": 67,
+          "report_schemas": 1,
+          "workspace_schemas": 0,
+          "python_test_files": 44
+        },
+        {
+          "module": "Integrations",
+          "source_directory": "frappe/integrations",
+          "tracked_files": 142,
+          "doctype_schemas": 24,
+          "report_schemas": 0,
+          "workspace_schemas": 1,
+          "python_test_files": 19
+        },
+        {
+          "module": "Printing",
+          "source_directory": "frappe/printing",
+          "tracked_files": 87,
+          "doctype_schemas": 8,
+          "report_schemas": 0,
+          "workspace_schemas": 1,
+          "python_test_files": 8
+        },
+        {
+          "module": "Contacts",
+          "source_directory": "frappe/contacts",
+          "tracked_files": 46,
+          "doctype_schemas": 7,
+          "report_schemas": 1,
+          "workspace_schemas": 0,
+          "python_test_files": 7
+        },
+        {
+          "module": "Automation",
+          "source_directory": "frappe/automation",
+          "tracked_files": 71,
+          "doctype_schemas": 16,
+          "report_schemas": 0,
+          "workspace_schemas": 1,
+          "python_test_files": 8
+        },
+        {
+          "module": "System",
+          "source_directory": "frappe/system",
+          "tracked_files": 3,
+          "doctype_schemas": 0,
+          "report_schemas": 0,
+          "workspace_schemas": 1,
+          "python_test_files": 0
+        },
+        {
+          "module": "Build",
+          "source_directory": "frappe/build",
+          "tracked_files": 4,
+          "doctype_schemas": 0,
+          "report_schemas": 0,
+          "workspace_schemas": 1,
+          "python_test_files": 0
+        },
+        {
+          "module": "Data",
+          "source_directory": "frappe/data",
+          "tracked_files": 3,
+          "doctype_schemas": 0,
+          "report_schemas": 0,
+          "workspace_schemas": 0,
+          "python_test_files": 0
+        },
+        {
+          "module": "Users",
+          "source_directory": "frappe/users",
+          "tracked_files": 3,
+          "doctype_schemas": 0,
+          "report_schemas": 0,
+          "workspace_schemas": 1,
+          "python_test_files": 0
+        },
+        {
+          "module": "Studio",
+          "source_directory": "frappe/studio",
+          "tracked_files": 122,
+          "doctype_schemas": 10,
+          "report_schemas": 0,
+          "workspace_schemas": 0,
+          "python_test_files": 16
+        },
+        {
+          "module": "Flow",
+          "source_directory": "frappe/flow",
+          "tracked_files": 150,
+          "doctype_schemas": 20,
+          "report_schemas": 0,
+          "workspace_schemas": 1,
+          "python_test_files": 32
+        }
+      ],
+      "top_level_file_counts": {
+        ".editorconfig": 1,
+        ".eslintignore": 1,
+        ".eslintrc": 1,
+        ".git-blame-ignore-revs": 1,
+        ".github": 43,
+        ".gitignore": 1,
+        ".greptile": 1,
+        ".guard": 3,
+        ".mergify.yml": 1,
+        ".pre-commit-config.yaml": 1,
+        ".releaserc": 1,
+        ".semgrepignore": 1,
+        "CODEOWNERS": 1,
+        "CODE_OF_CONDUCT.md": 1,
+        "LICENSE": 1,
+        "README.md": 1,
+        "SECURITY.md": 1,
+        "attributions.md": 1,
+        "babel_extractors.csv": 1,
+        "codecov.yml": 1,
+        "commitlint.config.js": 1,
+        "crowdin.yml": 1,
+        "cypress": 4,
+        "esbuild": 11,
+        "flow": 360,
+        "frappe": 4275,
+        "generate_bootstrap_theme.js": 1,
+        "hooks.md": 1,
+        "island-toolchain": 2,
+        "jsconfig.json": 1,
+        "node_utils.js": 1,
+        "package.json": 1,
+        "playwright": 159,
+        "playwright.config.js": 1,
+        "pyproject.toml": 1,
+        "realtime": 5,
+        "sider.yml": 1,
+        "skills": 5,
+        "socketio.js": 1,
+        "studio": 399,
+        "ui": 465,
+        "yarn.lock": 1
+      },
+      "schema_counts": {
+        "doctype_schemas": 332,
+        "report_schemas": 9,
+        "workspace_schemas": 9,
+        "python_test_files": 460
+      },
+      "schema_json_parsed": 350
+    },
+    {
+      "repository": "frappe/frappe_docker",
+      "revision": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+      "tracked_files": 170,
+      "module_count": 0,
+      "modules": [],
+      "top_level_file_counts": {
+        ".dockerignore": 1,
+        ".editorconfig": 1,
+        ".gitattributes": 1,
+        ".github": 27,
+        ".gitignore": 1,
+        ".hadolint.yaml": 1,
+        ".pre-commit-config.yaml": 1,
+        ".shellcheckrc": 1,
+        ".vscode": 1,
+        "CODE_OF_CONDUCT.md": 1,
+        "CONTRIBUTING.md": 1,
+        "LICENSE": 1,
+        "MAINTAINERS.md": 1,
+        "README.md": 1,
+        "compose.yaml": 1,
+        "devcontainer-example": 2,
+        "development": 5,
+        "docker-bake.hcl": 1,
+        "docs": 75,
+        "example.env": 1,
+        "images": 4,
+        "install_x11_deps.sh": 1,
+        "overrides": 21,
+        "pwd.yml": 1,
+        "requirements-test.txt": 1,
+        "resources": 5,
+        "setup.cfg": 1,
+        "tests": 11
+      },
+      "schema_counts": {
+        "python_test_files": 4
+      },
+      "schema_json_parsed": 0
+    }
+  ]
+}
