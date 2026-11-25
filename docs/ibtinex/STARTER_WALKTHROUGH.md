@@ -41,8 +41,10 @@ every feature variant or every technical table has a synthetic record.
 
 The packaged qualification command checks native versions, linked documents,
 stock quantities, posted ledger balance, settled invoice balances, and the
-absence of outbound integrations. Repeating the installer verifies the existing
-starter instead of recreating its records.
+absence of outbound integrations. A normal start recognizes a completed starter
+and preserves the records and settings you have changed while exploring. The
+strict baseline diagnostic is available separately; it deliberately reports
+differences after you change the original sample balances.
 
 The image build also tests a separate blank site, rejection of missing consent
 and the wrong site name, serving the icon assets, and execution of a real queued

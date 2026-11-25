@@ -109,6 +109,17 @@ def qualify(directory, site, mode):
     write_json(EVIDENCE / f'{mode}-verification.json', payload)
     return payload
 
+def assert_ready_desk(html, final_url):
+    # Frappe 16.60.2 routes /desk to www/desk.py and embeds a JSON object
+    # directly in `frappe.boot = ...` (www/desk.html). Never evaluate page JS.
+    assert urllib.parse.urlsplit(final_url).path.rstrip('/') == '/desk', 'Desk redirected away from its native route.'
+    match = re.search(r'frappe\.boot\s*=\s*', html)
+    assert match, 'The authenticated Desk did not return its native boot payload.'
+    boot, _ = json.JSONDecoder().raw_decode(html[match.end():])
+    assert boot.get('sysdefaults', {}).get('setup_complete') in (1, True), 'Desk still requires setup.'
+    assert not boot.get('setup_wizard_url'), 'Desk boot still advertises a setup-wizard redirect.'
+    return {'native_route': '/desk', 'setup_complete': True, 'setup_wizard_redirect': False}
+
 def http_checks(port, admin_password):
     base = f'http://127.0.0.1:{port}'
     result = {}
@@ -138,6 +149,8 @@ def http_checks(port, admin_password):
         companies = json.load(response)['data']
     assert any(row['name'] == 'IBTINEX Starter Ethiopia' for row in companies)
     result['authenticated_native_company_api'] = True
+    with opener.open(f'{base}/desk', timeout=60) as response:
+        result['authenticated_desk_boot'] = assert_ready_desk(response.read().decode(), response.geturl())
     with opener.open(f'{base}/socket.io/?EIO=4&transport=polling', timeout=30) as response:
         assert response.read().startswith(b'0{'), 'Realtime handshake did not succeed.'
     result['engine_io_handshake'] = True
@@ -221,7 +234,8 @@ def verify_publish():
                     'customer_release_qualified': False,
                     'verification': ['fresh_empty_site', 'explicit_starter_install', 'native_business_assertions',
                                      'seed_idempotence', 'opt_in_and_site_guards', 'worker_execution',
-                                     'http_icons_login_api', 'realtime_handshake', 'container_recreation',
+                                     'http_icons_login_api', 'authenticated_desk_setup_complete',
+                                     'realtime_handshake', 'container_recreation',
                                      'normal_restart_preserves_review_activity'],
                     'images': {'app': None, 'mariadb': inputs['mariadb_image'], 'redis': inputs['redis_image']}}
         if os.environ.get('IBTINEX_PUBLISH', 'false').lower() == 'true':

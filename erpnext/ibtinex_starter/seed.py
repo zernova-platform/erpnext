@@ -180,6 +180,22 @@ class Starter:
 		self.projects_assets()
 		self.quality_support()
 		self.portal_and_integrations()
+		self.finish_setup()
+
+	def finish_setup(self):
+		from frappe.desk.page.setup_wizard.setup_wizard import enable_setup_wizard_complete
+		apps = {"frappe", "erpnext"}
+		if set(frappe.get_all("Installed Application", filters={"app_name": ["in", sorted(apps)]},
+			pluck="app_name")) != apps:
+			raise ValueError("Installed Application records for the pinned apps are missing.")
+		for app_name in sorted(apps):
+			enable_setup_wizard_complete(app_name)
+		# Native is_setup_complete() is request-cached and reads Installed
+		# Application, not System Settings. This clears that stale request result.
+		frappe.clear_cache(doctype="Installed Application")
+		if not frappe.is_setup_complete():
+			raise ValueError("Native setup completion did not accept the finished starter.")
+		frappe.db.set_single_value("System Settings", "setup_complete", 1)
 
 	def setup(self):
 		from erpnext.setup.setup_wizard.operations import install_fixtures
@@ -269,7 +285,7 @@ class Starter:
 		})
 		frappe.db.set_single_value("System Settings", {
 			"country": COUNTRY, "language": "en", "time_zone": "Africa/Addis_Ababa", "currency": CURRENCY,
-			"enable_telemetry": 0, "enable_scheduler": 0, "setup_complete": 1,
+			"enable_telemetry": 0, "enable_scheduler": 0,
 		})
 
 	def masters(self):
@@ -318,6 +334,7 @@ class Starter:
 			warehouse = self.name("finished_warehouse" if key == "finished_item" else "raw_warehouse")
 			self.put(key, "Item", {"item_code": code, "item_name": label, "item_group": group,
 				"brand": self.name("brand"),
+				"is_sub_contracted_item": int(key == "finished_item"),
 				"stock_uom": "Nos", "is_stock_item": stock, "is_purchase_item": 1, "is_sales_item": 1,
 				"description": "SYNTHETIC IBTINEX training product. No commercial inventory.",
 				"item_defaults": [{"company": COMPANY, "default_warehouse": warehouse,
@@ -491,9 +508,10 @@ class Starter:
 		}, submit=True)
 		sco = make_subcontracting_order(order.name)
 		sco.supplier_warehouse = self.name("supplier_warehouse")
+		# Native validation creates supplied_items after mapping. Set the parent
+		# default so those new rows point at the warehouse holding the materials.
+		sco.set_reserve_warehouse = self.name("raw_warehouse")
 		sco.transaction_date = self.day
-		for row in sco.supplied_items:
-			row.reserve_warehouse = self.name("raw_warehouse")
 		self.save("subcontracting_order", sco, submit=True)
 
 	def projects_assets(self):
@@ -638,6 +656,7 @@ def _verify(manifest, detailed_coverage=False):
 			require(current.company == COMPANY, f"wrong company: {key}")
 	require(set(MODULE_COVERAGE) == {row["module"] for row in manifest["coverage"]}, "module coverage mismatch")
 	coverage_manifest(records)
+	require(frappe.is_setup_complete(), "native setup wizard is still incomplete")
 	require(doc("company").default_currency == CURRENCY and doc("company").country == COUNTRY, "company locale changed")
 	for key in ("quotation", "sales_order", "sales_invoice"):
 		require(Decimal(str(doc(key).grand_total)) == Decimal("8280"), f"unexpected total: {key}")
@@ -672,6 +691,12 @@ def _verify(manifest, detailed_coverage=False):
 	require(not frappe.db.get_single_value("Plaid Settings", "enabled"), "Plaid enabled")
 	require(doc("communication_medium").disabled == 1, "synthetic voice medium enabled")
 	require(doc("subcontracting_order").purchase_order == doc("subcontracting_purchase_order").name, "subcontract link")
+	require(doc("finished_item").is_sub_contracted_item == 1, "finished item is not eligible for subcontracting")
+	supplied = doc("subcontracting_order").supplied_items
+	require({row.rm_item_code for row in supplied} == {doc("raw_item").name, doc("hardware_item").name},
+		"subcontract raw-material requirements")
+	require(all(row.reserve_warehouse == doc("raw_warehouse").name and Decimal(str(row.required_qty)) == 2
+		for row in supplied), "subcontract raw-material warehouse or quantity")
 	# Exercise the reports users actually open, in addition to checking raw ledgers.
 	from erpnext.accounts.report.general_ledger.general_ledger import execute as general_ledger
 	from erpnext.stock.report.stock_balance.stock_balance import execute as stock_balance
@@ -702,6 +727,7 @@ def _verify(manifest, detailed_coverage=False):
 	require(abs(stock_value - Decimal("72000")) < Decimal("0.01"), "Stock Balance report total value")
 	coverage = doctype_coverage(manifest["doctype_baseline_counts"], records)
 	result = {"status": "passed", "seed_version": SEED_VERSION, "company": COMPANY,
+		"native_setup_complete": True,
 		"record_count": len(records), "counts_by_doctype": dict(sorted(Counter(r["doctype"] for r in records.values()).items())),
 		"module_count": len(manifest["coverage"]), "gl_entry_count": len(ledger), "gl_imbalance": str(imbalance),
 		"sales_outstanding": str(doc("sales_invoice").outstanding_amount),
