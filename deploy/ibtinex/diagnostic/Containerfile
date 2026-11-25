@@ -1,0 +1,33 @@
+# syntax=docker/dockerfile:1
+# Diagnostic only: no publication or release claim. The source-build workflow
+# remains the only publisher and still qualifies its own image end to end.
+FROM frappe/erpnext@sha256:759726db4c3719d8d89f7a3ecb89540286190d65343f25341c3b6c27201ee229
+
+USER frappe
+WORKDIR /home/frappe/frappe-bench
+RUN ./env/bin/python -c 'import frappe, erpnext, sys; assert frappe.__version__ == "16.60.2"; assert erpnext.__version__ == "16.60.0"; assert sys.version_info[:2] == (3, 14)' && \
+    python3 -c 'from importlib.metadata import version; assert version("frappe-bench") == "5.31.1"'
+
+# prepare.py archives the exact checkout and rejects dependency/built-asset
+# source changes. The official image supplies unchanged compiled assets.
+COPY --chown=frappe:0 source/erpnext/ /home/frappe/frappe-bench/apps/erpnext/
+COPY --chown=frappe:0 release.json /opt/ibtinex/release.json
+
+USER root
+COPY container/ /opt/ibtinex/
+COPY vendor/frappe_docker/resources/core/nginx/nginx-template.conf /templates/nginx/frappe.conf.template
+COPY vendor/frappe_docker/resources/core/nginx/nginx-entrypoint.sh /usr/local/bin/nginx-entrypoint.sh
+COPY vendor/frappe_docker/resources/core/nginx/security_headers.conf /etc/nginx/snippets/security_headers.conf
+COPY vendor/frappe_docker/resources/core/start.sh /usr/local/bin/start.sh
+COPY vendor/frappe_docker/LICENSE /opt/ibtinex/FRAPPE_DOCKER_LICENSE
+RUN chmod -R a+rX /opt/ibtinex && chmod 755 /usr/local/bin/nginx-entrypoint.sh /usr/local/bin/start.sh
+
+USER frappe
+RUN ./env/bin/python -c 'import frappe, erpnext; assert frappe.__version__ == "16.60.2"; assert erpnext.__version__ == "16.60.0"'
+ENTRYPOINT ["/home/frappe/frappe-bench/env/bin/python", "/opt/ibtinex/entrypoint.py"]
+CMD ["start.sh"]
+
+ARG ERP_COMMIT
+LABEL org.opencontainers.image.title="IBTINEX ERP diagnostic only" \
+      org.opencontainers.image.revision="${ERP_COMMIT}" \
+      com.ibtinex.diagnostic-only="true"

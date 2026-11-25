@@ -218,12 +218,16 @@ class Starter:
 		disable_future_access()
 
 	def setup(self):
+		from frappe.desk.page.setup_wizard.install_fixtures import update_genders
 		from erpnext.setup.setup_wizard.operations import install_fixtures
 		# These two enabled standard alerts ship with ERPNext itself. They are not
 		# evidence of customer data, but are disabled for this synthetic site.
 		for name in NATIVE_EMAIL_ALERTS:
 			if frappe.db.exists("Notification", name):
 				frappe.db.set_value("Notification", name, "enabled", 0)
+		# Gender is populated by the Framework setup wizard, not app installation.
+		# Use its native reference fixture without running the full wizard/importer.
+		update_genders()
 		install_fixtures.install(COUNTRY)
 		year = date.fromisoformat(self.day).year
 		self.put("fiscal_year", "Fiscal Year", {
@@ -679,6 +683,8 @@ def _verify(manifest, detailed_coverage=False):
 	require(frappe.is_setup_complete(), "native setup wizard is still incomplete")
 	require(frappe.db.get_default("desktop:home_page") == "workspace", "starter Desk still boots the setup wizard")
 	require(doc("company").default_currency == CURRENCY and doc("company").country == COUNTRY, "company locale changed")
+	require(doc("employee").gender == "Female" and frappe.db.exists("Gender", "Female"),
+		"native Framework gender fixture or employee linkage is missing")
 	for key in ("quotation", "sales_order", "sales_invoice"):
 		require(Decimal(str(doc(key).grand_total)) == Decimal("8280"), f"unexpected total: {key}")
 		require(Decimal(str(doc(key).total_taxes_and_charges)) == Decimal("1080"), f"unexpected training tax: {key}")
