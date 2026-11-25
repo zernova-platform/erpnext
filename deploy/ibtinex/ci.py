@@ -280,6 +280,8 @@ def check_upgrade_and_rollback(image, inputs):
 
 def check_legacy_password_recovery(image, inputs):
     """Reproduce the old CRLF failure, then recover only its empty partial site."""
+    # This gate also runs when the independent upgrade gate failed before pulling.
+    pull_previous_image()
     directory = TEMP / 'ibtinex-crlf-installation'
     project = f'ibtinex-crlf-{os.environ.get("GITHUB_RUN_ID", "local")}-{os.environ.get("GITHUB_RUN_ATTEMPT", "1")}'
     site = 'recovery.ibtinex-ci.invalid'
@@ -402,8 +404,20 @@ def verify_publish():
         http_checks(state['port'], (directory / '.secrets/admin-password').read_text().strip())
         print('Checking native desktop/mobile screens, both themes, and visible focus.', flush=True)
         from visual_checks import run_visual_checks
-        run_visual_checks(f'http://127.0.0.1:{state["port"]}',
-                          directory / '.secrets/admin-password', EVIDENCE / 'visual', site)
+        gates = {}
+        def record_gate(name, operation):
+            # These suites use independent disposable sites (or read-only UI).
+            # Gather every failure in one run, but never publish a partial pass.
+            try:
+                operation()
+                gates[name] = {'status': 'passed'}
+            except Exception as error:
+                reason = redact(str(error), secret_values + [os.environ.get('GH_TOKEN', '')])
+                gates[name] = {'status': 'failed', 'reason': reason}
+                print(f'{name} qualification failed: {reason}', flush=True)
+            write_json(EVIDENCE / 'qualification-gates.json', gates)
+        record_gate('browser', lambda: run_visual_checks(f'http://127.0.0.1:{state["port"]}',
+                    directory / '.secrets/admin-password', EVIDENCE / 'visual', site))
         print('Recreating application containers and rechecking the persisted site.', flush=True)
         compose(directory, 'up', '-d', '--no-deps', '--force-recreate', '--wait', '--wait-timeout', '360',
                 'backend', 'websocket', 'queue-short', 'queue-long', 'scheduler', 'frontend', capture=False)
@@ -413,9 +427,12 @@ def verify_publish():
         start(directory, skip_pull=True)
         qualify(directory, site, 'after-exploration')
         print('Rehearsing an upgrade from the previous private release and visual rollback.', flush=True)
-        check_upgrade_and_rollback(image, inputs)
+        record_gate('upgrade-and-rollback', lambda: check_upgrade_and_rollback(image, inputs))
         print('Reproducing the old CRLF password failure and proving guarded recovery.', flush=True)
-        check_legacy_password_recovery(image, inputs)
+        record_gate('legacy-crlf-recovery', lambda: check_legacy_password_recovery(image, inputs))
+        failed = [name for name, result in gates.items() if result['status'] != 'passed']
+        if failed:
+            raise RuntimeError('Required qualification gates failed; no candidate was published: ' + ', '.join(failed))
         python_packages = run(['docker', 'run', '--rm', '--entrypoint',
                                '/home/frappe/frappe-bench/env/bin/python', image,
                                '-m', 'pip', 'list', '--format=json'])

@@ -1,12 +1,34 @@
 import sys
+import json
 from pathlib import Path
+import subprocess
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from visual_checks import contrast_ratio, validate_target
+from visual_checks import MOBILE_READY_PREDICATE, contrast_ratio, validate_target
 
 
 class VisualChecksTests(unittest.TestCase):
+    def test_mobile_ready_predicate_returns_boolean_without_invoking_class(self):
+        # Exercise Playwright's function-valued predicate convention with a real
+        # JS class. Calling BottomSheet as a predicate used to throw before new.
+        script = """
+const source = JSON.parse(process.argv[1]);
+const cases = [undefined, {}, {ui: {}}, {ui: {mobile_nav: {defined: false}, BottomSheet: class BottomSheet {}}},
+    {ui: {mobile_nav: {defined: true}}}, {ui: {mobile_nav: {defined: true}, BottomSheet: class BottomSheet {}}}];
+const actual = cases.map(frappe => {
+    globalThis.window = {frappe};
+    let predicate = globalThis.eval(source);
+    if (typeof predicate === 'function') predicate = predicate();
+    if (typeof predicate !== 'boolean') throw Error('Readiness must be a boolean.');
+    return predicate;
+});
+process.stdout.write(JSON.stringify(actual));
+"""
+        result = subprocess.run(['node', '-e', script, json.dumps(MOBILE_READY_PREDICATE)],
+                                check=True, capture_output=True, text=True)
+        self.assertEqual(json.loads(result.stdout), [False, False, False, False, False, True])
+
     def test_wcag_luminance_reference_pairs(self):
         self.assertAlmostEqual(contrast_ratio((0, 0, 0), (255, 255, 255)), 21)
         self.assertAlmostEqual(contrast_ratio((80, 80, 80), (80, 80, 80)), 1)

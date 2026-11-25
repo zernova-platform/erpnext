@@ -23,6 +23,9 @@ from urllib.parse import urlsplit
 THEME_BUNDLE = "ibtinex-theme.bundle"
 COMPANY = "IBTINEX Starter Ethiopia"
 VIEWPORTS = {"desktop": {"width": 1440, "height": 1000}, "mobile": {"width": 390, "height": 844}}
+# Playwright calls a function-valued expression as a predicate. Returning the
+# BottomSheet class directly therefore tries to call its constructor without new.
+MOBILE_READY_PREDICATE = "() => Boolean(window.frappe?.ui?.mobile_nav?.defined && window.frappe?.ui?.BottomSheet)"
 
 
 def contrast_ratio(foreground, background):
@@ -201,6 +204,47 @@ class VisualQualification:
             if ratio < 4.5:
                 raise AssertionError(f"{mode} semantic text pair {sample['fg']}/{sample['bg']} has contrast {ratio:.2f}:1.")
 
+    def assert_theme_surfaces(self, name, mode, viewport):
+        """Check real surfaces after login's late native token imports.
+
+        Run 1 exposed a white login background and gray labels despite valid
+        brand tokens, plus the Apps header which omits the .navbar class.
+        """
+        if name not in {"login", "login-validation", "desk-home"}:
+            return
+        actual = self.page.evaluate("""name => {
+            const rgb = value => value.match(/[\\d.]+/g).slice(0,3).map(Number);
+            const value = (selector, property) => {
+                const element = document.querySelector(selector);
+                if (!element) throw Error(`Native theme surface missing: ${selector}`);
+                return rgb(getComputedStyle(element)[property]);
+            };
+            const result = {page: value('body', 'backgroundColor')};
+            if (name.startsWith('login')) {
+                result.card = value('.for-login .page-card', 'backgroundColor');
+                result.label = value('.for-login label[for="login_email"]', 'color');
+                if (name === 'login') result.field_border = value('#login_password', 'borderTopColor');
+            } else {
+                result.navigation = value('.desktop-navbar', 'backgroundColor');
+            }
+            return result;
+        }""", name)
+        light = mode == "light"
+        expected = {"page": [244, 245, 239] if light else [16, 27, 22]}
+        if name.startswith("login"):
+            expected.update(card=[255, 255, 255] if light else [24, 39, 31],
+                            label=[82, 99, 87] if light else [186, 202, 189])
+            if name == "login":
+                expected["field_border"] = [122, 136, 125] if light else [130, 152, 137]
+            if contrast_ratio(actual["label"], actual["card"]) < 4.5:
+                raise AssertionError(f"{mode} rendered login label fails AA contrast after native CSS loaded.")
+        else:
+            expected["navigation"] = [16, 43, 33]
+        for surface, color in expected.items():
+            if actual.get(surface) != color:
+                raise AssertionError(f"{name}/{mode} rendered {surface} is {actual.get(surface)}, expected {color}; check native CSS cascade.")
+        self.record(f"rendered_{name}_{viewport}_{mode}_brand_surfaces", colors=actual)
+
     def pair(self, name, mode, viewport):
         self.theme(mode)
         stem = f"{name}-{viewport}-{mode}"
@@ -224,12 +268,13 @@ class VisualQualification:
             "before_sha256": before_hash, "after_sha256": after_hash,
         })
         self.contrast(stem, before_colours)
+        self.assert_theme_surfaces(name, mode, viewport)
 
     def variants(self, name):
         for viewport, dimensions in VIEWPORTS.items():
             self.page.set_viewport_size(dimensions)
             if viewport == "mobile" and self.page.evaluate("!!window.frappe?.app"):
-                self.page.wait_for_function("window.frappe?.ui?.mobile_nav?.defined && frappe.ui.BottomSheet", timeout=60000)
+                self.page.wait_for_function(MOBILE_READY_PREDICATE, timeout=60000)
             for mode in ("light", "dark"):
                 self.pair(name, mode, viewport)
         self.page.set_viewport_size(VIEWPORTS["desktop"])
@@ -316,7 +361,7 @@ class VisualQualification:
         self.variants("selling-workspace")
 
         self.page.set_viewport_size(VIEWPORTS["mobile"])
-        self.page.wait_for_function("window.frappe?.ui?.mobile_nav?.defined && frappe.ui.BottomSheet", timeout=60000)
+        self.page.wait_for_function(MOBILE_READY_PREDICATE, timeout=60000)
         self.page.evaluate("frappe.ui.mobile_nav.open_navigation()")
         self.page.locator(".desk-mobile-sheet:visible").wait_for()
         self.pair("mobile-navigation", "light", "mobile")

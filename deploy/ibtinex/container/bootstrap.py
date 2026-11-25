@@ -1,4 +1,5 @@
 """Fresh-site installer with byte-safe secrets and explicit empty-site recovery."""
+from contextlib import contextmanager
 import json
 import os
 import re
@@ -75,41 +76,71 @@ def check_existing_site(config_path, connector):
         return False
 
 
+@contextmanager
+def inactive_install_lock(site_path):
+    """Use the exact FileLock primitive used by the pinned Frappe installer."""
+    path = site_path / 'locks' / 'bench_new_site.lock'
+    if site_path.is_symlink() or path.parent.is_symlink() or path.is_symlink():
+        raise SetupError('The native installation lock path contains a symbolic link; recovery stopped.')
+    if not path.exists():
+        yield
+        return
+    if not path.is_file():
+        raise SetupError('The native installation lock is not a regular file; recovery stopped.')
+    # Frappe utils/synchronization.py uses filelock.FileLock on this exact path.
+    # Do not unlink it: a retained file is normal, while a held lock means another
+    # native installer is still active. Hold it throughout validation and archival.
+    from filelock import FileLock, Timeout
+    lock = FileLock(str(path), timeout=0)
+    try:
+        lock.acquire(timeout=0)
+    except Timeout:
+        raise SetupError('The native site installer is still holding its installation lock. '
+                         'Wait for it to finish; no files or database were changed.') from None
+    try:
+        yield
+    finally:
+        lock.release()
+
+
 def archive_empty_partial_site(site_path, password, connector):
     """Recover only a proven empty failed install; never drop a DB or delete files."""
-    config_path = site_path / 'site_config.json'
-    config = {}
-    if config_path.exists():
-        try:
-            config = json.loads(config_path.read_text(encoding='utf-8'))
-        except (ValueError, OSError):
-            raise SetupError('The partial site configuration is unreadable. Existing files were '
-                             'preserved; recovery requires inspecting that configuration.') from None
-    for path in site_path.rglob('*'):
-        if path.is_symlink():
-            raise SetupError('The partial site contains a symbolic link; automatic recovery stopped.')
-        if path.is_file() and path != config_path and 'logs' not in path.relative_to(site_path).parts:
-            raise SetupError('The partial site contains files beyond its configuration/logs. '
-                             'Automatic recovery stopped to preserve possible customer data.')
-    if config:
-        name = config.get('db_name')
-        if not isinstance(name, str) or not re.fullmatch(r'[A-Za-z0-9_]+', name):
-            raise SetupError('The partial site has an unrecognized database name; recovery stopped.')
-        connection = connector(host='db', port=3306, user='root', password=password, connect_timeout=15)
-        try:
-            with connection.cursor() as cursor:
-                cursor.execute('SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=%s', (name,))
-                if cursor.fetchone()[0] != 0:
-                    raise SetupError('This site database contains tables. Automatic recovery refuses '
-                                     'to recreate it; use a verified backup or repair the existing site.')
-        finally:
-            connection.close()
-    archive = site_path.parent / '.ibtinex-recovery' / uuid.uuid4().hex
-    archive.mkdir(parents=True, mode=0o700)
-    destination = archive / site_path.name
-    site_path.rename(destination)
-    # The old database (if present and empty), site config and logs remain intact.
-    return destination
+    with inactive_install_lock(site_path):
+        config_path = site_path / 'site_config.json'
+        native_lock = site_path / 'locks' / 'bench_new_site.lock'
+        config = {}
+        if config_path.exists():
+            try:
+                config = json.loads(config_path.read_text(encoding='utf-8'))
+            except (ValueError, OSError):
+                raise SetupError('The partial site configuration is unreadable. Existing files were '
+                                 'preserved; recovery requires inspecting that configuration.') from None
+        for path in site_path.rglob('*'):
+            if path.is_symlink():
+                raise SetupError('The partial site contains a symbolic link; automatic recovery stopped.')
+            if (path.is_file() and path not in {config_path, native_lock}
+                    and path.relative_to(site_path).parts[0] != 'logs'):
+                raise SetupError('The partial site contains files beyond its configuration/logs/native '
+                                 'installation lock. Recovery stopped to preserve possible customer data.')
+        if config:
+            name = config.get('db_name')
+            if not isinstance(name, str) or not re.fullmatch(r'[A-Za-z0-9_]+', name):
+                raise SetupError('The partial site has an unrecognized database name; recovery stopped.')
+            connection = connector(host='db', port=3306, user='root', password=password, connect_timeout=15)
+            try:
+                with connection.cursor() as cursor:
+                    cursor.execute('SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=%s', (name,))
+                    if cursor.fetchone()[0] != 0:
+                        raise SetupError('This site database contains tables. Automatic recovery refuses '
+                                         'to recreate it; use a verified backup or repair the existing site.')
+            finally:
+                connection.close()
+        archive = site_path.parent / '.ibtinex-recovery' / uuid.uuid4().hex
+        archive.mkdir(parents=True, mode=0o700)
+        destination = archive / site_path.name
+        site_path.rename(destination)
+        # The old database, configuration, logs, and retained lock remain intact.
+        return destination
 
 
 def run(args, secret_list):

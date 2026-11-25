@@ -97,6 +97,8 @@ jobs:
           load: true
           push: false
           tags: ibtinex-ci:${{ github.sha }}
+          cache-from: type=gha,scope=ibtinex-erp-v16
+          cache-to: type=gha,mode=max,scope=ibtinex-erp-v16
           build-args: |
             PYTHON_BASE_IMAGE=${{ steps.prepare.outputs.python_base_image }}
             NODE_VERSION=${{ steps.prepare.outputs.node_version }}

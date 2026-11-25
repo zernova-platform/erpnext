@@ -68,9 +68,12 @@
 		--ibtinex-info-bg: #193345;
 	}
 
-	:root,
-	[data-theme="light"],
-	[data-theme="dark"] {
+	/* login.bundle.css loads after web hooks and imports the native token roots
+	 * again. Qualify the document root so those late defaults cannot erase this
+	 * palette; component-local status and navigation tokens still take priority. */
+	html:root,
+	html[data-theme="light"],
+	html[data-theme="dark"] {
 		--surface-base: var(--ibtinex-surface);
 		--surface-gray-1: var(--ibtinex-page);
 		--surface-gray-2: var(--ibtinex-surface-secondary);
@@ -190,7 +193,8 @@
 		color: var(--ibtinex-accent);
 	}
 
-	.navbar {
+	.navbar,
+	.desktop-navbar {
 		background-color: var(--ibtinex-brand);
 		border-bottom-color: var(--ibtinex-nav-border);
 		color: var(--ibtinex-nav-text);
@@ -215,9 +219,23 @@
 		--icon-stroke: currentColor;
 	}
 
+	/* The native Apps launcher deliberately omits the .navbar class. Keep its
+	 * original search/avatar layout, with light search controls on green chrome. */
+	.desktop-navbar .desktop-navbar-title {
+		--ink-gray-9: var(--ibtinex-nav-text);
+	}
+
+	.desktop-navbar .desktop-notification-icon,
+	.desktop-navbar .desktop-cloud-settings {
+		--text-muted: var(--ibtinex-nav-text);
+		--ink-gray-7: var(--ibtinex-nav-text);
+		--icon-stroke: currentColor;
+		color: var(--ibtinex-nav-text);
+	}
+
 	/* Menus remain normal light/dark working surfaces even when their trigger
 	 * is inside green navigation. Explicit tokens prevent inherited pale ink. */
-	:is(.body-sidebar, .dock, .navbar) .dropdown-menu {
+	:is(.body-sidebar, .dock, .navbar, .desktop-navbar) .dropdown-menu {
 		--surface-gray-2: var(--ibtinex-surface-secondary);
 		--surface-gray-3: var(--ibtinex-surface-hover);
 		--ink-gray-5: var(--ibtinex-muted);
@@ -256,7 +274,7 @@
 		outline-offset: 2px;
 	}
 
-	:is(.body-sidebar, .dock, .navbar)
+	:is(.body-sidebar, .dock, .navbar, .desktop-navbar)
 		:where(a, button, input, [tabindex]):focus-visible {
 		outline-color: var(--ibtinex-accent);
 	}

@@ -8,6 +8,7 @@ from pathlib import Path
 import sys
 import tarfile
 import tempfile
+from types import SimpleNamespace
 import unittest
 from unittest.mock import MagicMock, patch
 
@@ -138,6 +139,95 @@ class EmptyRecoveryTests(unittest.TestCase):
                 bootstrap.archive_empty_partial_site(site, 'not-logged', connector)
             self.assertEqual(attachment.read_bytes(), b'customer-data')
             connector.assert_not_called()
+
+    def test_uploaded_logs_subdirectory_is_not_native_site_log_data(self):
+        for visibility in ('public', 'private'):
+            with self.subTest(visibility=visibility), tempfile.TemporaryDirectory() as temporary:
+                site = self.partial(Path(temporary))
+                attachment = site / visibility / 'files/logs/customer.txt'
+                attachment.parent.mkdir(parents=True)
+                attachment.write_bytes(b'customer-file-must-survive')
+                connector = self.connector(0)
+                with self.assertRaises(bootstrap.SetupError):
+                    bootstrap.archive_empty_partial_site(site, 'not-logged', connector)
+                connector.assert_not_called()
+                self.assertEqual(attachment.read_bytes(), b'customer-file-must-survive')
+                self.assertTrue((site / 'site_config.json').is_file())
+
+    def test_retained_native_install_lock_is_acquired_nonblocking_and_preserved(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            site = self.partial(Path(temporary))
+            path = site / 'locks/bench_new_site.lock'
+            path.parent.mkdir()
+            path.write_bytes(b'')
+            lock = MagicMock()
+            factory = MagicMock(return_value=lock)
+            module = SimpleNamespace(FileLock=factory, Timeout=type('Timeout', (Exception,), {}))
+            with patch.dict(sys.modules, {'filelock': module}):
+                destination = bootstrap.archive_empty_partial_site(site, 'not-logged', self.connector(0))
+            factory.assert_called_once_with(str(path), timeout=0)
+            lock.acquire.assert_called_once_with(timeout=0)
+            lock.release.assert_called_once_with()
+            self.assertTrue((destination / 'locks/bench_new_site.lock').is_file())
+
+    def test_held_native_install_lock_refuses_recovery_before_database_access(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            site = self.partial(Path(temporary))
+            path = site / 'locks/bench_new_site.lock'
+            path.parent.mkdir()
+            path.write_bytes(b'')
+            timeout = type('Timeout', (Exception,), {})
+            lock = MagicMock()
+            lock.acquire.side_effect = timeout()
+            connector = self.connector(0)
+            module = SimpleNamespace(FileLock=MagicMock(return_value=lock), Timeout=timeout)
+            with patch.dict(sys.modules, {'filelock': module}), self.assertRaises(bootstrap.SetupError):
+                bootstrap.archive_empty_partial_site(site, 'not-logged', connector)
+            connector.assert_not_called()
+            lock.release.assert_not_called()
+            self.assertTrue((site / 'site_config.json').is_file())
+
+    def test_another_lock_filename_is_not_treated_as_empty_installation_data(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            site = self.partial(Path(temporary))
+            path = site / 'locks/customer-operation.lock'
+            path.parent.mkdir()
+            path.write_bytes(b'preserve')
+            with self.assertRaises(bootstrap.SetupError):
+                bootstrap.archive_empty_partial_site(site, 'not-logged', self.connector(0))
+            self.assertEqual(path.read_bytes(), b'preserve')
+
+    @unittest.skipUnless(sys.platform != 'win32', 'Symlink creation requires special Windows privileges')
+    def test_native_install_lock_symlink_is_refused(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            site = self.partial(Path(temporary))
+            path = site / 'locks/bench_new_site.lock'
+            path.parent.mkdir()
+            path.symlink_to(site / 'site_config.json')
+            connector = self.connector(0)
+            with self.assertRaises(bootstrap.SetupError):
+                bootstrap.archive_empty_partial_site(site, 'not-logged', connector)
+            connector.assert_not_called()
+            self.assertTrue(path.is_symlink())
+
+    @unittest.skipUnless(sys.platform != 'win32', 'Symlink creation requires special Windows privileges')
+    def test_native_lock_parent_symlink_is_refused_before_lock_open(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            site = self.partial(root)
+            external = root / 'external-locks'
+            external.mkdir()
+            target = external / 'bench_new_site.lock'
+            target.write_bytes(b'must-not-be-opened-or-truncated')
+            (site / 'locks').symlink_to(external, target_is_directory=True)
+            factory = MagicMock()
+            module = SimpleNamespace(FileLock=factory, Timeout=type('Timeout', (Exception,), {}))
+            connector = self.connector(0)
+            with patch.dict(sys.modules, {'filelock': module}), self.assertRaises(bootstrap.SetupError):
+                bootstrap.archive_empty_partial_site(site, 'not-logged', connector)
+            factory.assert_not_called()
+            connector.assert_not_called()
+            self.assertEqual(target.read_bytes(), b'must-not-be-opened-or-truncated')
 
     def test_recovery_uses_new_helper_without_switching_existing_image(self):
         with tempfile.TemporaryDirectory() as temporary:
