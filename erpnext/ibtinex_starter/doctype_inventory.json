@@ -1,0 +1,5375 @@
+{
+  "erpnext_version": "16.60.0",
+  "upstream_commit": "886ab6ae187244e7f1b852393384ab6019d56264",
+  "doctypes": [
+    {
+      "doctype": "Account",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/account/account.json",
+      "parents": []
+    },
+    {
+      "doctype": "Account Category",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/account_category/account_category.json",
+      "parents": []
+    },
+    {
+      "doctype": "Account Closing Balance",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/account_closing_balance/account_closing_balance.json",
+      "parents": []
+    },
+    {
+      "doctype": "Accounting Dimension",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/accounting_dimension/accounting_dimension.json",
+      "parents": []
+    },
+    {
+      "doctype": "Accounting Dimension Detail",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/accounting_dimension_detail/accounting_dimension_detail.json",
+      "parents": [
+        "Accounting Dimension.dimension_defaults"
+      ]
+    },
+    {
+      "doctype": "Accounting Dimension Filter",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/accounting_dimension_filter/accounting_dimension_filter.json",
+      "parents": []
+    },
+    {
+      "doctype": "Accounting Period",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/accounting_period/accounting_period.json",
+      "parents": []
+    },
+    {
+      "doctype": "Accounts Settings",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/accounts_settings/accounts_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Activity Cost",
+      "module": "Projects",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/projects/doctype/activity_cost/activity_cost.json",
+      "parents": []
+    },
+    {
+      "doctype": "Activity Type",
+      "module": "Projects",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/projects/doctype/activity_type/activity_type.json",
+      "parents": []
+    },
+    {
+      "doctype": "Advance Payment Ledger Entry",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/advance_payment_ledger_entry/advance_payment_ledger_entry.json",
+      "parents": []
+    },
+    {
+      "doctype": "Advance Taxes and Charges",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/advance_taxes_and_charges/advance_taxes_and_charges.json",
+      "parents": [
+        "Payment Entry.taxes"
+      ]
+    },
+    {
+      "doctype": "Allowed Dimension",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/allowed_dimension/allowed_dimension.json",
+      "parents": [
+        "Accounting Dimension Filter.dimensions"
+      ]
+    },
+    {
+      "doctype": "Allowed To Transact With",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/allowed_to_transact_with/allowed_to_transact_with.json",
+      "parents": [
+        "Customer.companies",
+        "Supplier.companies"
+      ]
+    },
+    {
+      "doctype": "Applicable On Account",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/applicable_on_account/applicable_on_account.json",
+      "parents": [
+        "Accounting Dimension Filter.accounts"
+      ]
+    },
+    {
+      "doctype": "Appointment",
+      "module": "CRM",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/appointment/appointment.json",
+      "parents": []
+    },
+    {
+      "doctype": "Appointment Booking Settings",
+      "module": "CRM",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/appointment_booking_settings/appointment_booking_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Appointment Booking Slots",
+      "module": "CRM",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/appointment_booking_slots/appointment_booking_slots.json",
+      "parents": [
+        "Appointment Booking Settings.availability_of_slots"
+      ]
+    },
+    {
+      "doctype": "Asset",
+      "module": "Assets",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset/asset.json",
+      "parents": []
+    },
+    {
+      "doctype": "Asset Activity",
+      "module": "Assets",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_activity/asset_activity.json",
+      "parents": []
+    },
+    {
+      "doctype": "Asset Capitalization",
+      "module": "Assets",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_capitalization/asset_capitalization.json",
+      "parents": []
+    },
+    {
+      "doctype": "Asset Capitalization Asset Item",
+      "module": "Assets",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_capitalization_asset_item/asset_capitalization_asset_item.json",
+      "parents": [
+        "Asset Capitalization.asset_items"
+      ]
+    },
+    {
+      "doctype": "Asset Capitalization Service Item",
+      "module": "Assets",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_capitalization_service_item/asset_capitalization_service_item.json",
+      "parents": [
+        "Asset Capitalization.service_items"
+      ]
+    },
+    {
+      "doctype": "Asset Capitalization Stock Item",
+      "module": "Assets",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_capitalization_stock_item/asset_capitalization_stock_item.json",
+      "parents": [
+        "Asset Capitalization.stock_items"
+      ]
+    },
+    {
+      "doctype": "Asset Category",
+      "module": "Assets",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_category/asset_category.json",
+      "parents": []
+    },
+    {
+      "doctype": "Asset Category Account",
+      "module": "Assets",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_category_account/asset_category_account.json",
+      "parents": [
+        "Asset Category.accounts"
+      ]
+    },
+    {
+      "doctype": "Asset Depreciation Schedule",
+      "module": "Assets",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_depreciation_schedule/asset_depreciation_schedule.json",
+      "parents": []
+    },
+    {
+      "doctype": "Asset Finance Book",
+      "module": "Assets",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_finance_book/asset_finance_book.json",
+      "parents": [
+        "Asset Category.finance_books",
+        "Asset.finance_books"
+      ]
+    },
+    {
+      "doctype": "Asset Maintenance",
+      "module": "Assets",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_maintenance/asset_maintenance.json",
+      "parents": []
+    },
+    {
+      "doctype": "Asset Maintenance Log",
+      "module": "Assets",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_maintenance_log/asset_maintenance_log.json",
+      "parents": []
+    },
+    {
+      "doctype": "Asset Maintenance Task",
+      "module": "Assets",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_maintenance_task/asset_maintenance_task.json",
+      "parents": [
+        "Asset Maintenance.asset_maintenance_tasks"
+      ]
+    },
+    {
+      "doctype": "Asset Maintenance Team",
+      "module": "Assets",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_maintenance_team/asset_maintenance_team.json",
+      "parents": []
+    },
+    {
+      "doctype": "Asset Movement",
+      "module": "Assets",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_movement/asset_movement.json",
+      "parents": []
+    },
+    {
+      "doctype": "Asset Movement Item",
+      "module": "Assets",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_movement_item/asset_movement_item.json",
+      "parents": [
+        "Asset Movement.assets"
+      ]
+    },
+    {
+      "doctype": "Asset Repair",
+      "module": "Assets",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_repair/asset_repair.json",
+      "parents": []
+    },
+    {
+      "doctype": "Asset Repair Consumed Item",
+      "module": "Assets",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_repair_consumed_item/asset_repair_consumed_item.json",
+      "parents": [
+        "Asset Repair.stock_items"
+      ]
+    },
+    {
+      "doctype": "Asset Repair Purchase Invoice",
+      "module": "Assets",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_repair_purchase_invoice/asset_repair_purchase_invoice.json",
+      "parents": [
+        "Asset Repair.invoices"
+      ]
+    },
+    {
+      "doctype": "Asset Shift Allocation",
+      "module": "Assets",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_shift_allocation/asset_shift_allocation.json",
+      "parents": []
+    },
+    {
+      "doctype": "Asset Shift Factor",
+      "module": "Assets",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_shift_factor/asset_shift_factor.json",
+      "parents": []
+    },
+    {
+      "doctype": "Asset Value Adjustment",
+      "module": "Assets",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/asset_value_adjustment/asset_value_adjustment.json",
+      "parents": []
+    },
+    {
+      "doctype": "Authorization Control",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/authorization_control/authorization_control.json",
+      "parents": []
+    },
+    {
+      "doctype": "Authorization Rule",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/authorization_rule/authorization_rule.json",
+      "parents": []
+    },
+    {
+      "doctype": "Availability Of Slots",
+      "module": "CRM",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/availability_of_slots/availability_of_slots.json",
+      "parents": []
+    },
+    {
+      "doctype": "BOM",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/bom/bom.json",
+      "parents": []
+    },
+    {
+      "doctype": "BOM Creator",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/bom_creator/bom_creator.json",
+      "parents": []
+    },
+    {
+      "doctype": "BOM Creator Item",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/bom_creator_item/bom_creator_item.json",
+      "parents": [
+        "BOM Creator.items"
+      ]
+    },
+    {
+      "doctype": "BOM Creator Material",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/bom_creator_material/bom_creator_material.json",
+      "parents": [
+        "BOM Creator.materials"
+      ]
+    },
+    {
+      "doctype": "BOM Creator Operation",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/bom_creator_operation/bom_creator_operation.json",
+      "parents": [
+        "BOM Creator.operations"
+      ]
+    },
+    {
+      "doctype": "BOM Explosion Item",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/bom_explosion_item/bom_explosion_item.json",
+      "parents": [
+        "BOM.exploded_items"
+      ]
+    },
+    {
+      "doctype": "BOM Item",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/bom_item/bom_item.json",
+      "parents": [
+        "BOM.items"
+      ]
+    },
+    {
+      "doctype": "BOM Operation",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/bom_operation/bom_operation.json",
+      "parents": [
+        "BOM.operations",
+        "Routing.operations"
+      ]
+    },
+    {
+      "doctype": "BOM Secondary Item",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/bom_secondary_item/bom_secondary_item.json",
+      "parents": [
+        "BOM.secondary_items"
+      ]
+    },
+    {
+      "doctype": "BOM Update Batch",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/bom_update_batch/bom_update_batch.json",
+      "parents": [
+        "BOM Update Log.bom_batches"
+      ]
+    },
+    {
+      "doctype": "BOM Update Log",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/bom_update_log/bom_update_log.json",
+      "parents": []
+    },
+    {
+      "doctype": "BOM Update Tool",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/bom_update_tool/bom_update_tool.json",
+      "parents": []
+    },
+    {
+      "doctype": "BOM Website Item",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/bom_website_item/bom_website_item.json",
+      "parents": []
+    },
+    {
+      "doctype": "BOM Website Operation",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/bom_website_operation/bom_website_operation.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bank",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank/bank.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bank Account",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_account/bank_account.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bank Account Balance",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_account_balance/bank_account_balance.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bank Account Subtype",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_account_subtype/bank_account_subtype.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bank Account Type",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_account_type/bank_account_type.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bank Clearance",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_clearance/bank_clearance.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bank Clearance Detail",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_clearance_detail/bank_clearance_detail.json",
+      "parents": [
+        "Bank Clearance.payment_entries"
+      ]
+    },
+    {
+      "doctype": "Bank Guarantee",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_guarantee/bank_guarantee.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bank Reconciliation Tool",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_reconciliation_tool/bank_reconciliation_tool.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bank Statement Import",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_statement_import/bank_statement_import.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bank Statement Import Log",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_statement_import_log/bank_statement_import_log.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bank Statement Import Log Column Map",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_statement_import_log_column_map/bank_statement_import_log_column_map.json",
+      "parents": [
+        "Bank Statement Import Log.column_mapping"
+      ]
+    },
+    {
+      "doctype": "Bank Transaction",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_transaction/bank_transaction.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bank Transaction Mapping",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_transaction_mapping/bank_transaction_mapping.json",
+      "parents": [
+        "Bank.bank_transaction_mapping"
+      ]
+    },
+    {
+      "doctype": "Bank Transaction Payments",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_transaction_payments/bank_transaction_payments.json",
+      "parents": [
+        "Bank Transaction.payment_entries"
+      ]
+    },
+    {
+      "doctype": "Bank Transaction Rule",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_transaction_rule/bank_transaction_rule.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bank Transaction Rule Accounts",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_transaction_rule_accounts/bank_transaction_rule_accounts.json",
+      "parents": [
+        "Bank Transaction Rule.accounts"
+      ]
+    },
+    {
+      "doctype": "Bank Transaction Rule Description Conditions",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bank_transaction_rule_description_conditions/bank_transaction_rule_description_conditions.json",
+      "parents": [
+        "Bank Transaction Rule.description_rules"
+      ]
+    },
+    {
+      "doctype": "Batch",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/batch/batch.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bin",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/bin/bin.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bisect Accounting Statements",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bisect_accounting_statements/bisect_accounting_statements.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bisect Nodes",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/bisect_nodes/bisect_nodes.json",
+      "parents": []
+    },
+    {
+      "doctype": "Blanket Order",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/blanket_order/blanket_order.json",
+      "parents": []
+    },
+    {
+      "doctype": "Blanket Order Item",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/blanket_order_item/blanket_order_item.json",
+      "parents": [
+        "Blanket Order.items"
+      ]
+    },
+    {
+      "doctype": "Branch",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/branch/branch.json",
+      "parents": []
+    },
+    {
+      "doctype": "Brand",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/brand/brand.json",
+      "parents": []
+    },
+    {
+      "doctype": "Budget",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/budget/budget.json",
+      "parents": []
+    },
+    {
+      "doctype": "Budget Account",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/budget_account/budget_account.json",
+      "parents": []
+    },
+    {
+      "doctype": "Budget Distribution",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/budget_distribution/budget_distribution.json",
+      "parents": [
+        "Budget.budget_distribution"
+      ]
+    },
+    {
+      "doctype": "Bulk Transaction Log",
+      "module": "Bulk Transaction",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": true,
+      "source_path": "erpnext/bulk_transaction/doctype/bulk_transaction_log/bulk_transaction_log.json",
+      "parents": []
+    },
+    {
+      "doctype": "Bulk Transaction Log Detail",
+      "module": "Bulk Transaction",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/bulk_transaction/doctype/bulk_transaction_log_detail/bulk_transaction_log_detail.json",
+      "parents": []
+    },
+    {
+      "doctype": "Buying Settings",
+      "module": "Buying",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/buying_settings/buying_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "CRM Note",
+      "module": "CRM",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/crm_note/crm_note.json",
+      "parents": [
+        "Lead.notes",
+        "Opportunity.notes",
+        "Prospect.notes"
+      ]
+    },
+    {
+      "doctype": "CRM Settings",
+      "module": "CRM",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/crm_settings/crm_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Call Log",
+      "module": "Telephony",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/telephony/doctype/call_log/call_log.json",
+      "parents": []
+    },
+    {
+      "doctype": "Campaign",
+      "module": "CRM",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/campaign/campaign.json",
+      "parents": []
+    },
+    {
+      "doctype": "Campaign Email Schedule",
+      "module": "CRM",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/campaign_email_schedule/campaign_email_schedule.json",
+      "parents": [
+        "Campaign.campaign_schedules"
+      ]
+    },
+    {
+      "doctype": "Campaign Item",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/campaign_item/campaign_item.json",
+      "parents": [
+        "Promotional Scheme.campaign"
+      ]
+    },
+    {
+      "doctype": "Cashier Closing",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/cashier_closing/cashier_closing.json",
+      "parents": []
+    },
+    {
+      "doctype": "Cashier Closing Payments",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/cashier_closing_payments/cashier_closing_payments.json",
+      "parents": [
+        "Cashier Closing.payments"
+      ]
+    },
+    {
+      "doctype": "Chart of Accounts Importer",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/chart_of_accounts_importer/chart_of_accounts_importer.json",
+      "parents": []
+    },
+    {
+      "doctype": "Cheque Print Template",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/cheque_print_template/cheque_print_template.json",
+      "parents": []
+    },
+    {
+      "doctype": "Closed Document",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/closed_document/closed_document.json",
+      "parents": [
+        "Accounting Period.closed_documents"
+      ]
+    },
+    {
+      "doctype": "Code List",
+      "module": "EDI",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/edi/doctype/code_list/code_list.json",
+      "parents": []
+    },
+    {
+      "doctype": "Common Code",
+      "module": "EDI",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/edi/doctype/common_code/common_code.json",
+      "parents": []
+    },
+    {
+      "doctype": "Communication Medium",
+      "module": "Communication",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/communication/doctype/communication_medium/communication_medium.json",
+      "parents": []
+    },
+    {
+      "doctype": "Communication Medium Timeslot",
+      "module": "Communication",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/communication/doctype/communication_medium_timeslot/communication_medium_timeslot.json",
+      "parents": [
+        "Communication Medium.timeslots"
+      ]
+    },
+    {
+      "doctype": "Company",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/company/company.json",
+      "parents": []
+    },
+    {
+      "doctype": "Company Restriction",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/company_restriction/company_restriction.json",
+      "parents": [
+        "Customer.allowed_companies",
+        "Item.allowed_companies",
+        "Supplier.allowed_companies"
+      ]
+    },
+    {
+      "doctype": "Competitor",
+      "module": "CRM",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/competitor/competitor.json",
+      "parents": []
+    },
+    {
+      "doctype": "Competitor Detail",
+      "module": "CRM",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/competitor_detail/competitor_detail.json",
+      "parents": [
+        "Opportunity.competitors",
+        "Quotation.competitors"
+      ]
+    },
+    {
+      "doctype": "Contract",
+      "module": "CRM",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/contract/contract.json",
+      "parents": []
+    },
+    {
+      "doctype": "Contract Fulfilment Checklist",
+      "module": "CRM",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/contract_fulfilment_checklist/contract_fulfilment_checklist.json",
+      "parents": [
+        "Contract.fulfilment_terms"
+      ]
+    },
+    {
+      "doctype": "Contract Template",
+      "module": "CRM",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/contract_template/contract_template.json",
+      "parents": []
+    },
+    {
+      "doctype": "Contract Template Fulfilment Terms",
+      "module": "CRM",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/contract_template_fulfilment_terms/contract_template_fulfilment_terms.json",
+      "parents": [
+        "Contract Template.fulfilment_terms"
+      ]
+    },
+    {
+      "doctype": "Cost Center",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/cost_center/cost_center.json",
+      "parents": []
+    },
+    {
+      "doctype": "Cost Center Allocation",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/cost_center_allocation/cost_center_allocation.json",
+      "parents": []
+    },
+    {
+      "doctype": "Cost Center Allocation Percentage",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/cost_center_allocation_percentage/cost_center_allocation_percentage.json",
+      "parents": [
+        "Cost Center Allocation.allocation_percentages"
+      ]
+    },
+    {
+      "doctype": "Coupon Code",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/coupon_code/coupon_code.json",
+      "parents": []
+    },
+    {
+      "doctype": "Currency Exchange",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/currency_exchange/currency_exchange.json",
+      "parents": []
+    },
+    {
+      "doctype": "Currency Exchange Settings",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/currency_exchange_settings/currency_exchange_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Currency Exchange Settings Details",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/currency_exchange_settings_details/currency_exchange_settings_details.json",
+      "parents": [
+        "Currency Exchange Settings.req_params"
+      ]
+    },
+    {
+      "doctype": "Currency Exchange Settings Result",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/currency_exchange_settings_result/currency_exchange_settings_result.json",
+      "parents": [
+        "Currency Exchange Settings.result_key"
+      ]
+    },
+    {
+      "doctype": "Customer",
+      "module": "Selling",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/customer/customer.json",
+      "parents": []
+    },
+    {
+      "doctype": "Customer Credit Limit",
+      "module": "Selling",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/customer_credit_limit/customer_credit_limit.json",
+      "parents": [
+        "Customer Group.credit_limits",
+        "Customer.credit_limits"
+      ]
+    },
+    {
+      "doctype": "Customer Group",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/customer_group/customer_group.json",
+      "parents": []
+    },
+    {
+      "doctype": "Customer Group Item",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/customer_group_item/customer_group_item.json",
+      "parents": [
+        "Promotional Scheme.customer_group"
+      ]
+    },
+    {
+      "doctype": "Customer Item",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/customer_item/customer_item.json",
+      "parents": [
+        "Promotional Scheme.customer"
+      ]
+    },
+    {
+      "doctype": "Customer Number At Supplier",
+      "module": "Buying",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/customer_number_at_supplier/customer_number_at_supplier.json",
+      "parents": [
+        "Supplier.customer_numbers"
+      ]
+    },
+    {
+      "doctype": "Customs Tariff Number",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/customs_tariff_number/customs_tariff_number.json",
+      "parents": []
+    },
+    {
+      "doctype": "Delivery Note",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/delivery_note/delivery_note.json",
+      "parents": []
+    },
+    {
+      "doctype": "Delivery Note Item",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/delivery_note_item/delivery_note_item.json",
+      "parents": [
+        "Delivery Note.items"
+      ]
+    },
+    {
+      "doctype": "Delivery Schedule Item",
+      "module": "Selling",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/delivery_schedule_item/delivery_schedule_item.json",
+      "parents": []
+    },
+    {
+      "doctype": "Delivery Settings",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/delivery_settings/delivery_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Delivery Stop",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/delivery_stop/delivery_stop.json",
+      "parents": [
+        "Delivery Trip.delivery_stops"
+      ]
+    },
+    {
+      "doctype": "Delivery Trip",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/delivery_trip/delivery_trip.json",
+      "parents": []
+    },
+    {
+      "doctype": "Department",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/department/department.json",
+      "parents": []
+    },
+    {
+      "doctype": "Dependent Task",
+      "module": "Projects",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/projects/doctype/dependent_task/dependent_task.json",
+      "parents": []
+    },
+    {
+      "doctype": "Depreciation Schedule",
+      "module": "Assets",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/depreciation_schedule/depreciation_schedule.json",
+      "parents": [
+        "Asset Depreciation Schedule.depreciation_schedule",
+        "Asset Shift Allocation.depreciation_schedule"
+      ]
+    },
+    {
+      "doctype": "Designation",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/designation/designation.json",
+      "parents": []
+    },
+    {
+      "doctype": "Discounted Invoice",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/discounted_invoice/discounted_invoice.json",
+      "parents": [
+        "Invoice Discounting.invoices"
+      ]
+    },
+    {
+      "doctype": "Downtime Entry",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/downtime_entry/downtime_entry.json",
+      "parents": []
+    },
+    {
+      "doctype": "Driver",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/driver/driver.json",
+      "parents": []
+    },
+    {
+      "doctype": "Driving License Category",
+      "module": "Setup",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/driving_license_category/driving_license_category.json",
+      "parents": [
+        "Driver.driving_license_category"
+      ]
+    },
+    {
+      "doctype": "Dunning",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/dunning/dunning.json",
+      "parents": []
+    },
+    {
+      "doctype": "Dunning Letter Text",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/dunning_letter_text/dunning_letter_text.json",
+      "parents": [
+        "Dunning Type.dunning_letter_text"
+      ]
+    },
+    {
+      "doctype": "Dunning Type",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/dunning_type/dunning_type.json",
+      "parents": []
+    },
+    {
+      "doctype": "Email Campaign",
+      "module": "CRM",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/email_campaign/email_campaign.json",
+      "parents": []
+    },
+    {
+      "doctype": "Email Digest",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/email_digest/email_digest.json",
+      "parents": []
+    },
+    {
+      "doctype": "Email Digest Recipient",
+      "module": "Setup",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/email_digest_recipient/email_digest_recipient.json",
+      "parents": [
+        "Email Digest.recipients"
+      ]
+    },
+    {
+      "doctype": "Employee",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/employee/employee.json",
+      "parents": []
+    },
+    {
+      "doctype": "Employee Education",
+      "module": "Setup",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/employee_education/employee_education.json",
+      "parents": [
+        "Employee.education"
+      ]
+    },
+    {
+      "doctype": "Employee External Work History",
+      "module": "Setup",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/employee_external_work_history/employee_external_work_history.json",
+      "parents": [
+        "Employee.external_work_history"
+      ]
+    },
+    {
+      "doctype": "Employee Group",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/employee_group/employee_group.json",
+      "parents": []
+    },
+    {
+      "doctype": "Employee Group Table",
+      "module": "Setup",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/employee_group_table/employee_group_table.json",
+      "parents": [
+        "Employee Group.employee_list"
+      ]
+    },
+    {
+      "doctype": "Employee Internal Work History",
+      "module": "Setup",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/employee_internal_work_history/employee_internal_work_history.json",
+      "parents": [
+        "Employee.internal_work_history"
+      ]
+    },
+    {
+      "doctype": "Exchange Rate Revaluation",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/exchange_rate_revaluation/exchange_rate_revaluation.json",
+      "parents": []
+    },
+    {
+      "doctype": "Exchange Rate Revaluation Account",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/exchange_rate_revaluation_account/exchange_rate_revaluation_account.json",
+      "parents": [
+        "Exchange Rate Revaluation.accounts"
+      ]
+    },
+    {
+      "doctype": "Finance Book",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/finance_book/finance_book.json",
+      "parents": []
+    },
+    {
+      "doctype": "Financial Report Row",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/financial_report_row/financial_report_row.json",
+      "parents": [
+        "Financial Report Template.rows"
+      ]
+    },
+    {
+      "doctype": "Financial Report Template",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/financial_report_template/financial_report_template.json",
+      "parents": []
+    },
+    {
+      "doctype": "Fiscal Year",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/fiscal_year/fiscal_year.json",
+      "parents": []
+    },
+    {
+      "doctype": "Fiscal Year Company",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/fiscal_year_company/fiscal_year_company.json",
+      "parents": [
+        "Fiscal Year.companies"
+      ]
+    },
+    {
+      "doctype": "Frappe CRM Allowed User",
+      "module": "CRM",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/frappe_crm_allowed_user/frappe_crm_allowed_user.json",
+      "parents": [
+        "CRM Settings.allowed_users"
+      ]
+    },
+    {
+      "doctype": "GL Entry",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/gl_entry/gl_entry.json",
+      "parents": []
+    },
+    {
+      "doctype": "Global Defaults",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/global_defaults/global_defaults.json",
+      "parents": []
+    },
+    {
+      "doctype": "Holiday",
+      "module": "Setup",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/holiday/holiday.json",
+      "parents": [
+        "Holiday List.holidays"
+      ]
+    },
+    {
+      "doctype": "Holiday List",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/holiday_list/holiday_list.json",
+      "parents": []
+    },
+    {
+      "doctype": "Import Supplier Invoice",
+      "module": "Regional",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/regional/doctype/import_supplier_invoice/import_supplier_invoice.json",
+      "parents": []
+    },
+    {
+      "doctype": "Incoming Call Handling Schedule",
+      "module": "Telephony",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/telephony/doctype/incoming_call_handling_schedule/incoming_call_handling_schedule.json",
+      "parents": [
+        "Incoming Call Settings.call_handling_schedule"
+      ]
+    },
+    {
+      "doctype": "Incoming Call Settings",
+      "module": "Telephony",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/telephony/doctype/incoming_call_settings/incoming_call_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Incoterm",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/incoterm/incoterm.json",
+      "parents": []
+    },
+    {
+      "doctype": "Industry Type",
+      "module": "Selling",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/industry_type/industry_type.json",
+      "parents": []
+    },
+    {
+      "doctype": "Installation Note",
+      "module": "Selling",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/installation_note/installation_note.json",
+      "parents": []
+    },
+    {
+      "doctype": "Installation Note Item",
+      "module": "Selling",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/installation_note_item/installation_note_item.json",
+      "parents": [
+        "Installation Note.items"
+      ]
+    },
+    {
+      "doctype": "Inventory Dimension",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/inventory_dimension/inventory_dimension.json",
+      "parents": []
+    },
+    {
+      "doctype": "Invoice Discounting",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/invoice_discounting/invoice_discounting.json",
+      "parents": []
+    },
+    {
+      "doctype": "Issue",
+      "module": "Support",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/support/doctype/issue/issue.json",
+      "parents": []
+    },
+    {
+      "doctype": "Issue Priority",
+      "module": "Support",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/support/doctype/issue_priority/issue_priority.json",
+      "parents": []
+    },
+    {
+      "doctype": "Issue Type",
+      "module": "Support",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/support/doctype/issue_type/issue_type.json",
+      "parents": []
+    },
+    {
+      "doctype": "Item",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item/item.json",
+      "parents": []
+    },
+    {
+      "doctype": "Item Alternative",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_alternative/item_alternative.json",
+      "parents": []
+    },
+    {
+      "doctype": "Item Attribute",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_attribute/item_attribute.json",
+      "parents": []
+    },
+    {
+      "doctype": "Item Attribute Value",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_attribute_value/item_attribute_value.json",
+      "parents": [
+        "Item Attribute.item_attribute_values"
+      ]
+    },
+    {
+      "doctype": "Item Barcode",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_barcode/item_barcode.json",
+      "parents": [
+        "Item.barcodes"
+      ]
+    },
+    {
+      "doctype": "Item Customer Detail",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_customer_detail/item_customer_detail.json",
+      "parents": [
+        "Item.customer_items"
+      ]
+    },
+    {
+      "doctype": "Item Default",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_default/item_default.json",
+      "parents": [
+        "Brand.brand_defaults",
+        "Item Group.item_group_defaults",
+        "Item.item_defaults"
+      ]
+    },
+    {
+      "doctype": "Item Group",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/item_group/item_group.json",
+      "parents": []
+    },
+    {
+      "doctype": "Item Lead Time",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_lead_time/item_lead_time.json",
+      "parents": []
+    },
+    {
+      "doctype": "Item Manufacturer",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_manufacturer/item_manufacturer.json",
+      "parents": []
+    },
+    {
+      "doctype": "Item Price",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_price/item_price.json",
+      "parents": []
+    },
+    {
+      "doctype": "Item Quality Inspection Parameter",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_quality_inspection_parameter/item_quality_inspection_parameter.json",
+      "parents": [
+        "Quality Inspection Template.item_quality_inspection_parameter"
+      ]
+    },
+    {
+      "doctype": "Item Reorder",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_reorder/item_reorder.json",
+      "parents": [
+        "Item.reorder_levels"
+      ]
+    },
+    {
+      "doctype": "Item Supplier",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_supplier/item_supplier.json",
+      "parents": [
+        "Item.supplier_items"
+      ]
+    },
+    {
+      "doctype": "Item Tax",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_tax/item_tax.json",
+      "parents": [
+        "Item Group.taxes",
+        "Item.taxes"
+      ]
+    },
+    {
+      "doctype": "Item Tax Template",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/item_tax_template/item_tax_template.json",
+      "parents": []
+    },
+    {
+      "doctype": "Item Tax Template Detail",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/item_tax_template_detail/item_tax_template_detail.json",
+      "parents": [
+        "Item Tax Template.taxes"
+      ]
+    },
+    {
+      "doctype": "Item Variant",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_variant/item_variant.json",
+      "parents": []
+    },
+    {
+      "doctype": "Item Variant Attribute",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_variant_attribute/item_variant_attribute.json",
+      "parents": [
+        "Item.attributes"
+      ]
+    },
+    {
+      "doctype": "Item Variant Settings",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_variant_settings/item_variant_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Item Website Specification",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/item_website_specification/item_website_specification.json",
+      "parents": []
+    },
+    {
+      "doctype": "Item Wise Tax Detail",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/item_wise_tax_detail/item_wise_tax_detail.json",
+      "parents": [
+        "Delivery Note.item_wise_tax_details",
+        "POS Invoice.item_wise_tax_details",
+        "Purchase Invoice.item_wise_tax_details",
+        "Purchase Order.item_wise_tax_details",
+        "Purchase Receipt.item_wise_tax_details",
+        "Quotation.item_wise_tax_details",
+        "Sales Invoice.item_wise_tax_details",
+        "Sales Order.item_wise_tax_details",
+        "Supplier Quotation.item_wise_tax_details"
+      ]
+    },
+    {
+      "doctype": "Job Card",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/job_card/job_card.json",
+      "parents": []
+    },
+    {
+      "doctype": "Job Card Item",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/job_card_item/job_card_item.json",
+      "parents": [
+        "Job Card.items"
+      ]
+    },
+    {
+      "doctype": "Job Card Operation",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/job_card_operation/job_card_operation.json",
+      "parents": [
+        "Job Card.sub_operations"
+      ]
+    },
+    {
+      "doctype": "Job Card Scheduled Time",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/job_card_scheduled_time/job_card_scheduled_time.json",
+      "parents": [
+        "Job Card.scheduled_time_logs"
+      ]
+    },
+    {
+      "doctype": "Job Card Secondary Item",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/job_card_secondary_item/job_card_secondary_item.json",
+      "parents": [
+        "Job Card.secondary_items"
+      ]
+    },
+    {
+      "doctype": "Job Card Time Log",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/job_card_time_log/job_card_time_log.json",
+      "parents": [
+        "Job Card.employee",
+        "Job Card.time_logs"
+      ]
+    },
+    {
+      "doctype": "Journal Entry",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/journal_entry/journal_entry.json",
+      "parents": []
+    },
+    {
+      "doctype": "Journal Entry Account",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/journal_entry_account/journal_entry_account.json",
+      "parents": [
+        "Journal Entry.accounts"
+      ]
+    },
+    {
+      "doctype": "Journal Entry Template",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/journal_entry_template/journal_entry_template.json",
+      "parents": []
+    },
+    {
+      "doctype": "Journal Entry Template Account",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/journal_entry_template_account/journal_entry_template_account.json",
+      "parents": [
+        "Journal Entry Template.accounts"
+      ]
+    },
+    {
+      "doctype": "Landed Cost Item",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/landed_cost_item/landed_cost_item.json",
+      "parents": [
+        "Landed Cost Voucher.items"
+      ]
+    },
+    {
+      "doctype": "Landed Cost Purchase Receipt",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/landed_cost_purchase_receipt/landed_cost_purchase_receipt.json",
+      "parents": [
+        "Landed Cost Voucher.purchase_receipts"
+      ]
+    },
+    {
+      "doctype": "Landed Cost Taxes and Charges",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/landed_cost_taxes_and_charges/landed_cost_taxes_and_charges.json",
+      "parents": [
+        "Landed Cost Voucher.taxes",
+        "Stock Entry.additional_costs",
+        "Subcontracting Order.additional_costs",
+        "Subcontracting Receipt.additional_costs"
+      ]
+    },
+    {
+      "doctype": "Landed Cost Vendor Invoice",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/landed_cost_vendor_invoice/landed_cost_vendor_invoice.json",
+      "parents": [
+        "Landed Cost Voucher.vendor_invoices"
+      ]
+    },
+    {
+      "doctype": "Landed Cost Voucher",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/landed_cost_voucher/landed_cost_voucher.json",
+      "parents": []
+    },
+    {
+      "doctype": "Lead",
+      "module": "CRM",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/lead/lead.json",
+      "parents": []
+    },
+    {
+      "doctype": "Ledger Health",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/ledger_health/ledger_health.json",
+      "parents": []
+    },
+    {
+      "doctype": "Ledger Health Monitor",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/ledger_health_monitor/ledger_health_monitor.json",
+      "parents": []
+    },
+    {
+      "doctype": "Ledger Health Monitor Company",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/ledger_health_monitor_company/ledger_health_monitor_company.json",
+      "parents": [
+        "Ledger Health Monitor.companies"
+      ]
+    },
+    {
+      "doctype": "Ledger Merge",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/ledger_merge/ledger_merge.json",
+      "parents": []
+    },
+    {
+      "doctype": "Ledger Merge Accounts",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/ledger_merge_accounts/ledger_merge_accounts.json",
+      "parents": [
+        "Ledger Merge.merge_accounts"
+      ]
+    },
+    {
+      "doctype": "Linked Location",
+      "module": "Assets",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/linked_location/linked_location.json",
+      "parents": []
+    },
+    {
+      "doctype": "Location",
+      "module": "Assets",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/location/location.json",
+      "parents": []
+    },
+    {
+      "doctype": "Lost Reason Detail",
+      "module": "CRM",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/lost_reason_detail/lost_reason_detail.json",
+      "parents": []
+    },
+    {
+      "doctype": "Lower Deduction Certificate",
+      "module": "Regional",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/regional/doctype/lower_deduction_certificate/lower_deduction_certificate.json",
+      "parents": []
+    },
+    {
+      "doctype": "Loyalty Point Entry",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/loyalty_point_entry/loyalty_point_entry.json",
+      "parents": []
+    },
+    {
+      "doctype": "Loyalty Point Entry Redemption",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/loyalty_point_entry_redemption/loyalty_point_entry_redemption.json",
+      "parents": []
+    },
+    {
+      "doctype": "Loyalty Program",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/loyalty_program/loyalty_program.json",
+      "parents": []
+    },
+    {
+      "doctype": "Loyalty Program Collection",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/loyalty_program_collection/loyalty_program_collection.json",
+      "parents": [
+        "Loyalty Program.collection_rules"
+      ]
+    },
+    {
+      "doctype": "Maintenance Schedule",
+      "module": "Maintenance",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/maintenance/doctype/maintenance_schedule/maintenance_schedule.json",
+      "parents": []
+    },
+    {
+      "doctype": "Maintenance Schedule Detail",
+      "module": "Maintenance",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/maintenance/doctype/maintenance_schedule_detail/maintenance_schedule_detail.json",
+      "parents": [
+        "Maintenance Schedule.schedules"
+      ]
+    },
+    {
+      "doctype": "Maintenance Schedule Item",
+      "module": "Maintenance",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/maintenance/doctype/maintenance_schedule_item/maintenance_schedule_item.json",
+      "parents": [
+        "Maintenance Schedule.items"
+      ]
+    },
+    {
+      "doctype": "Maintenance Team Member",
+      "module": "Assets",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/assets/doctype/maintenance_team_member/maintenance_team_member.json",
+      "parents": [
+        "Asset Maintenance Team.maintenance_team_members"
+      ]
+    },
+    {
+      "doctype": "Maintenance Visit",
+      "module": "Maintenance",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/maintenance/doctype/maintenance_visit/maintenance_visit.json",
+      "parents": []
+    },
+    {
+      "doctype": "Maintenance Visit Purpose",
+      "module": "Maintenance",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/maintenance/doctype/maintenance_visit_purpose/maintenance_visit_purpose.json",
+      "parents": [
+        "Maintenance Visit.purposes"
+      ]
+    },
+    {
+      "doctype": "Manufacturer",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/manufacturer/manufacturer.json",
+      "parents": []
+    },
+    {
+      "doctype": "Manufacturing Settings",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/manufacturing_settings/manufacturing_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Market Segment",
+      "module": "CRM",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/market_segment/market_segment.json",
+      "parents": []
+    },
+    {
+      "doctype": "Master Production Schedule",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/master_production_schedule/master_production_schedule.json",
+      "parents": []
+    },
+    {
+      "doctype": "Master Production Schedule Item",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/master_production_schedule_item/master_production_schedule_item.json",
+      "parents": [
+        "Master Production Schedule.items",
+        "Master Production Schedule.select_items"
+      ]
+    },
+    {
+      "doctype": "Material Request",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/material_request/material_request.json",
+      "parents": []
+    },
+    {
+      "doctype": "Material Request Item",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/material_request_item/material_request_item.json",
+      "parents": [
+        "Material Request.items"
+      ]
+    },
+    {
+      "doctype": "Material Request Plan Item",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/material_request_plan_item/material_request_plan_item.json",
+      "parents": [
+        "Production Plan.mr_items"
+      ]
+    },
+    {
+      "doctype": "Mode of Payment",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/mode_of_payment/mode_of_payment.json",
+      "parents": []
+    },
+    {
+      "doctype": "Mode of Payment Account",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/mode_of_payment_account/mode_of_payment_account.json",
+      "parents": [
+        "Mode of Payment.accounts"
+      ]
+    },
+    {
+      "doctype": "Monthly Distribution",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/monthly_distribution/monthly_distribution.json",
+      "parents": []
+    },
+    {
+      "doctype": "Monthly Distribution Percentage",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/monthly_distribution_percentage/monthly_distribution_percentage.json",
+      "parents": [
+        "Monthly Distribution.percentages"
+      ]
+    },
+    {
+      "doctype": "Non Conformance",
+      "module": "Quality Management",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/quality_management/doctype/non_conformance/non_conformance.json",
+      "parents": []
+    },
+    {
+      "doctype": "Opening Invoice Creation Tool",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/opening_invoice_creation_tool/opening_invoice_creation_tool.json",
+      "parents": []
+    },
+    {
+      "doctype": "Opening Invoice Creation Tool Item",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/opening_invoice_creation_tool_item/opening_invoice_creation_tool_item.json",
+      "parents": [
+        "Opening Invoice Creation Tool.invoices"
+      ]
+    },
+    {
+      "doctype": "Operation",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/operation/operation.json",
+      "parents": []
+    },
+    {
+      "doctype": "Opportunity",
+      "module": "CRM",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/opportunity/opportunity.json",
+      "parents": []
+    },
+    {
+      "doctype": "Opportunity Item",
+      "module": "CRM",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/opportunity_item/opportunity_item.json",
+      "parents": [
+        "Opportunity.items"
+      ]
+    },
+    {
+      "doctype": "Opportunity Lost Reason",
+      "module": "CRM",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/opportunity_lost_reason/opportunity_lost_reason.json",
+      "parents": []
+    },
+    {
+      "doctype": "Opportunity Lost Reason Detail",
+      "module": "CRM",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/opportunity_lost_reason_detail/opportunity_lost_reason_detail.json",
+      "parents": [
+        "Opportunity.lost_reasons"
+      ]
+    },
+    {
+      "doctype": "Opportunity Type",
+      "module": "CRM",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/opportunity_type/opportunity_type.json",
+      "parents": []
+    },
+    {
+      "doctype": "Overdue Payment",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/overdue_payment/overdue_payment.json",
+      "parents": [
+        "Dunning.overdue_payments"
+      ]
+    },
+    {
+      "doctype": "POS Closing Entry",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_closing_entry/pos_closing_entry.json",
+      "parents": []
+    },
+    {
+      "doctype": "POS Closing Entry Detail",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_closing_entry_detail/pos_closing_entry_detail.json",
+      "parents": [
+        "POS Closing Entry.payment_reconciliation"
+      ]
+    },
+    {
+      "doctype": "POS Closing Entry Taxes",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_closing_entry_taxes/pos_closing_entry_taxes.json",
+      "parents": [
+        "POS Closing Entry.taxes"
+      ]
+    },
+    {
+      "doctype": "POS Customer Group",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_customer_group/pos_customer_group.json",
+      "parents": [
+        "POS Profile.customer_groups"
+      ]
+    },
+    {
+      "doctype": "POS Field",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_field/pos_field.json",
+      "parents": [
+        "POS Settings.invoice_fields"
+      ]
+    },
+    {
+      "doctype": "POS Invoice",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_invoice/pos_invoice.json",
+      "parents": []
+    },
+    {
+      "doctype": "POS Invoice Item",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_invoice_item/pos_invoice_item.json",
+      "parents": [
+        "POS Invoice.items"
+      ]
+    },
+    {
+      "doctype": "POS Invoice Merge Log",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_invoice_merge_log/pos_invoice_merge_log.json",
+      "parents": []
+    },
+    {
+      "doctype": "POS Invoice Reference",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_invoice_reference/pos_invoice_reference.json",
+      "parents": [
+        "POS Closing Entry.pos_invoices",
+        "POS Invoice Merge Log.pos_invoices"
+      ]
+    },
+    {
+      "doctype": "POS Item Group",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_item_group/pos_item_group.json",
+      "parents": [
+        "POS Profile.item_groups"
+      ]
+    },
+    {
+      "doctype": "POS Opening Entry",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_opening_entry/pos_opening_entry.json",
+      "parents": []
+    },
+    {
+      "doctype": "POS Opening Entry Detail",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_opening_entry_detail/pos_opening_entry_detail.json",
+      "parents": [
+        "POS Opening Entry.balance_details"
+      ]
+    },
+    {
+      "doctype": "POS Payment Method",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_payment_method/pos_payment_method.json",
+      "parents": [
+        "POS Profile.payments"
+      ]
+    },
+    {
+      "doctype": "POS Profile",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_profile/pos_profile.json",
+      "parents": []
+    },
+    {
+      "doctype": "POS Profile User",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_profile_user/pos_profile_user.json",
+      "parents": [
+        "POS Profile.applicable_for_users"
+      ]
+    },
+    {
+      "doctype": "POS Search Fields",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_search_fields/pos_search_fields.json",
+      "parents": [
+        "POS Settings.pos_search_fields"
+      ]
+    },
+    {
+      "doctype": "POS Settings",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pos_settings/pos_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "PSOA Cost Center",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/psoa_cost_center/psoa_cost_center.json",
+      "parents": [
+        "Process Statement Of Accounts.cost_center"
+      ]
+    },
+    {
+      "doctype": "PSOA Project",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/psoa_project/psoa_project.json",
+      "parents": [
+        "Process Statement Of Accounts.project"
+      ]
+    },
+    {
+      "doctype": "Packed Item",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/packed_item/packed_item.json",
+      "parents": [
+        "Delivery Note.packed_items",
+        "POS Invoice.packed_items",
+        "Quotation.packed_items",
+        "Sales Invoice.packed_items",
+        "Sales Order.packed_items"
+      ]
+    },
+    {
+      "doctype": "Packing Slip",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/packing_slip/packing_slip.json",
+      "parents": []
+    },
+    {
+      "doctype": "Packing Slip Item",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/packing_slip_item/packing_slip_item.json",
+      "parents": [
+        "Packing Slip.items"
+      ]
+    },
+    {
+      "doctype": "Party Account",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/party_account/party_account.json",
+      "parents": [
+        "Customer Group.accounts",
+        "Customer.accounts",
+        "Supplier Group.accounts",
+        "Supplier.accounts"
+      ]
+    },
+    {
+      "doctype": "Party Link",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/party_link/party_link.json",
+      "parents": []
+    },
+    {
+      "doctype": "Party Specific Item",
+      "module": "Selling",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/party_specific_item/party_specific_item.json",
+      "parents": []
+    },
+    {
+      "doctype": "Party Type",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/party_type/party_type.json",
+      "parents": []
+    },
+    {
+      "doctype": "Pause SLA On Status",
+      "module": "Support",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/support/doctype/pause_sla_on_status/pause_sla_on_status.json",
+      "parents": [
+        "Service Level Agreement.pause_sla_on"
+      ]
+    },
+    {
+      "doctype": "Payment Entry",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/payment_entry/payment_entry.json",
+      "parents": []
+    },
+    {
+      "doctype": "Payment Entry Deduction",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/payment_entry_deduction/payment_entry_deduction.json",
+      "parents": [
+        "Payment Entry.deductions"
+      ]
+    },
+    {
+      "doctype": "Payment Entry Reference",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/payment_entry_reference/payment_entry_reference.json",
+      "parents": [
+        "Payment Entry.references"
+      ]
+    },
+    {
+      "doctype": "Payment Gateway Account",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/payment_gateway_account/payment_gateway_account.json",
+      "parents": []
+    },
+    {
+      "doctype": "Payment Ledger Entry",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/payment_ledger_entry/payment_ledger_entry.json",
+      "parents": []
+    },
+    {
+      "doctype": "Payment Order",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/payment_order/payment_order.json",
+      "parents": []
+    },
+    {
+      "doctype": "Payment Order Reference",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/payment_order_reference/payment_order_reference.json",
+      "parents": [
+        "Payment Order.references"
+      ]
+    },
+    {
+      "doctype": "Payment Reconciliation",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": true,
+      "source_path": "erpnext/accounts/doctype/payment_reconciliation/payment_reconciliation.json",
+      "parents": []
+    },
+    {
+      "doctype": "Payment Reconciliation Allocation",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": true,
+      "source_path": "erpnext/accounts/doctype/payment_reconciliation_allocation/payment_reconciliation_allocation.json",
+      "parents": [
+        "Payment Reconciliation.allocation"
+      ]
+    },
+    {
+      "doctype": "Payment Reconciliation Invoice",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": true,
+      "source_path": "erpnext/accounts/doctype/payment_reconciliation_invoice/payment_reconciliation_invoice.json",
+      "parents": [
+        "Payment Reconciliation.invoices"
+      ]
+    },
+    {
+      "doctype": "Payment Reconciliation Payment",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": true,
+      "source_path": "erpnext/accounts/doctype/payment_reconciliation_payment/payment_reconciliation_payment.json",
+      "parents": [
+        "Payment Reconciliation.payments"
+      ]
+    },
+    {
+      "doctype": "Payment Reference",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/payment_reference/payment_reference.json",
+      "parents": [
+        "Payment Request.payment_reference"
+      ]
+    },
+    {
+      "doctype": "Payment Request",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/payment_request/payment_request.json",
+      "parents": []
+    },
+    {
+      "doctype": "Payment Schedule",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/payment_schedule/payment_schedule.json",
+      "parents": [
+        "POS Invoice.payment_schedule",
+        "Purchase Invoice.payment_schedule",
+        "Purchase Order.payment_schedule",
+        "Quotation.payment_schedule",
+        "Sales Invoice.payment_schedule",
+        "Sales Order.payment_schedule"
+      ]
+    },
+    {
+      "doctype": "Payment Term",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/payment_term/payment_term.json",
+      "parents": []
+    },
+    {
+      "doctype": "Payment Terms Template",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/payment_terms_template/payment_terms_template.json",
+      "parents": []
+    },
+    {
+      "doctype": "Payment Terms Template Detail",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/payment_terms_template_detail/payment_terms_template_detail.json",
+      "parents": [
+        "Payment Terms Template.terms"
+      ]
+    },
+    {
+      "doctype": "Pegged Currencies",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pegged_currencies/pegged_currencies.json",
+      "parents": []
+    },
+    {
+      "doctype": "Pegged Currency Details",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pegged_currency_details/pegged_currency_details.json",
+      "parents": [
+        "Pegged Currencies.pegged_currency_item"
+      ]
+    },
+    {
+      "doctype": "Period Closing Voucher",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/period_closing_voucher/period_closing_voucher.json",
+      "parents": []
+    },
+    {
+      "doctype": "Pick List",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/pick_list/pick_list.json",
+      "parents": []
+    },
+    {
+      "doctype": "Pick List Item",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/pick_list_item/pick_list_item.json",
+      "parents": [
+        "Pick List.locations"
+      ]
+    },
+    {
+      "doctype": "Plaid Settings",
+      "module": "ERPNext Integrations",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/erpnext_integrations/doctype/plaid_settings/plaid_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Plant Floor",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/plant_floor/plant_floor.json",
+      "parents": []
+    },
+    {
+      "doctype": "Portal User",
+      "module": "Utilities",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/utilities/doctype/portal_user/portal_user.json",
+      "parents": [
+        "Customer.portal_users",
+        "Supplier.portal_users"
+      ]
+    },
+    {
+      "doctype": "Price List",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/price_list/price_list.json",
+      "parents": []
+    },
+    {
+      "doctype": "Price List Country",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/price_list_country/price_list_country.json",
+      "parents": [
+        "Price List.countries"
+      ]
+    },
+    {
+      "doctype": "Pricing Rule",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pricing_rule/pricing_rule.json",
+      "parents": []
+    },
+    {
+      "doctype": "Pricing Rule Brand",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pricing_rule_brand/pricing_rule_brand.json",
+      "parents": [
+        "Pricing Rule.brands",
+        "Promotional Scheme.brands"
+      ]
+    },
+    {
+      "doctype": "Pricing Rule Detail",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pricing_rule_detail/pricing_rule_detail.json",
+      "parents": [
+        "Delivery Note.pricing_rules",
+        "POS Invoice.pricing_rules",
+        "Purchase Invoice.pricing_rules",
+        "Purchase Order.pricing_rules",
+        "Purchase Receipt.pricing_rules",
+        "Quotation.pricing_rules",
+        "Sales Invoice.pricing_rules",
+        "Sales Order.pricing_rules",
+        "Supplier Quotation.pricing_rules"
+      ]
+    },
+    {
+      "doctype": "Pricing Rule Item Code",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pricing_rule_item_code/pricing_rule_item_code.json",
+      "parents": [
+        "Pricing Rule.items",
+        "Promotional Scheme.items"
+      ]
+    },
+    {
+      "doctype": "Pricing Rule Item Group",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/pricing_rule_item_group/pricing_rule_item_group.json",
+      "parents": [
+        "Pricing Rule.item_groups",
+        "Promotional Scheme.item_groups"
+      ]
+    },
+    {
+      "doctype": "Process Deferred Accounting",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/process_deferred_accounting/process_deferred_accounting.json",
+      "parents": []
+    },
+    {
+      "doctype": "Process Payment Reconciliation",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/process_payment_reconciliation/process_payment_reconciliation.json",
+      "parents": []
+    },
+    {
+      "doctype": "Process Payment Reconciliation Log",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/process_payment_reconciliation_log/process_payment_reconciliation_log.json",
+      "parents": []
+    },
+    {
+      "doctype": "Process Payment Reconciliation Log Allocations",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/process_payment_reconciliation_log_allocations/process_payment_reconciliation_log_allocations.json",
+      "parents": [
+        "Process Payment Reconciliation Log.allocations"
+      ]
+    },
+    {
+      "doctype": "Process Period Closing Voucher",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/process_period_closing_voucher/process_period_closing_voucher.json",
+      "parents": []
+    },
+    {
+      "doctype": "Process Period Closing Voucher Detail",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/process_period_closing_voucher_detail/process_period_closing_voucher_detail.json",
+      "parents": [
+        "Process Period Closing Voucher.normal_balances",
+        "Process Period Closing Voucher.z_opening_balances"
+      ]
+    },
+    {
+      "doctype": "Process Statement Of Accounts",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/process_statement_of_accounts/process_statement_of_accounts.json",
+      "parents": []
+    },
+    {
+      "doctype": "Process Statement Of Accounts CC",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/process_statement_of_accounts_cc/process_statement_of_accounts_cc.json",
+      "parents": [
+        "Process Statement Of Accounts.cc_to"
+      ]
+    },
+    {
+      "doctype": "Process Statement Of Accounts Customer",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/process_statement_of_accounts_customer/process_statement_of_accounts_customer.json",
+      "parents": [
+        "Process Statement Of Accounts.customers"
+      ]
+    },
+    {
+      "doctype": "Process Subscription",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/process_subscription/process_subscription.json",
+      "parents": []
+    },
+    {
+      "doctype": "Product Bundle",
+      "module": "Selling",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/product_bundle/product_bundle.json",
+      "parents": []
+    },
+    {
+      "doctype": "Product Bundle Item",
+      "module": "Selling",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/product_bundle_item/product_bundle_item.json",
+      "parents": [
+        "Product Bundle.items"
+      ]
+    },
+    {
+      "doctype": "Production Plan",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/production_plan/production_plan.json",
+      "parents": []
+    },
+    {
+      "doctype": "Production Plan Item",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/production_plan_item/production_plan_item.json",
+      "parents": [
+        "Production Plan.po_items"
+      ]
+    },
+    {
+      "doctype": "Production Plan Item Reference",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/production_plan_item_reference/production_plan_item_reference.json",
+      "parents": [
+        "Production Plan.prod_plan_references"
+      ]
+    },
+    {
+      "doctype": "Production Plan Material Request",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/production_plan_material_request/production_plan_material_request.json",
+      "parents": [
+        "Master Production Schedule.material_requests",
+        "Production Plan.material_requests"
+      ]
+    },
+    {
+      "doctype": "Production Plan Material Request Warehouse",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/production_plan_material_request_warehouse/production_plan_material_request_warehouse.json",
+      "parents": [
+        "Production Plan.warehouses"
+      ]
+    },
+    {
+      "doctype": "Production Plan Sales Order",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/production_plan_sales_order/production_plan_sales_order.json",
+      "parents": [
+        "Master Production Schedule.sales_orders",
+        "Production Plan.sales_orders"
+      ]
+    },
+    {
+      "doctype": "Production Plan Sub Assembly Item",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/production_plan_sub_assembly_item/production_plan_sub_assembly_item.json",
+      "parents": [
+        "Production Plan.sub_assembly_items"
+      ]
+    },
+    {
+      "doctype": "Proforma Invoice",
+      "module": "Selling",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/proforma_invoice/proforma_invoice.json",
+      "parents": []
+    },
+    {
+      "doctype": "Proforma Invoice Item",
+      "module": "Selling",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/proforma_invoice_item/proforma_invoice_item.json",
+      "parents": [
+        "Proforma Invoice.items"
+      ]
+    },
+    {
+      "doctype": "Project",
+      "module": "Projects",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/projects/doctype/project/project.json",
+      "parents": []
+    },
+    {
+      "doctype": "Project Template",
+      "module": "Projects",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/projects/doctype/project_template/project_template.json",
+      "parents": []
+    },
+    {
+      "doctype": "Project Template Task",
+      "module": "Projects",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/projects/doctype/project_template_task/project_template_task.json",
+      "parents": [
+        "Project Template.tasks"
+      ]
+    },
+    {
+      "doctype": "Project Type",
+      "module": "Projects",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/projects/doctype/project_type/project_type.json",
+      "parents": []
+    },
+    {
+      "doctype": "Project Update",
+      "module": "Projects",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/projects/doctype/project_update/project_update.json",
+      "parents": []
+    },
+    {
+      "doctype": "Project User",
+      "module": "Projects",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/projects/doctype/project_user/project_user.json",
+      "parents": [
+        "Project Update.users",
+        "Project.users"
+      ]
+    },
+    {
+      "doctype": "Projects Settings",
+      "module": "Projects",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/projects/doctype/projects_settings/projects_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Promotional Scheme",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/promotional_scheme/promotional_scheme.json",
+      "parents": []
+    },
+    {
+      "doctype": "Promotional Scheme Price Discount",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/promotional_scheme_price_discount/promotional_scheme_price_discount.json",
+      "parents": [
+        "Promotional Scheme.price_discount_slabs"
+      ]
+    },
+    {
+      "doctype": "Promotional Scheme Product Discount",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/promotional_scheme_product_discount/promotional_scheme_product_discount.json",
+      "parents": [
+        "Promotional Scheme.product_discount_slabs"
+      ]
+    },
+    {
+      "doctype": "Prospect",
+      "module": "CRM",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/prospect/prospect.json",
+      "parents": []
+    },
+    {
+      "doctype": "Prospect Lead",
+      "module": "CRM",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/prospect_lead/prospect_lead.json",
+      "parents": [
+        "Prospect.leads"
+      ]
+    },
+    {
+      "doctype": "Prospect Opportunity",
+      "module": "CRM",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/prospect_opportunity/prospect_opportunity.json",
+      "parents": [
+        "Prospect.opportunities"
+      ]
+    },
+    {
+      "doctype": "Purchase Invoice",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/purchase_invoice/purchase_invoice.json",
+      "parents": []
+    },
+    {
+      "doctype": "Purchase Invoice Advance",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/purchase_invoice_advance/purchase_invoice_advance.json",
+      "parents": [
+        "Purchase Invoice.advances"
+      ]
+    },
+    {
+      "doctype": "Purchase Invoice Item",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/purchase_invoice_item/purchase_invoice_item.json",
+      "parents": [
+        "Purchase Invoice.items"
+      ]
+    },
+    {
+      "doctype": "Purchase Order",
+      "module": "Buying",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/purchase_order/purchase_order.json",
+      "parents": []
+    },
+    {
+      "doctype": "Purchase Order Item",
+      "module": "Buying",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/purchase_order_item/purchase_order_item.json",
+      "parents": [
+        "Purchase Order.items"
+      ]
+    },
+    {
+      "doctype": "Purchase Order Item Supplied",
+      "module": "Buying",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/purchase_order_item_supplied/purchase_order_item_supplied.json",
+      "parents": [
+        "Purchase Order.supplied_items"
+      ]
+    },
+    {
+      "doctype": "Purchase Receipt",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/purchase_receipt/purchase_receipt.json",
+      "parents": []
+    },
+    {
+      "doctype": "Purchase Receipt Item",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/purchase_receipt_item/purchase_receipt_item.json",
+      "parents": [
+        "Purchase Receipt.items"
+      ]
+    },
+    {
+      "doctype": "Purchase Receipt Item Supplied",
+      "module": "Buying",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/purchase_receipt_item_supplied/purchase_receipt_item_supplied.json",
+      "parents": [
+        "Purchase Invoice.supplied_items",
+        "Purchase Receipt.supplied_items"
+      ]
+    },
+    {
+      "doctype": "Purchase Taxes and Charges",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/purchase_taxes_and_charges/purchase_taxes_and_charges.json",
+      "parents": [
+        "Purchase Invoice.taxes",
+        "Purchase Order.taxes",
+        "Purchase Receipt.taxes",
+        "Purchase Taxes and Charges Template.taxes",
+        "Supplier Quotation.taxes"
+      ]
+    },
+    {
+      "doctype": "Purchase Taxes and Charges Template",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/purchase_taxes_and_charges_template/purchase_taxes_and_charges_template.json",
+      "parents": []
+    },
+    {
+      "doctype": "Putaway Rule",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/putaway_rule/putaway_rule.json",
+      "parents": []
+    },
+    {
+      "doctype": "Quality Action",
+      "module": "Quality Management",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/quality_management/doctype/quality_action/quality_action.json",
+      "parents": []
+    },
+    {
+      "doctype": "Quality Action Resolution",
+      "module": "Quality Management",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/quality_management/doctype/quality_action_resolution/quality_action_resolution.json",
+      "parents": [
+        "Quality Action.resolutions"
+      ]
+    },
+    {
+      "doctype": "Quality Feedback",
+      "module": "Quality Management",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/quality_management/doctype/quality_feedback/quality_feedback.json",
+      "parents": []
+    },
+    {
+      "doctype": "Quality Feedback Parameter",
+      "module": "Quality Management",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/quality_management/doctype/quality_feedback_parameter/quality_feedback_parameter.json",
+      "parents": [
+        "Quality Feedback.parameters"
+      ]
+    },
+    {
+      "doctype": "Quality Feedback Template",
+      "module": "Quality Management",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/quality_management/doctype/quality_feedback_template/quality_feedback_template.json",
+      "parents": []
+    },
+    {
+      "doctype": "Quality Feedback Template Parameter",
+      "module": "Quality Management",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/quality_management/doctype/quality_feedback_template_parameter/quality_feedback_template_parameter.json",
+      "parents": [
+        "Quality Feedback Template.parameters"
+      ]
+    },
+    {
+      "doctype": "Quality Goal",
+      "module": "Quality Management",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/quality_management/doctype/quality_goal/quality_goal.json",
+      "parents": []
+    },
+    {
+      "doctype": "Quality Goal Objective",
+      "module": "Quality Management",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/quality_management/doctype/quality_goal_objective/quality_goal_objective.json",
+      "parents": [
+        "Quality Goal.objectives"
+      ]
+    },
+    {
+      "doctype": "Quality Inspection",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/quality_inspection/quality_inspection.json",
+      "parents": []
+    },
+    {
+      "doctype": "Quality Inspection Parameter",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/quality_inspection_parameter/quality_inspection_parameter.json",
+      "parents": []
+    },
+    {
+      "doctype": "Quality Inspection Parameter Group",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/quality_inspection_parameter_group/quality_inspection_parameter_group.json",
+      "parents": []
+    },
+    {
+      "doctype": "Quality Inspection Reading",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/quality_inspection_reading/quality_inspection_reading.json",
+      "parents": [
+        "Quality Inspection.readings"
+      ]
+    },
+    {
+      "doctype": "Quality Inspection Template",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/quality_inspection_template/quality_inspection_template.json",
+      "parents": []
+    },
+    {
+      "doctype": "Quality Meeting",
+      "module": "Quality Management",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/quality_management/doctype/quality_meeting/quality_meeting.json",
+      "parents": []
+    },
+    {
+      "doctype": "Quality Meeting Agenda",
+      "module": "Quality Management",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/quality_management/doctype/quality_meeting_agenda/quality_meeting_agenda.json",
+      "parents": [
+        "Quality Meeting.agenda"
+      ]
+    },
+    {
+      "doctype": "Quality Meeting Minutes",
+      "module": "Quality Management",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/quality_management/doctype/quality_meeting_minutes/quality_meeting_minutes.json",
+      "parents": [
+        "Quality Meeting.minutes"
+      ]
+    },
+    {
+      "doctype": "Quality Procedure",
+      "module": "Quality Management",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/quality_management/doctype/quality_procedure/quality_procedure.json",
+      "parents": []
+    },
+    {
+      "doctype": "Quality Procedure Process",
+      "module": "Quality Management",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/quality_management/doctype/quality_procedure_process/quality_procedure_process.json",
+      "parents": [
+        "Quality Procedure.processes"
+      ]
+    },
+    {
+      "doctype": "Quality Review",
+      "module": "Quality Management",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/quality_management/doctype/quality_review/quality_review.json",
+      "parents": []
+    },
+    {
+      "doctype": "Quality Review Objective",
+      "module": "Quality Management",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/quality_management/doctype/quality_review_objective/quality_review_objective.json",
+      "parents": [
+        "Quality Review.reviews"
+      ]
+    },
+    {
+      "doctype": "Quick Stock Balance",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/quick_stock_balance/quick_stock_balance.json",
+      "parents": []
+    },
+    {
+      "doctype": "Quotation",
+      "module": "Selling",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/quotation/quotation.json",
+      "parents": []
+    },
+    {
+      "doctype": "Quotation Item",
+      "module": "Selling",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/quotation_item/quotation_item.json",
+      "parents": [
+        "Quotation.items"
+      ]
+    },
+    {
+      "doctype": "Quotation Lost Reason",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/quotation_lost_reason/quotation_lost_reason.json",
+      "parents": []
+    },
+    {
+      "doctype": "Quotation Lost Reason Detail",
+      "module": "Setup",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/quotation_lost_reason_detail/quotation_lost_reason_detail.json",
+      "parents": [
+        "Quotation.lost_reasons"
+      ]
+    },
+    {
+      "doctype": "Rename Tool",
+      "module": "Utilities",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/utilities/doctype/rename_tool/rename_tool.json",
+      "parents": []
+    },
+    {
+      "doctype": "Repost Accounting Ledger",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/repost_accounting_ledger/repost_accounting_ledger.json",
+      "parents": []
+    },
+    {
+      "doctype": "Repost Accounting Ledger Items",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/repost_accounting_ledger_items/repost_accounting_ledger_items.json",
+      "parents": [
+        "Repost Accounting Ledger.vouchers"
+      ]
+    },
+    {
+      "doctype": "Repost Allowed Types",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/repost_allowed_types/repost_allowed_types.json",
+      "parents": [
+        "Accounts Settings.repost_allowed_types"
+      ]
+    },
+    {
+      "doctype": "Repost Item Valuation",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/repost_item_valuation/repost_item_valuation.json",
+      "parents": []
+    },
+    {
+      "doctype": "Repost Payment Ledger",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/repost_payment_ledger/repost_payment_ledger.json",
+      "parents": []
+    },
+    {
+      "doctype": "Repost Payment Ledger Items",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/repost_payment_ledger_items/repost_payment_ledger_items.json",
+      "parents": [
+        "Repost Payment Ledger.repost_vouchers"
+      ]
+    },
+    {
+      "doctype": "Request for Quotation",
+      "module": "Buying",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/request_for_quotation/request_for_quotation.json",
+      "parents": []
+    },
+    {
+      "doctype": "Request for Quotation Item",
+      "module": "Buying",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/request_for_quotation_item/request_for_quotation_item.json",
+      "parents": [
+        "Request for Quotation.items"
+      ]
+    },
+    {
+      "doctype": "Request for Quotation Supplier",
+      "module": "Buying",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/request_for_quotation_supplier/request_for_quotation_supplier.json",
+      "parents": [
+        "Request for Quotation.suppliers"
+      ]
+    },
+    {
+      "doctype": "Routing",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/routing/routing.json",
+      "parents": []
+    },
+    {
+      "doctype": "SLA Fulfilled On Status",
+      "module": "Support",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/support/doctype/sla_fulfilled_on_status/sla_fulfilled_on_status.json",
+      "parents": [
+        "Service Level Agreement.sla_fulfilled_on"
+      ]
+    },
+    {
+      "doctype": "SMS Center",
+      "module": "Selling",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/sms_center/sms_center.json",
+      "parents": []
+    },
+    {
+      "doctype": "Sales Forecast",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/sales_forecast/sales_forecast.json",
+      "parents": []
+    },
+    {
+      "doctype": "Sales Forecast Item",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/sales_forecast_item/sales_forecast_item.json",
+      "parents": [
+        "Sales Forecast.items",
+        "Sales Forecast.selected_items"
+      ]
+    },
+    {
+      "doctype": "Sales Invoice",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/sales_invoice/sales_invoice.json",
+      "parents": []
+    },
+    {
+      "doctype": "Sales Invoice Advance",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/sales_invoice_advance/sales_invoice_advance.json",
+      "parents": [
+        "POS Invoice.advances",
+        "Sales Invoice.advances"
+      ]
+    },
+    {
+      "doctype": "Sales Invoice Item",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/sales_invoice_item/sales_invoice_item.json",
+      "parents": [
+        "Sales Invoice.items"
+      ]
+    },
+    {
+      "doctype": "Sales Invoice Payment",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/sales_invoice_payment/sales_invoice_payment.json",
+      "parents": [
+        "POS Invoice.payments",
+        "Sales Invoice.payments"
+      ]
+    },
+    {
+      "doctype": "Sales Invoice Reference",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/sales_invoice_reference/sales_invoice_reference.json",
+      "parents": [
+        "POS Closing Entry.sales_invoices"
+      ]
+    },
+    {
+      "doctype": "Sales Invoice Timesheet",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/sales_invoice_timesheet/sales_invoice_timesheet.json",
+      "parents": [
+        "POS Invoice.timesheets",
+        "Sales Invoice.timesheets"
+      ]
+    },
+    {
+      "doctype": "Sales Order",
+      "module": "Selling",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/sales_order/sales_order.json",
+      "parents": []
+    },
+    {
+      "doctype": "Sales Order Item",
+      "module": "Selling",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/sales_order_item/sales_order_item.json",
+      "parents": [
+        "Sales Order.items"
+      ]
+    },
+    {
+      "doctype": "Sales Partner",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/sales_partner/sales_partner.json",
+      "parents": []
+    },
+    {
+      "doctype": "Sales Partner Item",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/sales_partner_item/sales_partner_item.json",
+      "parents": [
+        "Promotional Scheme.sales_partner"
+      ]
+    },
+    {
+      "doctype": "Sales Partner Type",
+      "module": "Selling",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/sales_partner_type/sales_partner_type.json",
+      "parents": []
+    },
+    {
+      "doctype": "Sales Person",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/sales_person/sales_person.json",
+      "parents": []
+    },
+    {
+      "doctype": "Sales Stage",
+      "module": "CRM",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/crm/doctype/sales_stage/sales_stage.json",
+      "parents": []
+    },
+    {
+      "doctype": "Sales Taxes and Charges",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/sales_taxes_and_charges/sales_taxes_and_charges.json",
+      "parents": [
+        "Delivery Note.taxes",
+        "POS Invoice.taxes",
+        "Quotation.taxes",
+        "Sales Invoice.taxes",
+        "Sales Order.taxes",
+        "Sales Taxes and Charges Template.taxes"
+      ]
+    },
+    {
+      "doctype": "Sales Taxes and Charges Template",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/sales_taxes_and_charges_template/sales_taxes_and_charges_template.json",
+      "parents": []
+    },
+    {
+      "doctype": "Sales Team",
+      "module": "Selling",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/sales_team/sales_team.json",
+      "parents": [
+        "Customer.sales_team",
+        "Delivery Note.sales_team",
+        "POS Invoice.sales_team",
+        "Sales Invoice.sales_team",
+        "Sales Order.sales_team"
+      ]
+    },
+    {
+      "doctype": "Selling Settings",
+      "module": "Selling",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/selling_settings/selling_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Serial No",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/serial_no/serial_no.json",
+      "parents": []
+    },
+    {
+      "doctype": "Serial and Batch Bundle",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/serial_and_batch_bundle/serial_and_batch_bundle.json",
+      "parents": []
+    },
+    {
+      "doctype": "Serial and Batch Entry",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/serial_and_batch_entry/serial_and_batch_entry.json",
+      "parents": [
+        "Serial and Batch Bundle.entries",
+        "Stock Reservation Entry.sb_entries"
+      ]
+    },
+    {
+      "doctype": "Service Day",
+      "module": "Support",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/support/doctype/service_day/service_day.json",
+      "parents": [
+        "Service Level Agreement.support_and_resolution"
+      ]
+    },
+    {
+      "doctype": "Service Level Agreement",
+      "module": "Support",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/support/doctype/service_level_agreement/service_level_agreement.json",
+      "parents": []
+    },
+    {
+      "doctype": "Service Level Priority",
+      "module": "Support",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/support/doctype/service_level_priority/service_level_priority.json",
+      "parents": [
+        "Service Level Agreement.priorities"
+      ]
+    },
+    {
+      "doctype": "Share Balance",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/share_balance/share_balance.json",
+      "parents": [
+        "Shareholder.share_balance"
+      ]
+    },
+    {
+      "doctype": "Share Transfer",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/share_transfer/share_transfer.json",
+      "parents": []
+    },
+    {
+      "doctype": "Share Type",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/share_type/share_type.json",
+      "parents": []
+    },
+    {
+      "doctype": "Shareholder",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/shareholder/shareholder.json",
+      "parents": []
+    },
+    {
+      "doctype": "Shipment",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/shipment/shipment.json",
+      "parents": []
+    },
+    {
+      "doctype": "Shipment Delivery Note",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/shipment_delivery_note/shipment_delivery_note.json",
+      "parents": [
+        "Shipment.shipment_delivery_note"
+      ]
+    },
+    {
+      "doctype": "Shipment Parcel",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/shipment_parcel/shipment_parcel.json",
+      "parents": [
+        "Shipment.shipment_parcel"
+      ]
+    },
+    {
+      "doctype": "Shipment Parcel Template",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/shipment_parcel_template/shipment_parcel_template.json",
+      "parents": []
+    },
+    {
+      "doctype": "Shipping Rule",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/shipping_rule/shipping_rule.json",
+      "parents": []
+    },
+    {
+      "doctype": "Shipping Rule Condition",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/shipping_rule_condition/shipping_rule_condition.json",
+      "parents": [
+        "Shipping Rule.conditions"
+      ]
+    },
+    {
+      "doctype": "Shipping Rule Country",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/shipping_rule_country/shipping_rule_country.json",
+      "parents": [
+        "Shipping Rule.countries"
+      ]
+    },
+    {
+      "doctype": "South Africa VAT Account",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/south_africa_vat_account/south_africa_vat_account.json",
+      "parents": [
+        "South Africa VAT Settings.vat_accounts"
+      ]
+    },
+    {
+      "doctype": "South Africa VAT Settings",
+      "module": "Regional",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/regional/doctype/south_africa_vat_settings/south_africa_vat_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Stock Closing Balance",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/stock_closing_balance/stock_closing_balance.json",
+      "parents": []
+    },
+    {
+      "doctype": "Stock Closing Entry",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/stock_closing_entry/stock_closing_entry.json",
+      "parents": []
+    },
+    {
+      "doctype": "Stock Entry",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/stock_entry/stock_entry.json",
+      "parents": []
+    },
+    {
+      "doctype": "Stock Entry Detail",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/stock_entry_detail/stock_entry_detail.json",
+      "parents": [
+        "Stock Entry.items"
+      ]
+    },
+    {
+      "doctype": "Stock Entry Type",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/stock_entry_type/stock_entry_type.json",
+      "parents": []
+    },
+    {
+      "doctype": "Stock Ledger Entry",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/stock_ledger_entry/stock_ledger_entry.json",
+      "parents": []
+    },
+    {
+      "doctype": "Stock Reconciliation",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/stock_reconciliation/stock_reconciliation.json",
+      "parents": []
+    },
+    {
+      "doctype": "Stock Reconciliation Item",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/stock_reconciliation_item/stock_reconciliation_item.json",
+      "parents": [
+        "Stock Reconciliation.items"
+      ]
+    },
+    {
+      "doctype": "Stock Reposting Settings",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/stock_reposting_settings/stock_reposting_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Stock Reservation Entry",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.json",
+      "parents": []
+    },
+    {
+      "doctype": "Stock Settings",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/stock_settings/stock_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Sub Operation",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/sub_operation/sub_operation.json",
+      "parents": [
+        "Operation.sub_operations"
+      ]
+    },
+    {
+      "doctype": "Subcontracting BOM",
+      "module": "Subcontracting",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/subcontracting/doctype/subcontracting_bom/subcontracting_bom.json",
+      "parents": []
+    },
+    {
+      "doctype": "Subcontracting Inward Order",
+      "module": "Subcontracting",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/subcontracting/doctype/subcontracting_inward_order/subcontracting_inward_order.json",
+      "parents": []
+    },
+    {
+      "doctype": "Subcontracting Inward Order Item",
+      "module": "Subcontracting",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/subcontracting/doctype/subcontracting_inward_order_item/subcontracting_inward_order_item.json",
+      "parents": [
+        "Subcontracting Inward Order.items"
+      ]
+    },
+    {
+      "doctype": "Subcontracting Inward Order Received Item",
+      "module": "Subcontracting",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/subcontracting/doctype/subcontracting_inward_order_received_item/subcontracting_inward_order_received_item.json",
+      "parents": [
+        "Subcontracting Inward Order.received_items"
+      ]
+    },
+    {
+      "doctype": "Subcontracting Inward Order Secondary Item",
+      "module": "Subcontracting",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/subcontracting/doctype/subcontracting_inward_order_secondary_item/subcontracting_inward_order_secondary_item.json",
+      "parents": [
+        "Subcontracting Inward Order.secondary_items"
+      ]
+    },
+    {
+      "doctype": "Subcontracting Inward Order Service Item",
+      "module": "Subcontracting",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/subcontracting/doctype/subcontracting_inward_order_service_item/subcontracting_inward_order_service_item.json",
+      "parents": [
+        "Subcontracting Inward Order.service_items"
+      ]
+    },
+    {
+      "doctype": "Subcontracting Order",
+      "module": "Subcontracting",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/subcontracting/doctype/subcontracting_order/subcontracting_order.json",
+      "parents": []
+    },
+    {
+      "doctype": "Subcontracting Order Item",
+      "module": "Subcontracting",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/subcontracting/doctype/subcontracting_order_item/subcontracting_order_item.json",
+      "parents": [
+        "Subcontracting Order.items"
+      ]
+    },
+    {
+      "doctype": "Subcontracting Order Service Item",
+      "module": "Subcontracting",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/subcontracting/doctype/subcontracting_order_service_item/subcontracting_order_service_item.json",
+      "parents": [
+        "Subcontracting Order.service_items"
+      ]
+    },
+    {
+      "doctype": "Subcontracting Order Supplied Item",
+      "module": "Subcontracting",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/subcontracting/doctype/subcontracting_order_supplied_item/subcontracting_order_supplied_item.json",
+      "parents": [
+        "Subcontracting Order.supplied_items"
+      ]
+    },
+    {
+      "doctype": "Subcontracting Receipt",
+      "module": "Subcontracting",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/subcontracting/doctype/subcontracting_receipt/subcontracting_receipt.json",
+      "parents": []
+    },
+    {
+      "doctype": "Subcontracting Receipt Item",
+      "module": "Subcontracting",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/subcontracting/doctype/subcontracting_receipt_item/subcontracting_receipt_item.json",
+      "parents": [
+        "Subcontracting Receipt.items"
+      ]
+    },
+    {
+      "doctype": "Subcontracting Receipt Supplied Item",
+      "module": "Subcontracting",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/subcontracting/doctype/subcontracting_receipt_supplied_item/subcontracting_receipt_supplied_item.json",
+      "parents": [
+        "Subcontracting Receipt.supplied_items"
+      ]
+    },
+    {
+      "doctype": "Subscription",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/subscription/subscription.json",
+      "parents": []
+    },
+    {
+      "doctype": "Subscription Invoice",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/subscription_invoice/subscription_invoice.json",
+      "parents": []
+    },
+    {
+      "doctype": "Subscription Plan",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/subscription_plan/subscription_plan.json",
+      "parents": []
+    },
+    {
+      "doctype": "Subscription Plan Detail",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/subscription_plan_detail/subscription_plan_detail.json",
+      "parents": [
+        "Payment Request.subscription_plans",
+        "Subscription.plans"
+      ]
+    },
+    {
+      "doctype": "Subscription Settings",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/subscription_settings/subscription_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Supplier",
+      "module": "Buying",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/supplier/supplier.json",
+      "parents": []
+    },
+    {
+      "doctype": "Supplier Group",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/supplier_group/supplier_group.json",
+      "parents": []
+    },
+    {
+      "doctype": "Supplier Group Item",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/supplier_group_item/supplier_group_item.json",
+      "parents": [
+        "Promotional Scheme.supplier_group"
+      ]
+    },
+    {
+      "doctype": "Supplier Item",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/supplier_item/supplier_item.json",
+      "parents": [
+        "Promotional Scheme.supplier"
+      ]
+    },
+    {
+      "doctype": "Supplier Number At Customer",
+      "module": "Selling",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/selling/doctype/supplier_number_at_customer/supplier_number_at_customer.json",
+      "parents": [
+        "Customer.supplier_numbers"
+      ]
+    },
+    {
+      "doctype": "Supplier Quotation",
+      "module": "Buying",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/supplier_quotation/supplier_quotation.json",
+      "parents": []
+    },
+    {
+      "doctype": "Supplier Quotation Item",
+      "module": "Buying",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/supplier_quotation_item/supplier_quotation_item.json",
+      "parents": [
+        "Supplier Quotation.items"
+      ]
+    },
+    {
+      "doctype": "Supplier Scorecard",
+      "module": "Buying",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/supplier_scorecard/supplier_scorecard.json",
+      "parents": []
+    },
+    {
+      "doctype": "Supplier Scorecard Criteria",
+      "module": "Buying",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/supplier_scorecard_criteria/supplier_scorecard_criteria.json",
+      "parents": []
+    },
+    {
+      "doctype": "Supplier Scorecard Period",
+      "module": "Buying",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/supplier_scorecard_period/supplier_scorecard_period.json",
+      "parents": []
+    },
+    {
+      "doctype": "Supplier Scorecard Scoring Criteria",
+      "module": "Buying",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/supplier_scorecard_scoring_criteria/supplier_scorecard_scoring_criteria.json",
+      "parents": [
+        "Supplier Scorecard Period.criteria",
+        "Supplier Scorecard.criteria"
+      ]
+    },
+    {
+      "doctype": "Supplier Scorecard Scoring Standing",
+      "module": "Buying",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/supplier_scorecard_scoring_standing/supplier_scorecard_scoring_standing.json",
+      "parents": [
+        "Supplier Scorecard.standings"
+      ]
+    },
+    {
+      "doctype": "Supplier Scorecard Scoring Variable",
+      "module": "Buying",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/supplier_scorecard_scoring_variable/supplier_scorecard_scoring_variable.json",
+      "parents": [
+        "Supplier Scorecard Period.variables"
+      ]
+    },
+    {
+      "doctype": "Supplier Scorecard Standing",
+      "module": "Buying",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/supplier_scorecard_standing/supplier_scorecard_standing.json",
+      "parents": []
+    },
+    {
+      "doctype": "Supplier Scorecard Variable",
+      "module": "Buying",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/buying/doctype/supplier_scorecard_variable/supplier_scorecard_variable.json",
+      "parents": []
+    },
+    {
+      "doctype": "Support Search Source",
+      "module": "Support",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/support/doctype/support_search_source/support_search_source.json",
+      "parents": [
+        "Support Settings.search_apis"
+      ]
+    },
+    {
+      "doctype": "Support Settings",
+      "module": "Support",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/support/doctype/support_settings/support_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Target Detail",
+      "module": "Setup",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/target_detail/target_detail.json",
+      "parents": [
+        "Sales Partner.targets",
+        "Sales Person.targets",
+        "Territory.targets"
+      ]
+    },
+    {
+      "doctype": "Task",
+      "module": "Projects",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/projects/doctype/task/task.json",
+      "parents": []
+    },
+    {
+      "doctype": "Task Depends On",
+      "module": "Projects",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/projects/doctype/task_depends_on/task_depends_on.json",
+      "parents": [
+        "Task.depends_on"
+      ]
+    },
+    {
+      "doctype": "Task Type",
+      "module": "Projects",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/projects/doctype/task_type/task_type.json",
+      "parents": []
+    },
+    {
+      "doctype": "Tax Category",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/tax_category/tax_category.json",
+      "parents": []
+    },
+    {
+      "doctype": "Tax Rule",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/tax_rule/tax_rule.json",
+      "parents": []
+    },
+    {
+      "doctype": "Tax Withholding Account",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/tax_withholding_account/tax_withholding_account.json",
+      "parents": [
+        "Tax Withholding Category.accounts"
+      ]
+    },
+    {
+      "doctype": "Tax Withholding Category",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/tax_withholding_category/tax_withholding_category.json",
+      "parents": []
+    },
+    {
+      "doctype": "Tax Withholding Entry",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/tax_withholding_entry/tax_withholding_entry.json",
+      "parents": [
+        "Journal Entry.tax_withholding_entries",
+        "Payment Entry.tax_withholding_entries",
+        "Purchase Invoice.tax_withholding_entries",
+        "Sales Invoice.tax_withholding_entries"
+      ]
+    },
+    {
+      "doctype": "Tax Withholding Group",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/tax_withholding_group/tax_withholding_group.json",
+      "parents": []
+    },
+    {
+      "doctype": "Tax Withholding Rate",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/tax_withholding_rate/tax_withholding_rate.json",
+      "parents": [
+        "Tax Withholding Category.rates"
+      ]
+    },
+    {
+      "doctype": "Telephony Call Type",
+      "module": "Telephony",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/telephony/doctype/telephony_call_type/telephony_call_type.json",
+      "parents": []
+    },
+    {
+      "doctype": "Terms and Conditions",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/terms_and_conditions/terms_and_conditions.json",
+      "parents": []
+    },
+    {
+      "doctype": "Territory",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/territory/territory.json",
+      "parents": []
+    },
+    {
+      "doctype": "Territory Item",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/territory_item/territory_item.json",
+      "parents": [
+        "Promotional Scheme.territory"
+      ]
+    },
+    {
+      "doctype": "Timesheet",
+      "module": "Projects",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/projects/doctype/timesheet/timesheet.json",
+      "parents": []
+    },
+    {
+      "doctype": "Timesheet Detail",
+      "module": "Projects",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/projects/doctype/timesheet_detail/timesheet_detail.json",
+      "parents": [
+        "Timesheet.time_logs"
+      ]
+    },
+    {
+      "doctype": "Transaction Deletion Record",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/transaction_deletion_record/transaction_deletion_record.json",
+      "parents": []
+    },
+    {
+      "doctype": "Transaction Deletion Record Details",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/transaction_deletion_record_details/transaction_deletion_record_details.json",
+      "parents": [
+        "Transaction Deletion Record.doctypes"
+      ]
+    },
+    {
+      "doctype": "Transaction Deletion Record Item",
+      "module": "Setup",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/transaction_deletion_record_item/transaction_deletion_record_item.json",
+      "parents": [
+        "Transaction Deletion Record.doctypes_to_be_ignored"
+      ]
+    },
+    {
+      "doctype": "Transaction Deletion Record To Delete",
+      "module": "Setup",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/transaction_deletion_record_to_delete/transaction_deletion_record_to_delete.json",
+      "parents": [
+        "Transaction Deletion Record.doctypes_to_delete"
+      ]
+    },
+    {
+      "doctype": "UAE VAT Account",
+      "module": "Regional",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/regional/doctype/uae_vat_account/uae_vat_account.json",
+      "parents": [
+        "UAE VAT Settings.uae_vat_accounts"
+      ]
+    },
+    {
+      "doctype": "UAE VAT Settings",
+      "module": "Regional",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/regional/doctype/uae_vat_settings/uae_vat_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "UOM",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/uom/uom.json",
+      "parents": []
+    },
+    {
+      "doctype": "UOM Category",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/uom_category/uom_category.json",
+      "parents": []
+    },
+    {
+      "doctype": "UOM Conversion Detail",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/uom_conversion_detail/uom_conversion_detail.json",
+      "parents": [
+        "Item.uoms"
+      ]
+    },
+    {
+      "doctype": "UOM Conversion Factor",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/uom_conversion_factor/uom_conversion_factor.json",
+      "parents": []
+    },
+    {
+      "doctype": "Unreconcile Payment",
+      "module": "Accounts",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/unreconcile_payment/unreconcile_payment.json",
+      "parents": []
+    },
+    {
+      "doctype": "Unreconcile Payment Entries",
+      "module": "Accounts",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/accounts/doctype/unreconcile_payment_entries/unreconcile_payment_entries.json",
+      "parents": [
+        "Unreconcile Payment.allocations"
+      ]
+    },
+    {
+      "doctype": "Variant Field",
+      "module": "Stock",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/variant_field/variant_field.json",
+      "parents": [
+        "Item Variant Settings.fields"
+      ]
+    },
+    {
+      "doctype": "Vehicle",
+      "module": "Setup",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/vehicle/vehicle.json",
+      "parents": []
+    },
+    {
+      "doctype": "Video",
+      "module": "Utilities",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/utilities/doctype/video/video.json",
+      "parents": []
+    },
+    {
+      "doctype": "Video Settings",
+      "module": "Utilities",
+      "is_child": false,
+      "is_single": true,
+      "is_virtual": false,
+      "source_path": "erpnext/utilities/doctype/video_settings/video_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Voice Call Settings",
+      "module": "Telephony",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/telephony/doctype/voice_call_settings/voice_call_settings.json",
+      "parents": []
+    },
+    {
+      "doctype": "Warehouse",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/warehouse/warehouse.json",
+      "parents": []
+    },
+    {
+      "doctype": "Warehouse Type",
+      "module": "Stock",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/stock/doctype/warehouse_type/warehouse_type.json",
+      "parents": []
+    },
+    {
+      "doctype": "Warranty Claim",
+      "module": "Support",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/support/doctype/warranty_claim/warranty_claim.json",
+      "parents": []
+    },
+    {
+      "doctype": "Website Attribute",
+      "module": "Portal",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/portal/doctype/website_attribute/website_attribute.json",
+      "parents": []
+    },
+    {
+      "doctype": "Website Filter Field",
+      "module": "Portal",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/portal/doctype/website_filter_field/website_filter_field.json",
+      "parents": []
+    },
+    {
+      "doctype": "Website Item Group",
+      "module": "Setup",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/setup/doctype/website_item_group/website_item_group.json",
+      "parents": []
+    },
+    {
+      "doctype": "Work Order",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/work_order/work_order.json",
+      "parents": []
+    },
+    {
+      "doctype": "Work Order Additional Item",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": true,
+      "source_path": "erpnext/manufacturing/doctype/work_order_additional_item/work_order_additional_item.json",
+      "parents": [
+        "Work Order.non_stock_items",
+        "Work Order.secondary_items"
+      ]
+    },
+    {
+      "doctype": "Work Order Item",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/work_order_item/work_order_item.json",
+      "parents": [
+        "Work Order.required_items"
+      ]
+    },
+    {
+      "doctype": "Work Order Operation",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/work_order_operation/work_order_operation.json",
+      "parents": [
+        "Work Order.operations"
+      ]
+    },
+    {
+      "doctype": "Workstation",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/workstation/workstation.json",
+      "parents": []
+    },
+    {
+      "doctype": "Workstation Cost",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/workstation_cost/workstation_cost.json",
+      "parents": [
+        "Workstation Type.workstation_costs",
+        "Workstation.workstation_costs"
+      ]
+    },
+    {
+      "doctype": "Workstation Operating Component",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/workstation_operating_component/workstation_operating_component.json",
+      "parents": []
+    },
+    {
+      "doctype": "Workstation Operating Component Account",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/workstation_operating_component_account/workstation_operating_component_account.json",
+      "parents": [
+        "Workstation Operating Component.accounts"
+      ]
+    },
+    {
+      "doctype": "Workstation Type",
+      "module": "Manufacturing",
+      "is_child": false,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/workstation_type/workstation_type.json",
+      "parents": []
+    },
+    {
+      "doctype": "Workstation Working Hour",
+      "module": "Manufacturing",
+      "is_child": true,
+      "is_single": false,
+      "is_virtual": false,
+      "source_path": "erpnext/manufacturing/doctype/workstation_working_hour/workstation_working_hour.json",
+      "parents": [
+        "Workstation.working_hours"
+      ]
+    }
+  ]
+}

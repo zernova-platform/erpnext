@@ -1,0 +1,136 @@
+x-app: &app
+  image: ${IBTINEX_IMAGE:?An exact IBTINEX image is required}
+  platform: linux/amd64
+  restart: unless-stopped
+  labels:
+    com.ibtinex.installation: ${INSTALLATION_ID:?Installation ownership is required}
+  volumes:
+    - sites:/home/frappe/frappe-bench/sites
+
+x-ready: &ready
+  configurator:
+    condition: service_completed_successfully
+
+services:
+  db:
+    image: ${MARIADB_IMAGE:?A pinned MariaDB image is required}
+    platform: linux/amd64
+    restart: unless-stopped
+    labels:
+      com.ibtinex.installation: ${INSTALLATION_ID}
+    command: [--character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci, --skip-character-set-client-handshake, --innodb-snapshot-isolation=OFF]
+    environment:
+      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/db_password
+    secrets: [db_password]
+    volumes: [db-data:/var/lib/mysql]
+    healthcheck:
+      test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+      start_period: 15s
+  redis-cache:
+    image: ${REDIS_IMAGE:?A pinned Redis image is required}
+    platform: linux/amd64
+    restart: unless-stopped
+    labels:
+      com.ibtinex.installation: ${INSTALLATION_ID}
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  redis-queue:
+    image: ${REDIS_IMAGE}
+    platform: linux/amd64
+    restart: unless-stopped
+    labels:
+      com.ibtinex.installation: ${INSTALLATION_ID}
+    volumes: [redis-queue-data:/data]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  configurator:
+    <<: *app
+    restart: 'no'
+    command: [python, /opt/ibtinex/configure.py]
+    depends_on:
+      db: {condition: service_healthy}
+      redis-cache: {condition: service_healthy}
+      redis-queue: {condition: service_healthy}
+  create-site:
+    <<: *app
+    profiles: [setup]
+    restart: 'no'
+    user: '0:0'
+    entrypoint: [/home/frappe/frappe-bench/env/bin/python, /opt/ibtinex/bootstrap.py]
+    environment:
+      SITE_NAME: ${SITE_NAME:?A site name is required}
+      IBTINEX_STARTER_DATA: ${IBTINEX_STARTER_DATA:-none}
+    secrets: [db_password, admin_password]
+    depends_on: *ready
+  backend:
+    <<: *app
+    environment:
+      SITE_NAME: ${SITE_NAME}
+    depends_on: *ready
+    healthcheck:
+      test: [CMD, /home/frappe/frappe-bench/env/bin/python, /opt/ibtinex/healthcheck.py]
+      interval: 10s
+      timeout: 8s
+      retries: 30
+      start_period: 30s
+  websocket:
+    <<: *app
+    command: [node, /home/frappe/frappe-bench/apps/frappe/socketio.js]
+    depends_on: *ready
+  queue-short:
+    <<: *app
+    command: [bench, worker, --queue, 'short,default']
+    depends_on: *ready
+  queue-long:
+    <<: *app
+    command: [bench, worker, --queue, 'long,default,short']
+    depends_on: *ready
+  scheduler:
+    <<: *app
+    command: [bench, schedule]
+    depends_on: *ready
+  frontend:
+    <<: *app
+    command: [nginx-entrypoint.sh]
+    stop_signal: SIGQUIT
+    stop_grace_period: 10s
+    environment:
+      BACKEND: backend:8000
+      SOCKETIO: websocket:9000
+      FRAPPE_SITE_NAME_HEADER: ${SITE_NAME}
+      UPSTREAM_REAL_IP_ADDRESS: 127.0.0.1
+      UPSTREAM_REAL_IP_HEADER: X-Forwarded-For
+      UPSTREAM_REAL_IP_RECURSIVE: 'off'
+      TRUST_UPSTREAM_FORWARDED_PROTO: 'off'
+      CLIENT_MAX_BODY_SIZE: 50m
+      PROXY_READ_TIMEOUT: '120'
+    ports:
+      - '127.0.0.1:${HTTP_PORT:?An available local port is required}:8080'
+    depends_on:
+      backend: {condition: service_healthy}
+      websocket: {condition: service_started}
+
+volumes:
+  sites:
+    labels: {com.ibtinex.installation: '${INSTALLATION_ID}'}
+  db-data:
+    labels: {com.ibtinex.installation: '${INSTALLATION_ID}'}
+  redis-queue-data:
+    labels: {com.ibtinex.installation: '${INSTALLATION_ID}'}
+networks:
+  default:
+    labels: {com.ibtinex.installation: '${INSTALLATION_ID}'}
+secrets:
+  db_password:
+    file: .secrets/db-password
+  admin_password:
+    file: .secrets/admin-password
