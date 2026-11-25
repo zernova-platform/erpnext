@@ -7,6 +7,7 @@ Runtime posting/ledger/stock checks are seed.verify(), not mocked here.
 """
 
 import ast
+from copy import deepcopy
 import importlib.util
 import json
 import os
@@ -106,6 +107,46 @@ class CoverageContract(unittest.TestCase):
 			coverage.doctype_coverage([], records, counts)
 
 
+class NativeNotificationContract(unittest.TestCase):
+	def setUp(self):
+		self.fields = [{"fieldname": key, "fieldtype": kind} for key, kind in (
+			("enabled", "Check"), ("is_standard", "Check"), ("channel", "Select"),
+			("subject", "Data"), ("message", "Code"), ("email_template", "Link"),
+			("sender_email", "Data"))]
+		self.fields.append({"fieldname": "recipients", "fieldtype": "Table", "options": "Notification Recipient"})
+		self.children = {"Notification Recipient": [{"fieldname": key, "fieldtype": "Data"}
+			for key in ("receiver_by_role", "receiver_by_document_field", "cc", "bcc", "condition")]}
+		self.expected = {"name": "Error Log", "enabled": 0, "is_standard": 0, "channel": "Email",
+			"subject": "[Error] {{ doc.method }}", "message": "Pinned upstream template",
+			"recipients": [{"receiver_by_role": "System Manager"}]}
+
+	def matches(self, actual):
+		return plan.matches_notification_template(actual, self.expected, self.fields, self.children)
+
+	def test_native_bookkeeping_and_empty_defaults_are_not_customization(self):
+		actual = deepcopy(self.expected)
+		actual.update(owner="Administrator", creation="2026-11-25", modified="2026-11-25", sender_email="")
+		actual["recipients"][0].update(name="random-native-id", parent="Error Log", idx=1, cc="")
+		self.assertTrue(self.matches(actual))
+
+	def test_enabled_or_changed_delivery_rules_are_rejected(self):
+		for key, value in (("enabled", 1), ("is_standard", 1), ("channel", "SMS"),
+			("name", "Customer Error Log"), ("message", "Custom template"),
+			("sender_email", "custom@example.invalid"), ("email_template", "Custom Template")):
+			with self.subTest(field=key):
+				actual = deepcopy(self.expected)
+				actual[key] = value
+				self.assertFalse(self.matches(actual))
+
+	def test_changed_or_added_recipient_is_rejected(self):
+		actual = deepcopy(self.expected)
+		actual["recipients"][0]["receiver_by_role"] = "Customer"
+		self.assertFalse(self.matches(actual))
+		actual = deepcopy(self.expected)
+		actual["recipients"].append({"receiver_by_document_field": "owner"})
+		self.assertFalse(self.matches(actual))
+
+
 class PinnedSchemaPayloads(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
@@ -160,6 +201,16 @@ class PinnedSchemaPayloads(unittest.TestCase):
 				with self.subTest(single=node.args[0].value, line=node.lineno):
 					self.check_values(node.args[0].value, node.args[1])
 		self.assertGreater(checked, 60)
+
+	def test_framework_templates_are_exactly_the_known_disabled_email_rules(self):
+		root = os.environ.get("FRAPPE_SOURCE_ROOT")
+		if not root:
+			root = next(path for path in (REPO.parent / "frappe", REPO.parent / "frappe-baseline")
+				if (path / "frappe" / "__init__.py").exists())
+		folder = Path(root) / "frappe/email/doctype/notification/templates"
+		templates = [json.loads(path.read_text()) for path in folder.glob("*/*.json")]
+		self.assertEqual({row["name"] for row in templates}, set(plan.FRAMEWORK_NOTIFICATION_TEMPLATES))
+		self.assertTrue(all(row["enabled"] == 0 and row["channel"] == "Email" for row in templates))
 
 
 if __name__ == "__main__":

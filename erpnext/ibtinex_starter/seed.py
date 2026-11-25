@@ -15,9 +15,9 @@ from decimal import Decimal
 import frappe
 
 from erpnext.ibtinex_starter.plan import (
-	ABBR, BUSINESS_DOCTYPES, COMPANY, COUNTRY, CURRENCY, MARKER_KEY,
+	ABBR, BUSINESS_DOCTYPES, COMPANY, COUNTRY, CURRENCY, FRAMEWORK_NOTIFICATION_TEMPLATES, MARKER_KEY,
 	MODULE_COVERAGE, REQUIRED_SITE_FLAGS, SEED_VERSION, coverage_manifest,
-	seed_date, validate_request,
+	matches_notification_template, seed_date, validate_request,
 )
 from erpnext.ibtinex_starter.coverage import doctype_coverage, snapshot_counts
 
@@ -52,15 +52,33 @@ def _assert_fresh():
 	for doctype in ("Email Account", "Webhook", "Email Campaign"):
 		if frappe.db.count(doctype):
 			raise ValueError(f"Fresh starter site must not contain configured {doctype} records.")
-	for notification in frappe.get_all("Notification", fields=["name", "is_standard", "channel"]):
-		if notification.name not in NATIVE_EMAIL_ALERTS or not notification.is_standard or notification.channel != "Email":
-			raise ValueError("Fresh starter site contains a custom notification; no data was changed.")
+	_assert_native_notifications()
 	if frappe.db.get_single_value("SMS Settings", "sms_gateway_url"):
 		raise ValueError("Fresh starter site must not have an SMS gateway.")
 	if frappe.db.get_single_value("Plaid Settings", "enabled"):
 		raise ValueError("Fresh starter site must not have Plaid enabled.")
 	if frappe.db.count("Email Queue"):
 		raise ValueError("Fresh starter site has queued email; no data was changed.")
+
+
+def _assert_native_notifications():
+	from frappe.email.doctype.notification.notification import get_notification_templates
+	template_path = frappe.get_module_path("Email", "doctype", "notification", "templates")
+	templates = {template["name"]: template for template in get_notification_templates(template_path)
+		if template["name"] in FRAMEWORK_NOTIFICATION_TEMPLATES}
+	meta = frappe.get_meta("Notification")
+	children = {field.options: frappe.get_meta(field.options).fields for field in meta.get_table_fields()}
+	for row in frappe.get_all("Notification", fields=["name", "is_standard", "channel", "enabled"]):
+		if row.name in NATIVE_EMAIL_ALERTS and row.is_standard and row.channel == "Email":
+			continue
+		if row.name in templates and not row.enabled and not row.is_standard:
+			expected = frappe.new_doc("Notification")
+			expected.update(deepcopy(templates[row.name]))
+			expected.is_standard = 0
+			actual = frappe.get_doc("Notification", row.name)
+			if matches_notification_template(actual.as_dict(), expected.as_dict(), meta.fields, children):
+				continue
+		raise ValueError("Fresh starter site contains a custom or changed notification; no data was changed.")
 
 
 def install(expected_site, accept_sample_data=False, as_of_date=None):
@@ -183,7 +201,7 @@ class Starter:
 		self.finish_setup()
 
 	def finish_setup(self):
-		from frappe.desk.page.setup_wizard.setup_wizard import enable_setup_wizard_complete
+		from frappe.desk.page.setup_wizard.setup_wizard import disable_future_access, enable_setup_wizard_complete
 		apps = {"frappe", "erpnext"}
 		if set(frappe.get_all("Installed Application", filters={"app_name": ["in", sorted(apps)]},
 			pluck="app_name")) != apps:
@@ -195,7 +213,9 @@ class Starter:
 		frappe.clear_cache(doctype="Installed Application")
 		if not frappe.is_setup_complete():
 			raise ValueError("Native setup completion did not accept the finished starter.")
-		frappe.db.set_single_value("System Settings", "setup_complete", 1)
+		# This native helper completes the Desk home-page/defaults portion without
+		# the intermediate commit performed by run_post_setup_complete().
+		disable_future_access()
 
 	def setup(self):
 		from erpnext.setup.setup_wizard.operations import install_fixtures
@@ -657,6 +677,7 @@ def _verify(manifest, detailed_coverage=False):
 	require(set(MODULE_COVERAGE) == {row["module"] for row in manifest["coverage"]}, "module coverage mismatch")
 	coverage_manifest(records)
 	require(frappe.is_setup_complete(), "native setup wizard is still incomplete")
+	require(frappe.db.get_default("desktop:home_page") == "workspace", "starter Desk still boots the setup wizard")
 	require(doc("company").default_currency == CURRENCY and doc("company").country == COUNTRY, "company locale changed")
 	for key in ("quotation", "sales_order", "sales_invoice"):
 		require(Decimal(str(doc(key).grand_total)) == Decimal("8280"), f"unexpected total: {key}")

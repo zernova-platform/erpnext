@@ -11,6 +11,7 @@ CURRENCY = "ETB"
 COUNTRY = "Ethiopia"
 MARKER_KEY = "ibtinex_starter_manifest_v1"
 REQUIRED_SITE_FLAGS = ("ibtinex_starter_demo", "mute_emails", "pause_scheduler")
+FRAMEWORK_NOTIFICATION_TEMPLATES = ("Error Log", "Integration Request")
 
 # Fresh means fresh: even unrelated draft business data prevents initial seeding.
 BUSINESS_DOCTYPES = (
@@ -76,3 +77,26 @@ def coverage_manifest(records):
 			raise ValueError(f"Missing coverage records for {module}: {', '.join(missing)}")
 		result.append({"module": module, "kind": kind, "records": list(keys), "note": note})
 	return result
+
+
+def matches_notification_template(actual, expected, fields, child_fields):
+	"""Compare all native notification fields, excluding database bookkeeping.
+
+	The framework installs two customizable (is_standard=0), disabled templates.
+	Names alone do not prove that a row is still the harmless upstream template.
+	"""
+	layout = {"Section Break", "Column Break", "Tab Break", "HTML", "Button", "Fold", "Heading"}
+	def project(row, schema):
+		values = {}
+		for field in schema:
+			kind, key = field.get("fieldtype"), field.get("fieldname")
+			if kind in layout:
+				continue
+			value = row.get(key)
+			if kind in ("Table", "Table MultiSelect"):
+				value = [project(child, child_fields[field.get("options")]) for child in (value or [])]
+			elif value in (None, "", 0, False):
+				value = ""  # Native defaults represent empty/unchecked fields as None or 0.
+			values[key] = value
+		return values
+	return actual.get("name") == expected.get("name") and project(actual, fields) == project(expected, fields)

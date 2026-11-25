@@ -118,6 +118,7 @@ def assert_ready_desk(html, final_url):
     boot, _ = json.JSONDecoder().raw_decode(html[match.end():])
     assert boot.get('sysdefaults', {}).get('setup_complete') in (1, True), 'Desk still requires setup.'
     assert not boot.get('setup_wizard_url'), 'Desk boot still advertises a setup-wizard redirect.'
+    assert boot.get('home_page') != 'setup-wizard', 'Desk still opens the setup-wizard home page.'
     return {'native_route': '/desk', 'setup_complete': True, 'setup_wizard_redirect': False}
 
 def http_checks(port, admin_password):
