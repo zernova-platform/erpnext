@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import os
 import time
 from decimal import Decimal
 from pathlib import Path
@@ -16,6 +17,7 @@ parser.add_argument('--mode', choices=('empty', 'starter', 'explore', 'after-exp
 args = parser.parse_args()
 if not args.site.endswith('.ibtinex-ci.invalid'):
     raise SystemExit('Qualification only operates on the dedicated CI site suffix.')
+os.chdir('/home/frappe/frappe-bench/sites')
 frappe.init(site=args.site, sites_path='/home/frappe/frappe-bench/sites')
 frappe.connect()
 frappe.set_user('Administrator')

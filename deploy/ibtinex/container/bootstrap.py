@@ -42,6 +42,9 @@ if created:
          '--mariadb-user-host-login-scope', '%', '--install-app', 'erpnext',
          '--set-default', site])
 
+# Frappe's direct Python API resolves bench/site logs relative to the sites
+# working directory, even when init() receives an absolute sites_path.
+os.chdir(BENCH / 'sites')
 import frappe
 import erpnext
 from frappe.installer import update_site_config
