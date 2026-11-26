@@ -205,12 +205,13 @@ class VisualQualification:
                 raise AssertionError(f"{mode} semantic text pair {sample['fg']}/{sample['bg']} has contrast {ratio:.2f}:1.")
 
     def assert_theme_surfaces(self, name, mode, viewport):
-        """Check real surfaces after login's late native token imports.
+        """Check real surfaces after native CSS and mobile-sheet inheritance.
 
         Run 1 exposed a white login background and gray labels despite valid
         brand tokens, plus the Apps header which omits the .navbar class.
+        Run 2 exposed pale sidebar ink on the native white mobile sheet.
         """
-        if name not in {"login", "login-validation", "desk-home"}:
+        if name not in {"login", "login-validation", "desk-home", "mobile-navigation"}:
             return
         actual = self.page.evaluate("""name => {
             const rgb = value => value.match(/[\\d.]+/g).slice(0,3).map(Number);
@@ -224,6 +225,11 @@ class VisualQualification:
                 result.card = value('.for-login .page-card', 'backgroundColor');
                 result.label = value('.for-login label[for="login_email"]', 'color');
                 if (name === 'login') result.field_border = value('#login_password', 'borderTopColor');
+            } else if (name === 'mobile-navigation') {
+                result.navigation = value('.es-bottom-sheet:has(.desk-mobile-sheet)', 'backgroundColor');
+                result.navigation_label = value('.desk-mobile-sheet .standard-sidebar-item:not(.active-sidebar) .item-anchor:not(.section-break)', 'color');
+                result.navigation_selected = value('.desk-mobile-sheet .standard-sidebar-item.active-sidebar', 'backgroundColor');
+                result.navigation_selected_label = value('.desk-mobile-sheet .standard-sidebar-item.active-sidebar .item-anchor', 'color');
             } else {
                 result.navigation = value('.desktop-navbar', 'backgroundColor');
             }
@@ -238,6 +244,15 @@ class VisualQualification:
                 expected["field_border"] = [122, 136, 125] if light else [130, 152, 137]
             if contrast_ratio(actual["label"], actual["card"]) < 4.5:
                 raise AssertionError(f"{mode} rendered login label fails AA contrast after native CSS loaded.")
+        elif name == "mobile-navigation":
+            expected.update(navigation=[255, 255, 255] if light else [24, 39, 31],
+                            navigation_label=[82, 99, 87] if light else [186, 202, 189],
+                            navigation_selected=[237, 239, 231] if light else [36, 53, 43],
+                            navigation_selected_label=[27, 36, 31] if light else [244, 245, 239])
+            for foreground, background in (("navigation_label", "navigation"),
+                                          ("navigation_selected_label", "navigation_selected")):
+                if contrast_ratio(actual[foreground], actual[background]) < 4.5:
+                    raise AssertionError(f"{mode} rendered mobile navigation fails AA contrast: {foreground}/{background}.")
         else:
             expected["navigation"] = [16, 43, 33]
         for surface, color in expected.items():

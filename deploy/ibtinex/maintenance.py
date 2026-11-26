@@ -6,7 +6,6 @@ scoped by the installer, and require its verified Docker volume ownership.
 import contextlib
 import gzip
 import hashlib
-import io
 import json
 import os
 from pathlib import Path
@@ -278,12 +277,45 @@ def execute(site, action, token, details=None):
         frappe.destroy()
 
 
+@contextlib.contextmanager
+def suppress_native_output():
+    """Hide helper output while preserving real standard-stream file descriptors.
+
+    Pinned Frappe enables faulthandler on import using sys.stderr.fileno(). An
+    in-memory StringIO cannot serve that API. Redirect descriptors 1/2 to the null
+    device instead, also suppressing inherited output from native backup tools.
+    Restore those same descriptors afterwards so Frappe's registered handlers
+    never retain a descriptor pointing at a closed temporary file.
+    """
+    saved = []
+    try:
+        for stream in (sys.__stdout__, sys.__stderr__):
+            stream.flush()
+        for descriptor in (1, 2):
+            saved.append((descriptor, os.dup(descriptor)))
+        with open(os.devnull, 'w', encoding='utf-8') as sink:
+            os.dup2(sink.fileno(), 1)
+            os.dup2(sink.fileno(), 2)
+            with contextlib.redirect_stdout(sys.__stdout__), contextlib.redirect_stderr(sys.__stderr__):
+                try:
+                    yield
+                finally:
+                    sys.stdout.flush()
+                    sys.stderr.flush()
+    finally:
+        for descriptor, original in saved:
+            try:
+                os.dup2(original, descriptor)
+            finally:
+                os.close(original)
+
+
 def main():
     if len(sys.argv) not in {4, 5}:
         raise ValueError('Expected site, operation, backup identifier, and optional JSON details.')
     # Native backup helpers can print shell failures containing database credentials.
     # Suppress their output; expose only a sanitized operation error and JSON metadata.
-    with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+    with suppress_native_output():
         result = execute(*sys.argv[1:4], json.loads(sys.argv[4]) if len(sys.argv) == 5 else None)
     print(json.dumps(result, sort_keys=True, default=str))
 

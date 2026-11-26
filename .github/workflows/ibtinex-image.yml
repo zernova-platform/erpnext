@@ -97,8 +97,9 @@ jobs:
           load: true
           push: false
           tags: ibtinex-ci:${{ github.sha }}
+          # Reuse the pinned baseline cache. Exporting each source-specific app
+          # layer adds several minutes without helping the next exact-SHA build.
           cache-from: type=gha,scope=ibtinex-erp-v16
-          cache-to: type=gha,mode=max,scope=ibtinex-erp-v16
           build-args: |
             PYTHON_BASE_IMAGE=${{ steps.prepare.outputs.python_base_image }}
             NODE_VERSION=${{ steps.prepare.outputs.node_version }}

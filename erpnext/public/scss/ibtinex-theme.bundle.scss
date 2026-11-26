@@ -151,8 +151,10 @@
 		color: var(--ibtinex-text);
 	}
 
-	/* Native side panel and dock, including the existing mobile drawer. */
-	.body-sidebar,
+	/* Native side panel and dock, including the existing mobile drawer. The
+	 * mobile navigation sheet borrows .body-sidebar for its row layout, but
+	 * removes the drawer background. Keep that sheet's normal surface tokens. */
+	.body-sidebar:not(.desk-mobile-sheet-sidebar),
 	.dock {
 		--surface-gray-2: var(--ibtinex-brand-hover);
 		--surface-gray-3: var(--ibtinex-brand-hover);
@@ -179,17 +181,17 @@
 		color: var(--ibtinex-nav-text);
 	}
 
-	.body-sidebar .standard-sidebar-item.active-sidebar {
+	.body-sidebar:not(.desk-mobile-sheet-sidebar) .standard-sidebar-item.active-sidebar {
 		background-color: var(--ibtinex-brand-hover);
 		box-shadow: inset 3px 0 var(--ibtinex-accent);
 		border-radius: var(--radius);
 	}
 
-	[dir="rtl"] .body-sidebar .standard-sidebar-item.active-sidebar {
+	[dir="rtl"] .body-sidebar:not(.desk-mobile-sheet-sidebar) .standard-sidebar-item.active-sidebar {
 		box-shadow: inset -3px 0 var(--ibtinex-accent);
 	}
 
-	.body-sidebar .standard-sidebar-item.active-sidebar .item-anchor {
+	.body-sidebar:not(.desk-mobile-sheet-sidebar) .standard-sidebar-item.active-sidebar .item-anchor {
 		color: var(--ibtinex-accent);
 	}
 
@@ -274,7 +276,7 @@
 		outline-offset: 2px;
 	}
 
-	:is(.body-sidebar, .dock, .navbar, .desktop-navbar)
+	:is(.body-sidebar:not(.desk-mobile-sheet-sidebar), .dock, .navbar, .desktop-navbar)
 		:where(a, button, input, [tabindex]):focus-visible {
 		outline-color: var(--ibtinex-accent);
 	}
