@@ -1,0 +1,39 @@
+{
+  "bench_version": "5.31.1",
+  "customer_release_qualified": false,
+  "distribution_version": "0.1.0-rc.1",
+  "erpnext_version": "16.60.0",
+  "frappe_commit": "2df0425571ebbaed878eabc3edc5b7e7c3327ae0",
+  "frappe_docker_reference": "cf568a829790ef658d232daa75457dadf4e1ecc9",
+  "frappe_version": "16.60.2",
+  "image_tag": "ghcr.io/zernova-platform/ibtinex-erpnext:0.1.0-rc.1-g28e3808696bf",
+  "images": {
+    "app": "ghcr.io/zernova-platform/ibtinex-erpnext@sha256:b825833c5f1a11546a09793aa7346776fa366e2f0d3d9d2a5ce4888fbd73cea9",
+    "mariadb": "mariadb@sha256:e1d5495f445654134f226f55a41ce0da227116f6f27f283101f405c794d841fc",
+    "redis": "redis@sha256:91c71f9ea78fa3fe268ff832a985c48e592244f707993773f8b3e1b244ac1137"
+  },
+  "mariadb_image": "mariadb@sha256:e1d5495f445654134f226f55a41ce0da227116f6f27f283101f405c794d841fc",
+  "node_version": "24.22.3",
+  "package_visibility": "private",
+  "platform": "linux/amd64",
+  "python_base_image": "python@sha256:22eafb370920ad8b429e0aec3fff433e0669968519f5d60469d83729c138b28b",
+  "redis_image": "redis@sha256:91c71f9ea78fa3fe268ff832a985c48e592244f707993773f8b3e1b244ac1137",
+  "schema_version": 1,
+  "source_branch": "ibtinex/starter-0.1.0",
+  "source_commit": "28e3808696bf415a3f6a5b66b017870ed794f5a1",
+  "source_repository": "https://github.com/zernova-platform/erpnext",
+  "status": "verified-review-candidate",
+  "verification": [
+    "fresh_empty_site",
+    "explicit_starter_install",
+    "native_business_assertions",
+    "seed_idempotence",
+    "opt_in_and_site_guards",
+    "worker_execution",
+    "http_icons_login_api",
+    "authenticated_desk_setup_complete",
+    "realtime_handshake",
+    "container_recreation",
+    "normal_restart_preserves_review_activity"
+  ]
+}

@@ -1,59 +1,108 @@
-# IBTINEX ERP review image and installer
+# IBTINEX ERP 0.1.1: installation and visual upgrades
 
-This recipe packages ERPNext **16.60.0**, Frappe **16.60.2**, the existing IBTINEX Studio mark as the icon/favicon, and an explicitly selected synthetic Ethiopian starter company. It preserves native ERP workflows and package identities. This is a review candidate, not a qualified customer rollout.
+This recipe packages ERPNext **16.60.0**, Frappe **16.60.2**, the approved IBTINEX icon, a screen-only dark-green/off-white theme, and the existing optional fictional Ethiopian starter company. Native ERP business logic, APIs, schemas, permissions, authentication and printed business documents retain their upstream behavior.
 
-## Install the verified candidate
+**Start with [WINDOWS.md](WINDOWS.md) for CMD commands.** This is a `0.1.1-rc.1` review candidate. The generated `release-manifest.json` is the authority for the exact tested image, source, automated results and open gates. Native Windows Python tests and Linux-container qualification are distinct from full Windows Docker Desktop acceptance.
 
-Download the installer ZIP from the successful `IBTINEX / Build, verify and publish candidate` workflow artifact. It contains `release-manifest.json` with the exact app, database and Redis digests, plus these portable Python/Compose files. Failed runs do not produce a verified installer bundle. Python 3.10+ and working Docker Compose v2 are required. Windows uses Docker Desktop with Linux containers; a Linux host uses Docker Engine. The recipe targets `linux/amd64`.
+## Bundle and prerequisites
 
-Authenticate Docker to the private organization package using an identity with package-read access:
+The release ZIP contains `ibtinex-erp-review-installer/` with `deploy.py`, `common.py`, `maintenance.py`, `container/bootstrap.py`, `compose.yaml`, release manifests, guides and license notices. Python 3.10+ and Docker Compose v2 are required. Windows uses Docker Desktop Linux containers; a Linux host uses Docker Engine. The image is `linux/amd64` and GHCR access is private.
 
-```text
-docker login ghcr.io
-```
-
-From the extracted installer directory, initialize a new deployment with the optional synthetic starter company:
+From that extracted folder, authenticate and create an isolated deployment:
 
 ```text
+docker login ghcr.io -u YOUR_GITHUB_USERNAME
 python deploy.py init --release-manifest release-manifest.json --directory ibtinex-review --port 8081 --starter-data
-```
-
-Omit `--starter-data` for a fresh, unseeded ERP site. That is the default. The choice is recorded before site creation; the installer refuses to seed an existing non-demo site.
-
-Start the prepared deployment:
-
-```text
 python deploy.py up --directory ibtinex-review
+python deploy.py status --directory ibtinex-review
 ```
 
-Open **http://localhost:8081**. The existing demo on port 8080 is unaffected. The account is `Administrator`; its generated password is in `ibtinex-review/.secrets/admin-password`. Password values are never printed by the installer or embedded in the image, manifest or report. Store the deployment directory securely; Windows engineers should place it within their protected user profile and retain its access restrictions.
+Omit `--starter-data` for an empty site. Use the printed URL and the `Administrator` password file identified in the result. The password is generated locally; it is not in the ZIP, image, manifest or logs.
 
-The starter contains synthetic records and connected posted workflows. Review the packaged `erpnext/ibtinex_starter` coverage manifest for which areas contain transactions, configuration or metadata only. Mail is muted, the scheduler is paused for the demo, and outbound integrations remain unconfigured. This sample company must not be mistaken for an Ethiopia regulatory certification or a real customer dataset.
+`init` can be repeated with the same arguments without rotating credentials. Different settings in an existing installation are refused. `up` recognizes a completed site and preserves edited transactions and starter flags. The independent seed verification diagnostic still checks the original fixture balances and is not appropriate after arbitrary user activity.
 
-## Scope and repeat operation
+## Operations
 
-The installer creates its own Compose project, ownership labels, bridge network, MariaDB volume, sites volume and queue volume. Only the frontend binds a host port, on loopback. It checks port and project ownership before starting. The repository's deployment studio must still provide its fuller host/subnet/route plan and confirmation process when this recipe is integrated into that tool. No Docker socket is mounted into the ERP containers.
+Every command accepts `--directory` pointing to the folder containing the actual `installation.json`, `.env`, `compose.yaml` and `.secrets`. Its Compose project, image, site and port are loaded and checked together. The installer explicitly supplies the stored project/environment so an unrelated shell environment cannot redirect the operation.
 
-Run `up` again to restart the same deployment. Existing app sets are checked and branding preserves customized settings. A compatible completed starter marker and its Company are recognized without reseeding, resetting site flags or requiring the original stock balances; engineers can continue exploring normal ERP transactions. The explicit seed `verify()` diagnostic still checks the original fixture expectations and may fail after legitimate review edits. This command is not a schema upgrade procedure; upgrades require a separately tested migration and coordinated backup/restore plan.
+| Command | Purpose |
+|---|---|
+| `init` | Prepare a new empty directory or recognize the same initialization without changing secrets. |
+| `status` | Show actual paths, project, images, containers, URL, legacy CRLF files and pending recovery state. |
+| `up` | Start the existing deployment; create a site only when appropriate. |
+| `stop` | Stop this project while retaining containers and volumes. |
+| `recover` | Use the corrected bundled bootstrap on the selected image; archive only a proven empty partial site and retry initialization. |
+| `backup` | Quiesce writes/workers, create and verify a full private backup, copy it to the host and restart. |
+| `resume` | Resume a recorded interrupted backup before any image transition; upgrade/rollback journals use their own recovery commands. |
+| `upgrade --release-manifest FILE` | Validate the exact appearance-only image pair, back up first, apply branding to the existing site and start the new image. |
+| `rollback --backup-directory DIR` | Reverse the qualified visual update and its owned branding while preserving business data. |
 
-The generated `.env` contains image references and identifiers only. Passwords live in `.secrets/` and are mounted only into MariaDB and the one-off setup container. On Linux, secret files use mode 0600. The setup container reads them, drops to runtime UID 1000, then creates the site. The application stores its normal database credential in its site configuration.
+Mutation commands use a local operation lock. A stale lock after a crash is reported; remove it only after confirming its process has ended. The installer verifies ownership labels on this project's containers, volumes and network. It never removes an unrelated Docker project or runs a global prune.
 
-To stop this one installation, use Compose from its generated directory:
+## Windows password failure and bounded recovery
+
+The previous writer used Python text mode with a trailing newline. Windows translates that newline into CRLF. MariaDB's shell password-file reader removes trailing LF but retains CR; the old Python reader removed both. Those readers therefore supplied different passwords.
+
+New secret files are written atomically as ASCII bytes with **no newline or BOM** on every host. Existing secret files are not normalized or rotated. The bootstrap tests the exact bytes MariaDB used; only an authentication rejection permits trying the historical stripped variant. Existing healthy sites connect with their own site credentials and do not depend on changing the root password.
+
+For an old failed initial installation, run from the **new installer folder**:
 
 ```text
-docker compose stop
+python deploy.py status --directory PATH_TO_EXISTING_DEPLOYMENT
+python deploy.py recover --directory PATH_TO_EXISTING_DEPLOYMENT
 ```
 
-Do not add `--volumes` when removing a review stack unless its data is intentionally disposable. No global prune or engine removal is used by this installer.
+Recovery streams the new bundled bootstrap into the existing image, so an old image can be repaired without an unbacked image switch. It proves the original database is absent or has zero tables and refuses extra business files, backups, symbolic links or an unreadable configuration. It archives the partial site configuration/logs under `.ibtinex-recovery` inside the sites volume. It does not drop the old database or remove volumes. A site with tables is preserved and requires repair or a verified restore, not automatic recreation.
 
-## Build and verification
+Once recovery succeeds, apply the normal backed-up visual upgrade below. New installations authenticate against MariaDB before invoking site creation, preventing this specific password mismatch from leaving another half-created site.
 
-`.github/workflows/ibtinex-image.yml` runs only for `ibtinex/starter-0.1.0` in `zernova-platform/erpnext`, or a manual dispatch of that branch. It prepares exact source/image inputs, builds from the pinned source and resolved inputs, then creates an isolated blank site and a separate explicitly seeded site. It checks native seed assertions, all ERP business-table counts across repeat installation, opt-in and target-site rejection, a real worker job, native HTTP/API login, authenticated Desk setup completion, anonymous access denial, served artwork hashes, realtime handshake and container recreation. It then posts a legitimate stock transfer and proves normal start preserves the edited records, balances and site configuration. Only after these checks pass does it push the same loaded image to GHCR and verify the package is private.
+## Existing-installation upgrade
 
-The candidate tag contains the source SHA. Install using the resulting immutable digest, not a moving branch or `latest`. Publication does not prove all upstream tests, security tests, SSO, backups, localization or customer acceptance have passed. Those remain separately reported release gates. The retained artifact contains exact source archives, build inputs, resolved Python/OS packages, verification results and the ready installer bundle; it excludes credentials and site backups.
+Keep the existing deployment folder and extract the new installer separately. The following uses the **new** `deploy.py` and its manifest with the **old** deployment directory:
 
-## Build provenance and licenses
+```text
+python deploy.py status --directory PATH_TO_EXISTING_DEPLOYMENT
+python deploy.py upgrade --directory PATH_TO_EXISTING_DEPLOYMENT --release-manifest release-manifest.json
+```
 
-The custom Containerfile is adapted from Frappe Docker commit `cf568a829790ef658d232daa75457dadf4e1ecc9`; vendored nginx/start resources and the upstream MIT license are under `vendor/frappe_docker`. Changes pin Bench 5.31.1 and Frappe 16.60.2, verify both application commit hashes before removing Git metadata, split framework/application build layers, add the required OpenCV libraries, package scoped installer/check scripts and use a non-destructive asset-link entrypoint. `apps.json` is a BuildKit secret. Its source manifest/commit also changes the build cache key.
+The manifest names the exact supported previous digest. The tool checks the current/target source metadata, ERPNext/Frappe versions, application set, database/cache digests and ownership. This release keeps upstream versions and database schema unchanged. No `new-site`, starter seed, generic `migrate`, or company reset runs during upgrade.
 
-ERPNext source is GPLv3, Frappe Framework and the Docker build reference use MIT. Upstream notices remain included. The workflow provides matching ERPNext/Frappe source archives and build material. A private registry does not remove recipients' GPL rights. Image/container licenses and a commercial support entitlement are separate concepts.
+Before switching images, the installer enters maintenance, pauses the scheduler and stops application/worker services. The native Frappe backup generator creates the complete database dump, public and private files and configuration. SQL gzip integrity/schema content, file-archive readability, copied sizes and SHA-256 hashes are checked. Native backup encryption is honored; if encryption is configured without its required key, the operation stops before mutation.
+
+The private host backup also retains exact deployment configuration, the original secret-file bytes and the original branding ownership state. The target applies only managed presentation settings and clears caches. Application roles are recreated on the target image, then the original site configuration is restored. No new site is required to receive the theme.
+
+The host result contains `backup_directory`; keep a protected off-machine copy of the complete directory. A journal records interrupted upgrade stages. A partial upgrade never silently wipes volumes or restores an old database over subsequent work.
+
+## Visual rollback and disaster recovery
+
+Use the new installer with the backup returned by its upgrade:
+
+```text
+python deploy.py rollback --directory PATH_TO_EXISTING_DEPLOYMENT --backup-directory PATH_TO_UPGRADE_BACKUP
+```
+
+Rollback verifies checksums, installation ownership, the recorded image pair, compatible application versions and unchanged deployment credentials. A completed visual upgrade also receives a new full safety backup before rollback, protecting subsequent transactions. Only branding values that still match the upgrade's applied values are restored; later customer names/logos remain. The previous application image and matching deployment configuration are selected. Business database records are **not** restored or discarded.
+
+This support applies only to the manifest-qualified appearance-only pair. Arbitrary schema upgrades require a full restore rehearsal using the prior image plus its matching database, files, configuration and encryption keys in replacement volumes. After post-upgrade business writes, reconcile those writes before any full database restore. This release does not claim a generic disaster-recovery restoration test.
+
+## Build and qualification
+
+The existing GitHub workflow is extended on `feat/ibtinex-erp-v0.1.1-branding`. It retains the tested Frappe commit, Bench/Node versions and exact Python/MariaDB/Redis image digests. The distribution version is separate from ERPNext/Frappe's native version identities. The build checks its source commits and includes the compiled theme on both web and Desk pages.
+
+Publication is gated by:
+
+1. Native Windows Python deployment/branding tests, including exact password-file bytes.
+2. Linux focused deployment, branding and starter contracts against the pinned Frappe schemas.
+3. Source image build and real blank/starter site installation.
+4. Native ERP transaction/ledger assertions, API and Administrator login, anonymous-access rejection, worker execution, realtime, restart and recreation persistence.
+5. Real Chromium desktop/mobile/light/dark screenshots, required native views, keyboard focus, semantic contrast checks, theme regression checks and print-style isolation.
+6. An upgrade from the previously published private image after a real stock transaction; data/configuration comparisons, visual rollback and repeat upgrade.
+7. Reproduction of the old CRLF MariaDB authentication failure and explicit recovery on the same image/volumes.
+
+The before/after visual reference disables only the dedicated theme stylesheet on the **same candidate runtime**. It is labeled accordingly and does not pretend to be an old-release screenshot. Human visual acceptance, complete WCAG 2.2 AA conformance, the full upstream regression suite and Windows Docker Desktop end-to-end installation remain separately reported gates.
+
+After automated qualification, the same loaded image is published to a new source-specific GHCR tag and its immutable digest is recorded. Existing candidate tags are not overwritten. The workflow verifies private package visibility and packages a versioned manifest, Windows ZIP, source archives and qualification evidence. Backup contents, credentials and session tokens are excluded from release artifacts.
+
+## Provenance and notices
+
+The Docker recipe derives from Frappe Docker commit `cf568a829790ef658d232daa75457dadf4e1ecc9`; the vendored resources retain its MIT notice. ERPNext's GPLv3 notice and matching source remain included; Frappe's MIT notice remains in its corresponding source archive and image. The original IBTINEX icon is reused. The styling is an isolated presentation layer; no separate Frappe app, replacement dashboard or new authentication policy is introduced.

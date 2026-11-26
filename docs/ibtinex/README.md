@@ -2,6 +2,8 @@
 
 Review date: **25 November 2026**.
 
+> **0.1.1 branch:** This branch implements the visual update and guarded Windows installer. See [Windows instructions](../../deploy/ibtinex/WINDOWS.md), [technical operations](../../deploy/ibtinex/README.md), and [0.1.1 verification status](V0_1_1_VALIDATION.md). The 0.1.0 image and evidence below remain the preserved upgrade baseline. Use the new release's generated manifest for its exact source/image rather than treating this historical digest as the themed release.
+
 **Status: the source-built review image passed real installation/runtime qualification and was published to private GHCR.** It retains the native ERPNext interface/workflows, replaces the main icon/favicon using the existing IBTINEX Studio mark, and offers an explicitly selected synthetic Ethiopian starter company. Customer rollout remains unqualified.
 
 The candidate uses **ERPNext 16.60.0 / Frappe 16.60.2**, matching the versions previously observed in the evaluation system. An upstream version upgrade is a separate qualification step.

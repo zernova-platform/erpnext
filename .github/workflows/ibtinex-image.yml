@@ -2,7 +2,7 @@ name: IBTINEX / Build, verify and publish candidate
 
 on:
   push:
-    branches: [ibtinex/starter-0.1.0]
+    branches: [feat/ibtinex-erp-v0.1.1-branding]
     paths:
       - erpnext/**
       - deploy/ibtinex/**
@@ -25,12 +25,34 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  windows-installer-tests:
+    if: github.repository == 'zernova-platform/erpnext'
+    runs-on: windows-latest
+    timeout-minutes: 15
+    env:
+      PYTHONUTF8: '1'
+    steps:
+      - name: Check out the exact candidate source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Exercise password bytes and deployment guards on native Windows
+        shell: pwsh
+        run: |
+          python --version
+          python -m unittest discover -s deploy/ibtinex/tests -v
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python erpnext/tests/test_ibtinex_branding.py -v
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "Native Windows Python tests passed. Docker Desktop end-to-end installation is a separate, unexecuted release gate." >> $env:GITHUB_STEP_SUMMARY
+
   build-test-publish:
     if: github.repository == 'zernova-platform/erpnext'
+    needs: windows-installer-tests
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     permissions:
-      contents: read
+      contents: write
       packages: write
     env:
       IBTINEX_IMAGE_REPOSITORY: ghcr.io/zernova-platform/ibtinex-erpnext
@@ -61,6 +83,10 @@ jobs:
       - name: Resolve and record exact build inputs
         id: prepare
         run: python3 deploy/ibtinex/ci.py prepare
+      - name: Install the pinned browser verification runtime
+        run: |
+          python3 -m pip install --break-system-packages -r deploy/ibtinex/visual-requirements.txt
+          python3 -m playwright install --with-deps chromium
       - name: Build the candidate once
         timeout-minutes: 25
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7
@@ -71,6 +97,9 @@ jobs:
           load: true
           push: false
           tags: ibtinex-ci:${{ github.sha }}
+          # Reuse the pinned baseline cache. Exporting each source-specific app
+          # layer adds several minutes without helping the next exact-SHA build.
+          cache-from: type=gha,scope=ibtinex-erp-v16
           build-args: |
             PYTHON_BASE_IMAGE=${{ steps.prepare.outputs.python_base_image }}
             NODE_VERSION=${{ steps.prepare.outputs.node_version }}
@@ -78,7 +107,7 @@ jobs:
             CACHE_BUST=${{ github.sha }}
           secret-files: |
             apps_json=${{ runner.temp }}/ibtinex-apps.json
-      - name: Exercise fresh site and starter data, then publish the tested image
+      - name: Qualify native workflows, visual assets, upgrade and rollback, then publish
         run: python3 deploy/ibtinex/ci.py verify-publish
       - name: Retain source and verification evidence
         if: always()

@@ -1,0 +1,433 @@
+/* Copyright (c) 2026, IBTINEX and contributors
+ * License: GNU General Public License v3. See license.txt
+ *
+ * Presentation layer for ERPNext 16.60 / Frappe 16.60.2. Keep native component
+ * geometry, responsive breakpoints, status palettes and interactions intact.
+ * Espresso semantic tokens drive newer controls; legacy aliases cover Desk's
+ * forms, reports and portal. No raw chart/status color scales are replaced.
+ * Print bundles and email bundles do not import this file. Screen-only rules
+ * also leave the browser's native print rendering unchanged.
+ */
+
+@media screen {
+	:root,
+	[data-theme="light"] {
+		--ibtinex-brand: #102b21;
+		--ibtinex-brand-hover: #1c332a;
+		--ibtinex-accent: #d4f594;
+		--ibtinex-page: #f4f5ef;
+		--ibtinex-surface: #ffffff;
+		--ibtinex-surface-secondary: #edefe7;
+		--ibtinex-surface-hover: #e3e9dc;
+		--ibtinex-text: #1b241f;
+		--ibtinex-muted: #526357;
+		--ibtinex-border: #c9d1c7;
+		/* Decorative dividers may be subtle; field edges must remain identifiable. */
+		--ibtinex-control-border: #7a887d;
+		--ibtinex-link: #245d43;
+		--ibtinex-focus: #245d43;
+		--ibtinex-primary: #102b21;
+		--ibtinex-primary-hover: #1c332a;
+		--ibtinex-primary-text: #ffffff;
+		--ibtinex-selection: #e1edcf;
+		--ibtinex-nav-text: #f4f5ef;
+		--ibtinex-nav-muted: #c4d1c6;
+		--ibtinex-nav-border: #526a5a;
+		--ibtinex-success: #17603b;
+		--ibtinex-success-bg: #edf8f0;
+		--ibtinex-warning: #805108;
+		--ibtinex-warning-bg: #fff4d5;
+		--ibtinex-danger: #ab2532;
+		--ibtinex-danger-bg: #fff0f1;
+		--ibtinex-info: #195a84;
+		--ibtinex-info-bg: #edf5fc;
+	}
+
+	[data-theme="dark"] {
+		--ibtinex-page: #101b16;
+		--ibtinex-surface: #18271f;
+		--ibtinex-surface-secondary: #24352b;
+		--ibtinex-surface-hover: #2c4033;
+		--ibtinex-text: #f4f5ef;
+		--ibtinex-muted: #bacabd;
+		--ibtinex-border: #43584a;
+		--ibtinex-control-border: #829889;
+		--ibtinex-link: #d4f594;
+		--ibtinex-focus: #d4f594;
+		--ibtinex-primary: #d4f594;
+		--ibtinex-primary-hover: #e0f8b3;
+		--ibtinex-primary-text: #102b21;
+		--ibtinex-selection: #304a35;
+		--ibtinex-success: #a5e6b9;
+		--ibtinex-success-bg: #153524;
+		--ibtinex-warning: #f6d58a;
+		--ibtinex-warning-bg: #3a2e13;
+		--ibtinex-danger: #ffbac1;
+		--ibtinex-danger-bg: #402126;
+		--ibtinex-info: #acd9f5;
+		--ibtinex-info-bg: #193345;
+	}
+
+	/* login.bundle.css loads after web hooks and imports the native token roots
+	 * again. Qualify the document root so those late defaults cannot erase this
+	 * palette; component-local status and navigation tokens still take priority. */
+	html:root,
+	html[data-theme="light"],
+	html[data-theme="dark"] {
+		--surface-base: var(--ibtinex-surface);
+		--surface-gray-1: var(--ibtinex-page);
+		--surface-gray-2: var(--ibtinex-surface-secondary);
+		--surface-gray-3: var(--ibtinex-surface-hover);
+		--surface-gray-4: var(--ibtinex-selection);
+		--surface-sidebar: var(--ibtinex-page);
+		--surface-elevation-1: var(--ibtinex-surface);
+		--surface-elevation-2: var(--ibtinex-surface);
+		--surface-elevation-3: var(--ibtinex-surface);
+		--ink-gray-3: var(--ibtinex-muted);
+		--ink-gray-4: var(--ibtinex-muted);
+		--ink-gray-5: var(--ibtinex-muted);
+		--ink-gray-6: var(--ibtinex-muted);
+		--ink-gray-7: var(--ibtinex-text);
+		--ink-gray-8: var(--ibtinex-text);
+		--ink-gray-9: var(--ibtinex-text);
+		--outline-gray-1: var(--ibtinex-border);
+		--outline-gray-2: var(--ibtinex-control-border);
+		--outline-gray-3: var(--ibtinex-control-border);
+		--outline-gray-4: var(--ibtinex-focus);
+		--bg-color: var(--ibtinex-page);
+		--fg-color: var(--ibtinex-surface);
+		--card-bg: var(--ibtinex-surface);
+		--modal-bg: var(--ibtinex-surface);
+		--popover-bg: var(--ibtinex-surface);
+		--control-bg: var(--ibtinex-surface-secondary);
+		--control-bg-on-gray: var(--ibtinex-surface);
+		--disabled-control-bg: var(--ibtinex-page);
+		--fg-hover-color: var(--ibtinex-surface-hover);
+		--subtle-fg: var(--ibtinex-surface-secondary);
+		--subtle-accent: var(--ibtinex-page);
+		--text-color: var(--ibtinex-text);
+		--heading-color: var(--ibtinex-text);
+		--text-muted: var(--ibtinex-muted);
+		--text-light: var(--ibtinex-muted);
+		--placeholder-color: var(--ibtinex-muted);
+		--border-color: var(--ibtinex-border);
+		--dark-border-color: var(--ibtinex-control-border);
+		--table-border-color: var(--ibtinex-border);
+		--primary: var(--ibtinex-primary);
+		--primary-color: var(--ibtinex-primary);
+		--primary-light: var(--ibtinex-selection);
+		--brand-color: var(--ibtinex-primary);
+		--btn-primary: var(--ibtinex-primary);
+		--btn-default-bg: var(--ibtinex-surface-secondary);
+		--btn-default-hover-bg: var(--ibtinex-surface-hover);
+		--btn-ghost-hover-bg: var(--ibtinex-surface-secondary);
+		--navbar-bg: var(--ibtinex-brand);
+		--desk-sidebar-bg: var(--ibtinex-brand);
+		--dock-bg: var(--ibtinex-brand);
+		--sidebar-select-color: var(--ibtinex-selection);
+		--highlight-color: var(--ibtinex-surface-secondary);
+		--awesomebar-focus-bg: var(--ibtinex-surface);
+		--awesomplete-hover-bg: var(--ibtinex-surface-hover);
+		--focus-default: 0 0 0 2px var(--ibtinex-focus);
+		--focus-outline-default: 2px solid var(--ibtinex-focus);
+		--checkbox-focus-shadow: 0 0 0 2px var(--ibtinex-focus);
+		--card-shadow: none;
+		--btn-shadow: none;
+		--modal-shadow: 0 8px 28px rgb(16 43 33 / 14%);
+		--alert-text-success: var(--ibtinex-success);
+		--alert-bg-success: var(--ibtinex-success-bg);
+		--alert-text-warning: var(--ibtinex-warning);
+		--alert-bg-warning: var(--ibtinex-warning-bg);
+		--alert-text-danger: var(--ibtinex-danger);
+		--alert-bg-danger: var(--ibtinex-danger-bg);
+		--alert-text-info: var(--ibtinex-info);
+		--alert-bg-info: var(--ibtinex-info-bg);
+		--error-border: var(--ibtinex-danger);
+		--error-bg: var(--ibtinex-danger-bg);
+	}
+
+	body {
+		background-color: var(--ibtinex-page);
+		color: var(--ibtinex-text);
+	}
+
+	/* Native side panel and dock, including the existing mobile drawer. The
+	 * mobile navigation sheet borrows .body-sidebar for its row layout, but
+	 * removes the drawer background. Keep that sheet's normal surface tokens. */
+	.body-sidebar:not(.desk-mobile-sheet-sidebar),
+	.dock {
+		--surface-gray-2: var(--ibtinex-brand-hover);
+		--surface-gray-3: var(--ibtinex-brand-hover);
+		--surface-elevation-2: var(--ibtinex-brand-hover);
+		--surface-elevation-3: var(--ibtinex-brand-hover);
+		--ink-gray-3: var(--ibtinex-nav-muted);
+		--ink-gray-4: var(--ibtinex-nav-muted);
+		--ink-gray-5: var(--ibtinex-nav-muted);
+		--ink-gray-6: var(--ibtinex-nav-muted);
+		--ink-gray-7: var(--ibtinex-nav-text);
+		--ink-gray-8: var(--ibtinex-nav-text);
+		--ink-gray-9: var(--ibtinex-nav-text);
+		--text-color: var(--ibtinex-nav-text);
+		--text-muted: var(--ibtinex-nav-muted);
+		--text-light: var(--ibtinex-nav-muted);
+		--heading-color: var(--ibtinex-nav-text);
+		--outline-gray-1: var(--ibtinex-nav-border);
+		--outline-gray-2: var(--ibtinex-nav-border);
+		--dock-ink: var(--ibtinex-nav-muted);
+		--dock-ink-hover: var(--ibtinex-nav-text);
+		--dock-ink-active: var(--ibtinex-accent);
+		--focus-default: 0 0 0 2px var(--ibtinex-accent);
+		--focus-outline-default: 2px solid var(--ibtinex-accent);
+		color: var(--ibtinex-nav-text);
+	}
+
+	.body-sidebar:not(.desk-mobile-sheet-sidebar) .standard-sidebar-item.active-sidebar {
+		background-color: var(--ibtinex-brand-hover);
+		box-shadow: inset 3px 0 var(--ibtinex-accent);
+		border-radius: var(--radius);
+	}
+
+	[dir="rtl"] .body-sidebar:not(.desk-mobile-sheet-sidebar) .standard-sidebar-item.active-sidebar {
+		box-shadow: inset -3px 0 var(--ibtinex-accent);
+	}
+
+	.body-sidebar:not(.desk-mobile-sheet-sidebar) .standard-sidebar-item.active-sidebar .item-anchor {
+		color: var(--ibtinex-accent);
+	}
+
+	.navbar,
+	.desktop-navbar {
+		background-color: var(--ibtinex-brand);
+		border-bottom-color: var(--ibtinex-nav-border);
+		color: var(--ibtinex-nav-text);
+	}
+
+	.navbar .nav-link,
+	.navbar.navbar-light .navbar-nav .nav-link,
+	.navbar .navbar-brand,
+	.navbar .navbar-toggler,
+	.navbar .breadcrumb a {
+		color: var(--ibtinex-nav-text);
+	}
+
+	.navbar .nav-link:hover,
+	.navbar.navbar-light .navbar-nav .nav-link:hover,
+	.navbar .breadcrumb a:hover {
+		color: var(--ibtinex-accent);
+	}
+
+	.navbar .nav-link .icon,
+	.navbar .navbar-toggler .icon {
+		--icon-stroke: currentColor;
+	}
+
+	/* The native Apps launcher deliberately omits the .navbar class. Keep its
+	 * original search/avatar layout, with light search controls on green chrome. */
+	.desktop-navbar .desktop-navbar-title {
+		--ink-gray-9: var(--ibtinex-nav-text);
+	}
+
+	.desktop-navbar .desktop-notification-icon,
+	.desktop-navbar .desktop-cloud-settings {
+		--text-muted: var(--ibtinex-nav-text);
+		--ink-gray-7: var(--ibtinex-nav-text);
+		--icon-stroke: currentColor;
+		color: var(--ibtinex-nav-text);
+	}
+
+	/* Menus remain normal light/dark working surfaces even when their trigger
+	 * is inside green navigation. Explicit tokens prevent inherited pale ink. */
+	:is(.body-sidebar, .dock, .navbar, .desktop-navbar) .dropdown-menu {
+		--surface-gray-2: var(--ibtinex-surface-secondary);
+		--surface-gray-3: var(--ibtinex-surface-hover);
+		--ink-gray-5: var(--ibtinex-muted);
+		--ink-gray-6: var(--ibtinex-muted);
+		--ink-gray-7: var(--ibtinex-text);
+		--ink-gray-8: var(--ibtinex-text);
+		--ink-gray-9: var(--ibtinex-text);
+		--text-color: var(--ibtinex-text);
+		--text-muted: var(--ibtinex-muted);
+		background-color: var(--ibtinex-surface);
+		color: var(--ibtinex-text);
+	}
+
+	/* Cover the Bootstrap and Espresso controls shipped together by v16.60. */
+	.btn.btn-primary {
+		background-color: var(--ibtinex-primary);
+		color: var(--ibtinex-primary-text);
+	}
+
+	.es-button:not([data-theme="red"]) {
+		--bt-solid-bg: var(--ibtinex-primary);
+		--bt-solid-bg-hover: var(--ibtinex-primary-hover);
+		--bt-solid-bg-active: var(--ibtinex-primary-hover);
+		--bt-solid-fg: var(--ibtinex-primary-text);
+	}
+
+	@media (hover: hover) {
+		.btn.btn-primary:hover {
+			background-color: var(--ibtinex-primary-hover);
+			color: var(--ibtinex-primary-text);
+		}
+	}
+
+	:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+		outline: 2px solid var(--ibtinex-focus);
+		outline-offset: 2px;
+	}
+
+	:is(.body-sidebar:not(.desk-mobile-sheet-sidebar), .dock, .navbar, .desktop-navbar)
+		:where(a, button, input, [tabindex]):focus-visible {
+		outline-color: var(--ibtinex-accent);
+	}
+
+	.form-control:not(:disabled):not([readonly]):focus,
+	.es-input:focus-visible,
+	.es-textarea:focus-visible {
+		border-color: var(--ibtinex-focus);
+		outline: 2px solid var(--ibtinex-focus);
+		outline-offset: 2px;
+	}
+
+	.form-control::placeholder {
+		color: var(--ibtinex-muted);
+		opacity: 1;
+	}
+
+	.frappe-control.has-error .form-control,
+	.form-control[aria-invalid="true"] {
+		border-color: var(--ibtinex-danger);
+	}
+
+	.frappe-control.has-error .form-control:focus,
+	.form-control[aria-invalid="true"]:focus {
+		outline-color: var(--ibtinex-danger);
+	}
+
+	/* Readable tables, report frames and native record tabs; no data colors. */
+	.datatable {
+		--dt-primary-color: var(--ibtinex-primary);
+		--dt-text-color: var(--ibtinex-text);
+		--dt-selection-highlight-color: var(--ibtinex-selection);
+	}
+
+	.list-row-head,
+	.grid-heading-row,
+	.datatable .dt-row-header .dt-cell {
+		background-color: var(--ibtinex-surface-secondary);
+		color: var(--ibtinex-text);
+	}
+
+	.list-row-container:hover,
+	.list-row-container:hover .list-row,
+	.datatable .dt-row:hover .dt-cell {
+		background-color: var(--ibtinex-surface-hover);
+	}
+
+	.list-row-container:has(.list-row-checkbox:checked),
+	.list-row-container:has(.list-row-checkbox:checked) .list-row,
+	.datatable .dt-cell--highlight {
+		background-color: var(--ibtinex-selection);
+	}
+
+	.form-tabs-list .nav-link.active,
+	.nav-tabs .nav-link.active {
+		color: var(--ibtinex-link);
+		border-bottom-color: var(--ibtinex-link);
+	}
+
+	.widget,
+	.frappe-card,
+	.modal-content,
+	.kanban-board .kanban-column {
+		border-color: var(--ibtinex-border);
+	}
+
+	.widget .widget-head .widget-title,
+	.widget .widget-head .widget-title a {
+		color: var(--ibtinex-text);
+	}
+
+	.widget .link-item:hover,
+	.website-sidebar .sidebar-item a.active {
+		background-color: var(--ibtinex-selection);
+		color: var(--ibtinex-link);
+	}
+
+	.web-list-item a,
+	.page-card a:not(.es-button):not(.btn),
+	.web-footer a {
+		color: var(--ibtinex-link);
+	}
+
+	.page-card a:not(.es-button):not(.btn):hover {
+		text-decoration: underline;
+	}
+
+	/* Higher specificity than login.bundle.css, which Frappe loads after hooks. */
+	:is(.for-login, .for-forgot, .for-login-with-email-link, .for-signup,
+		.for-email-login, .for-reset-password) .page-card.login-content {
+		background-color: var(--ibtinex-surface);
+		border: 1px solid var(--ibtinex-border);
+		box-shadow: none;
+	}
+
+	.page-card-head .ibtinex-product-name {
+		color: var(--ibtinex-text);
+		font-size: var(--text-base);
+		font-weight: var(--font-weight-semibold);
+		line-height: 1.4;
+		margin: 0;
+	}
+
+	.login-error-banner.es-alert {
+		--es-al-icon: var(--ibtinex-danger);
+		--ink-gray-8: var(--ibtinex-danger);
+		color: var(--ibtinex-danger);
+		background-color: var(--ibtinex-danger-bg);
+		border-color: var(--ibtinex-danger);
+	}
+
+	.login-success-banner.es-alert {
+		--es-al-icon: var(--ibtinex-success);
+		--ink-gray-8: var(--ibtinex-success);
+		color: var(--ibtinex-success);
+		background-color: var(--ibtinex-success-bg);
+		border-color: var(--ibtinex-success);
+	}
+
+	::selection {
+		background-color: var(--ibtinex-selection);
+		color: var(--ibtinex-text);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.body-sidebar,
+		.body-sidebar > *,
+		.body-sidebar .standard-sidebar-item,
+		.body-sidebar .item-anchor,
+		.body-sidebar .sidebar-item-label,
+		.dock,
+		.dock-item,
+		.es-button,
+		.btn {
+			transition: none;
+		}
+
+		:is(.for-login, .for-forgot, .for-login-with-email-link, .for-signup,
+			.for-email-login, .for-reset-password) .invalid-login {
+			animation: none;
+		}
+	}
+
+	@media (forced-colors: active) {
+		:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+			outline-color: Highlight;
+		}
+
+		.body-sidebar .standard-sidebar-item.active-sidebar {
+			outline: 2px solid Highlight;
+			outline-offset: -2px;
+		}
+	}
+}
